@@ -14,14 +14,14 @@ notifications:
 install:
   - npm ci # faster, goes only from package-lock
 before_script:
-  - psql -c 'create database "boilermaker-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "nicebreakers-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
-# before_deploy:
-#   - npm run build-client # make the bundle
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: nicebreakers # see README
+  api_key:
+    secure: "yT7pJmIOIgvmfPU7ZdgFuYWzAGv0TNgrDmTTm4dY6ybp1wlJTQSgt9xXEC71daG4ZQrX/4wvOntgxQmE0Dj5aXJ5hAa6yDd6rwLQOgwl4JlZPHFQm2UBGaLhbOPw/53MF5DFEeSK/Zus24G1XqZ6y41jEJQ1/N4dXKnHFKe0mNXXLtb34k0ZBrtAMKUye/99gUXBxcI4E8JkDA1ZwnNhwr6ydOwwRqiOSWf5nZhrcOr/q5slfE3+EBw8VvCxDB4lJq5w3uMbgDqDXZc2S6J6hvO5yDJI4bWD9zoNvCrOAGjv8IhF42Qn333OAi7GgbRv53F9zNp0vi5lOh+fwNYjEkwCnBVEJkAbgvwFkBogLX8BJHjCHRFBoQawpJ70DhrqLQO8uz9Jbzwftcg4AwC+RgV6GsR/dYEK8+AopATuLzbtfByHmeH8moR56loilFloraRDMHnWy+qHqHesg55IUy1MvcYgqyDGCAIiG6y9AaZgtPwf8+UTs2j+/Bq3+2dpBjW8v8x1BoNXsbLq7P55N7IstHec7zgzYl6WSPGJgwSU0ykbMWEwjfH+62FzvSo5Rq8BHmHnZKwF3s4QHj0Q51ScCTalEEGg3vgQaKx7weYpqeOV0EWRx/iYbdYF2Pg0yXbxqYW0deRGgAC60dF6yIv2bLIByKBMrWdWcIei0iQ="
