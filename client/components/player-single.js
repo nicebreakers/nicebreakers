@@ -1,8 +1,9 @@
 import React from 'react'
 
 const PlayerSingle = props => {
+	const {data} = props;
 	return (
-		<h1>someName</h1>
+		<h1>{data}</h1>
 	)
 }
 
