@@ -33,9 +33,6 @@ const User = db.define('User', {
   lastName: {
     type: Sequelize.STRING
   },
-  email: {
-    type: Sequelize.STRING
-  },
   imageURL: {
     type: Sequelize.STRING
   }
