@@ -1,18 +1,24 @@
 const User = require('./user')
+const Event = require('./event')
+const Prompt = require('./prompt')
+const PromptType = require('./promptType')
+const Interaction = require('./interaction')
 
-/**
- * If we had any associations to make, this would be a great place to put them!
- * ex. if we had another model called BlogPost, we might say:
- *
- *    BlogPost.belongsTo(User)
- */
+User.belongsToMany(User, {
+  through: Interaction,
+  as: 'Pair',
+  foreignKey: 'aId',
+  otherKey: 'bId'
+})
 
-/**
- * We'll export all of our models here, so that any time a module needs a model,
- * we can just require it from 'db/models'
- * for example, we can say: const {User} = require('../db/models')
- * instead of: const User = require('../db/models/user')
- */
+Interaction.belongsTo(Event, {foreignKey: 'eventId'})
+Interaction.belongsTo(Prompt, {foreignKey: 'promptId'})
+PromptType.hasOne(Prompt, {as: 'type'})
+
 module.exports = {
-  User
+  User,
+  Event,
+  Prompt,
+  PromptType,
+  Interaction
 }

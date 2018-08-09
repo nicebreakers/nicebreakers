@@ -1,41 +1,32 @@
-SCHEMA // v.1 // 8-9-18
+SCHEMA // v.3 // 8-9-18
 Excludes all createdAt/updatedAt
 
 ===========================
-Event
+Event(s)
 ===========================
 	id			    PRIMARY/Integer
 	date		    DateTime
 
 ===========================
-Participant
+Prompt(s)
 ===========================
 	id			    PRIMARY/Integer
-	firstName	  String
-	lastName	  String
-	email		    String
-	imageURL	  String
+  typeId      FK_PROMPT_TYPE
+	question	  Text
 
 ===========================
-Prompt
-===========================
-	id			    PRIMARY/Integer
-	type		    FK_PROMPT_TYPE
-	question	  String
-
-===========================
-PromptType
+PromptType(s)
 ===========================
 	id			    PRIMARY/Integer
 	name		    String
 
 ===========================
-Interaction
+Interaction(s)
 ===========================
 	id			    PRIMARY/Integer
 	aId			    FK_PARTICIPANT
 	bId			    FK_PARTICIPANT
-	gameId		  FK_GAME
+	eventId		  FK_EVENT
 	promptId	  FK_PROMPT
 	aInput		  Text
 	aInputMsec	Integer (unsigned)
@@ -44,21 +35,20 @@ Interaction
 	bInputMsec	Integer (unsigned
 	bScore		  Integer ??
 
-//////////////////////
-Passport and Sessions
-\\\\\\\\\\\\\\\\\\\\\\
-
 ===========================
-User
+User(s)
 ===========================
 	id			    PRIMARY/Integer
 	email		    String
 	password    String
   salt	      String
   googleId    String
+	firstName	  String
+	lastName	  String
+	imageURL	  String
 
 ===========================
-Session
+Session(s) // used by express-sessions
 ===========================
 	sid			    PRIMARY/String(32)
 	expires		  DateTime
