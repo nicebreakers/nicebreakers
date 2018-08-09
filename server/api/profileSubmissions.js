@@ -13,7 +13,7 @@ const router = require('express').Router()
 
 router.post('/picSubmit', async (req, res, next) => {
   console.log('A message:', req)
-  res.send('Shiittttt')
+  res.send('Stuff')
   // try {
   //   let imageFile = req.files.file
   //   imageFile.mv(`${__dirname}/public/${req.body.filename}.jpg`, function(err) {
