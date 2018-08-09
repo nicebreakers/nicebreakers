@@ -1,3 +1,5 @@
+//A dummy store for initial development of front end components
+
 const dummyPlayers = [
   {name: Richard,
     photo: 'dummyPic-Richard.jpg'
