@@ -1,0 +1,65 @@
+SCHEMA // v.1 // 8-9-18
+Excludes all createdAt/updatedAt
+
+===========================
+Event
+===========================
+	id			    PRIMARY/Integer
+	date		    DateTime
+
+===========================
+Participant
+===========================
+	id			    PRIMARY/Integer
+	firstName	  String
+	lastName	  String
+	email		    String
+	imageURL	  String
+
+===========================
+Prompt
+===========================
+	id			    PRIMARY/Integer
+	type		    FK_PROMPT_TYPE
+	question	  String
+
+===========================
+PromptType
+===========================
+	id			    PRIMARY/Integer
+	name		    String
+
+===========================
+Interaction
+===========================
+	id			    PRIMARY/Integer
+	aId			    FK_PARTICIPANT
+	bId			    FK_PARTICIPANT
+	gameId		  FK_GAME
+	promptId	  FK_PROMPT
+	aInput		  Text
+	aInputMsec	Integer (unsigned)
+	aScore		  Integer ??
+	bInput		  Text
+	bInputMsec	Integer (unsigned
+	bScore		  Integer ??
+
+//////////////////////
+Passport and Sessions
+\\\\\\\\\\\\\\\\\\\\\\
+
+===========================
+User
+===========================
+	id			    PRIMARY/Integer
+	email		    String
+	password    String
+  salt	      String
+  googleId    String
+
+===========================
+Session
+===========================
+	sid			    PRIMARY/String(32)
+	expires		  DateTime
+	data	      Text
