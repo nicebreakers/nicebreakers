@@ -7,24 +7,29 @@ export default class PictureSubmission extends Component {
     super(props)
     this.state = {
       imageUrl: '',
-      submitted: false
+      submitted: false,
+      error: false
     }
   }
 
   handleImageUpload = async evt => {
     evt.preventDefault()
-    let data = new FormData()
-    data.append('image', this.uploadInput.files[0])
-    const {data: submission} = await axios.post(
-      '/api/profileSubmissions/picSubmit',
-      data,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+    try {
+      let data = new FormData()
+      data.append('image', this.uploadInput.files[0])
+      const {data: submission} = await axios.post(
+        '/api/profileSubmissions/picSubmit',
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         }
-      }
-    )
-    this.setState({imageUrl: submission.url, submitted: true})
+      )
+      this.setState({imageUrl: submission.url, submitted: true})
+    } catch (err) {
+      this.setState({error: true})
+    }
   }
   render() {
     return (
@@ -48,6 +53,7 @@ export default class PictureSubmission extends Component {
             <p> Picture Submitted! </p>
           </Fragment>
         ) : null}
+        {this.state.error && <p> File must be in jpeg, png or jpg format</p>}
       </div>
     )
   }
