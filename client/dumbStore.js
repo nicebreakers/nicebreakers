@@ -1,23 +1,23 @@
+//A dummy store for initial development of front end components
 const dummyPlayers = [
-  {name: Richard,
+  {
+    name: Richard,
     photo: 'dummyPic-Richard.jpg'
   },
-  {name: Alfred,
+  {
+    name: Alfred,
     photo: 'dummyPic-Alfred.jpg'
   },
-  {name: Alex,
+  {
+    name: Alex,
     photo: 'dummyPic-Alex.jpg'
   },
-  {name: Eric,
+  {
+    name: Eric,
     photo: 'dummyPic-Eric.jpg'
-  },
+  }
 ]
 
-const dumbShapes = [
-  "circle.png",
-  "octagon.jpg",
-  "triangle.jpg",
-  "square.png"
-]
+const dumbShapes = ['circle.png', 'octagon.jpg', 'triangle.jpg', 'square.png']
 
 export {dummyPlayers, dumbShapes}
