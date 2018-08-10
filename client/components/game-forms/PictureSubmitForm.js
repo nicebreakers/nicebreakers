@@ -14,11 +14,11 @@ export default class PictureSubmitForm extends Component {
     evt.preventDefault()
     let data = new FormData()
     data.append('image', this.uploadInput.files[0])
-    const image = data.getAll('image')
-    console.log('Tester', image)
+
+    console.log('Tester', data)
     const submission = await axios.post(
       '/api/profileSubmissions/picSubmit',
-      {image},
+      {data},
       {
         headers: {
           'Content-Type': 'multipart/form-data'
