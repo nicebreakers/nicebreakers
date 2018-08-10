@@ -10,12 +10,16 @@ enzyme.configure({adapter})
 
 describe('PlayerList', () => {
   let wrapper
-	const testPlayers = ["test@email.com", "anotherTest@email.com", "oneMore@email.com"]
+  const testPlayers = [
+    'test@email.com',
+    'anotherTest@email.com',
+    'oneMore@email.com'
+  ]
 
   beforeEach(() => {
-		// playerList = shallow(<PlayerList players={testPlayers} />)
-		wrapper = shallow(<PlayerList players={testPlayers} />)
+    // playerList = shallow(<PlayerList players={testPlayers} />)
+    wrapper = shallow(<PlayerList players={testPlayers} />)
 
-		//need to add test
+    //need to add test
   })
 })
