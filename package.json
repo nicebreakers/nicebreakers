@@ -37,9 +37,11 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.15.3",
+    "cloudinary": "^1.11.0",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^4.1.0",
     "express": "^4.16.3",
+    "express-fileupload": "^0.4.0",
     "express-session": "^1.15.1",
     "history": "^4.6.3",
     "morgan": "^1.8.1",
@@ -93,6 +95,7 @@
     "react-test-renderer": "^16.4.2",
     "redux-devtools-extension": "^2.13.5",
     "redux-mock-store": "^1.5.3",
+    "sinon": "^6.1.4",
     "supertest": "^3.1.0",
     "webpack": "^4.16.4",
     "webpack-cli": "^3.1.0"
