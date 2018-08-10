@@ -19,7 +19,7 @@ class Routes extends Component {
 
     return (
       <Switch>
-        <Route path="/cody" component={PictureSubmitForm} />
+        <Route path="/createProfile" component={PictureSubmitForm} />
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />

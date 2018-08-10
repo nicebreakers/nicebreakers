@@ -5,7 +5,7 @@ export default class PictureSubmitForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      imageUrl: this.props.playerName + '_headshot' || 'myHeadshot',
+      imageUrl: '',
       submitted: false
     }
   }
@@ -14,34 +14,18 @@ export default class PictureSubmitForm extends Component {
     evt.preventDefault()
     let data = new FormData()
     data.append('image', this.uploadInput.files[0])
-
-    console.log('Tester', data)
-    const submission = await axios.post(
+    const {data: submission} = await axios.post(
       '/api/profileSubmissions/picSubmit',
-      {data},
+      data,
       {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }
     )
-
-    // data.append('filename', this.fileName.value)
-    // try {
-    //   data.append('file', this.uploadInput.files[0])
-    //   data.append('filename', this.fileName.value)
-    //   const submission = await axios.post('/picSubmit', data)
-    //   this.setState({submitted: true})
-    // } catch (err) {
-    //   console.log('')
-    // }
-  }
-  handleSubmit = evt => {
-    evt.default()
-    console.log('Submitted')
+    this.setState({imageUrl: submission.url, submitted: true})
   }
   render() {
-    console.log('Pffft')
     return (
       <div>
         <form onSubmit={this.handleImageUpload}>
@@ -59,8 +43,8 @@ export default class PictureSubmitForm extends Component {
         </form>
         {this.state.submitted ? (
           <Fragment>
+            <img src={'pics/' + this.state.imageUrl} />
             <p> Picture Submitted! </p>
-            <button> Continue </button>
           </Fragment>
         ) : null}
       </div>
