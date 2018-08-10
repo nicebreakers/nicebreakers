@@ -4,7 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import {me} from './store'
-import PictureSubmitForm from './components/game-forms/PictureSubmitForm'
+import PictureSubmission from './components/game-forms/PictureSubmitPage'
 
 /**
  * COMPONENT
@@ -19,7 +19,7 @@ class Routes extends Component {
 
     return (
       <Switch>
-        <Route path="/createProfile" component={PictureSubmitForm} />
+        <Route path="/createProfile" component={PictureSubmission} />
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />

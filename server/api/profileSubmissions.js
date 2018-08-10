@@ -9,12 +9,13 @@ cloudinary.config({
 })
 
 const router = require('express').Router()
-const Players = require('Player')
+const {user} = require('../db/models/index')
 
 router.post('/picSubmit', async (req, res, next) => {
   try {
     if (!req.files) throw Error('No file Attached')
     if (
+      !req.files.image.name.endsWith('.jpg') &&
       !req.files.image.name.endsWith('.jpg') &&
       !req.files.image.name.endsWith('.png')
     ) {
@@ -28,7 +29,9 @@ router.post('/picSubmit', async (req, res, next) => {
     })
 
     //ADD TO PLAYER
-    Players.findById(req.user.id)
+    console.log('user', req.user)
+    user.findById(req.user.id)
+    user.update({imageUrl: `${req.user.id}_${req.files.image.name}`})
     res.send({url: `${req.user.id}_${req.files.image.name}`})
   } catch (err) {
     next(err)

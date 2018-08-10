@@ -14,7 +14,7 @@ class PlayerList extends Component {
     this.props.removePlayer(data)
   }
   render() {
-		const {players} = this.props
+    const {players} = this.props
     return (
       <div>
         {players.map((singleEmail, index) => (
@@ -44,7 +44,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(PlayerList)
  * PROP TYPES
  */
 PlayerList.propTypes = {
-	players: PropTypes.array,
-	getPlayers: PropTypes.func,
-	removePlayer: PropTypes.func,
+  players: PropTypes.array,
+  getPlayers: PropTypes.func,
+  removePlayer: PropTypes.func
 }

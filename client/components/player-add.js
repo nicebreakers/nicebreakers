@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
-import {PlayerAddForm} from '../components';
+import {PlayerAddForm} from '../components'
 import {createPlayer} from '../store'
-import { connect } from 'react-redux';
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 class PlayerAdd extends Component {
-	submit = (newPlayer) => {
-		this.props.addPlayer(newPlayer)
-	}
+  submit = newPlayer => {
+    this.props.addPlayer(newPlayer)
+  }
 
-	render() {
-		return <PlayerAddForm onSubmit={this.submit} />
-	}
+  render() {
+    return <PlayerAddForm onSubmit={this.submit} />
+  }
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -24,5 +24,5 @@ export default connect(null, mapDispatchToProps)(PlayerAdd)
  * PROP TYPES
  */
 PlayerAdd.propTypes = {
-	addPlayer: PropTypes.func,
+  addPlayer: PropTypes.func
 }

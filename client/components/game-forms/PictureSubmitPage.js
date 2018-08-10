@@ -1,7 +1,8 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
-export default class PictureSubmitForm extends Component {
+
+export default class PictureSubmission extends Component {
   constructor(props) {
     super(props)
     this.state = {

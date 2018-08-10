@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import { PlayerAdd, PlayerList } from '../components'
+import {PlayerAdd, PlayerList} from '../components'
 
 /**
  * COMPONENT

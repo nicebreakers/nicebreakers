@@ -26,10 +26,9 @@ PlayerAddForm = reduxForm({form: 'playerAddForm'})(PlayerAddForm)
 
 export default PlayerAddForm
 
-
 /**
  * PROP TYPES
  */
 PlayerAddForm.propTypes = {
-	handleSubmit: PropTypes.func,
+  handleSubmit: PropTypes.func
 }
