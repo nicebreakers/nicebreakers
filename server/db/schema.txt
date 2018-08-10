@@ -1,0 +1,55 @@
+SCHEMA // v.3 // 8-9-18
+Excludes all createdAt/updatedAt
+
+===========================
+Event(s)
+===========================
+	id			    PRIMARY/Integer
+	date		    DateTime
+
+===========================
+Prompt(s)
+===========================
+	id			    PRIMARY/Integer
+  typeId      FK_PROMPT_TYPE
+	question	  Text
+
+===========================
+PromptType(s)
+===========================
+	id			    PRIMARY/Integer
+	name		    String
+
+===========================
+Interaction(s)
+===========================
+	id			    PRIMARY/Integer
+	aId			    FK_PARTICIPANT
+	bId			    FK_PARTICIPANT
+	eventId		  FK_EVENT
+	promptId	  FK_PROMPT
+	aInput		  Text
+	aInputMsec	Integer (unsigned)
+	aScore		  Integer ??
+	bInput		  Text
+	bInputMsec	Integer (unsigned
+	bScore		  Integer ??
+
+===========================
+User(s)
+===========================
+	id			    PRIMARY/Integer
+	email		    String
+	password    String
+  salt	      String
+  googleId    String
+	firstName	  String
+	lastName	  String
+	imageURL	  String
+
+===========================
+Session(s) // used by express-sessions
+===========================
+	sid			    PRIMARY/String(32)
+	expires		  DateTime
+	data	      Text

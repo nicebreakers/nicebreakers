@@ -21,10 +21,15 @@ router.post('/picSubmit', async (req, res, next) => {
       throw Error('File is not a jpg or png format')
     }
     let photo = req.files.image
-    photo.mv(`public/pics/${req.files.image.name}`, function(err) {
+    photo.mv(`public/pics/${req.user.id}_${req.files.image.name}`, function(
+      err
+    ) {
       if (err) next(err)
     })
-    res.send({url: req.files.image.name})
+
+    //ADD TO PLAYER
+    Players.findById(req.user.id)
+    res.send({url: `${req.user.id}_${req.files.image.name}`})
   } catch (err) {
     next(err)
   }
