@@ -1,9 +1,12 @@
 import React from 'react'
 
 const PlayerSingle = props => {
-	const {data} = props;
+	const {data, handleClick} = props;
 	return (
-		<h1>{data}</h1>
+		<div>
+			<h3 style={{display: "inline-block"}}>{data}</h3>
+			<button type="button" onClick={(event) => handleClick(event, data)}>Remove</button>
+		</div>
 	)
 }
 

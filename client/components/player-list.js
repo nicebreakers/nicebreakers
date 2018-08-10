@@ -1,13 +1,50 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {PlayerSingle} from '../components'
+import {deletePlayer, fetchAllPlayers} from '../store'
+import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
 
-const PlayerList = props => {
-	const tempData = ["email1@email.com", "email2@email.com", "email3@email.com", "email4@email.com", "email5@email.com"]
-	return (
-		<div>
-			{tempData.map((singleEmail, index) => <PlayerSingle key={index} data={singleEmail} />)}
-		</div>
-	)
+class PlayerList extends Component {
+  componentDidMount() {
+    const {getPlayers} = this.props
+    getPlayers()
+  }
+  handleClick = (event, data) => {
+    event.preventDefault()
+    this.props.removePlayer(data)
+  }
+  render() {
+		const {players} = this.props
+    return (
+      <div>
+        {players.map((singleEmail, index) => (
+          <PlayerSingle
+            key={index}
+            data={singleEmail}
+            handleClick={this.handleClick}
+          />
+        ))}
+      </div>
+    )
+  }
 }
 
-export default PlayerList
+const mapStateToProps = state => ({
+  players: state.player || []
+})
+
+const mapDispatchToProps = dispatch => ({
+  removePlayer: playerId => dispatch(deletePlayer(playerId)),
+  getPlayers: () => dispatch(fetchAllPlayers())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerList)
+
+/**
+ * PROP TYPES
+ */
+PlayerList.propTypes = {
+	players: PropTypes.array,
+	getPlayers: PropTypes.func,
+	removePlayer: PropTypes.func,
+}
