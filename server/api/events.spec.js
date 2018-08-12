@@ -80,9 +80,9 @@ describe.only('Event routes', () => {
     it('changes date', async () => {
       return request(app)
         .put('/api/events/1/date')
-        .send({date: new Date(2018, 1, 1)})
+        .send({date: new Date('2018-02-01T00:00:00.000Z')})
         .expect(res => {
-          expect(res.body.date).to.be.equal('2018-02-01T06:00:00.000Z')
+          expect(res.body.date).to.be.equal('2018-02-01T00:00:00.000Z')
         })
     })
   })
