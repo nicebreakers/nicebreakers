@@ -96,6 +96,9 @@ describe.only('Event routes', () => {
           expect(res.body.status).to.be.equal('in_progress')
         })
     })
+    //TODO:This will test that that instance was successfully created in DB.
+    //PAUSED: Unneccesary Blocker
+
     // it('A post will create correct instance in the DB')
     // const res = request(app)
     //   .post('/api/events')

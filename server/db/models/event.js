@@ -32,6 +32,9 @@ Event.findByName = function(searchName) {
   })
 }
 
+//TODO: Class Methods for finding instances within last month
+//PAUSED: Unnecessary Blocker
+
 // Event.findRecent = function() {
 //   return Event.findAll({
 //     where: {
