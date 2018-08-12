@@ -17,6 +17,9 @@ const Event = db.define('Event', {
   },
   description: {
     type: Sequelize.TEXT
+  },
+  status: {
+    type: Sequelize.ENUM('pending', 'in_progress', 'done')
   }
 })
 
