@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, FourOFour} from './components'
 import {me} from './store'
 import PictureSubmission from './components/game-forms/PictureSubmitPage'
+import Controller from './components/controllers/Controller'
 
 /**
  * COMPONENT
@@ -28,6 +29,7 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/home" component={UserHome} />
             <Route exact path="/" component={UserHome} />
+            <Route path="/game" component={Controller} />
             {/* <Route path="/createProfile" component={PictureSubmit} */}
             <Route path="*" component={FourOFour} />
           </Switch>
