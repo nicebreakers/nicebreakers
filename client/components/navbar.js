@@ -33,7 +33,7 @@ const LoggedOutLinks = props => (
 )
 const Navbar = props => (
   <div>
-    <nav className="light-blue lighten-3" role="navigation">
+    <nav className="light-blue" role="navigation">
       <div className="nav-wrapper container">
         <Link to="/" className="brand-logo logo-container">
           <i className="material-icons">ac_unit</i>
