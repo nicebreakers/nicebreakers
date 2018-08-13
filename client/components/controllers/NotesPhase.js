@@ -7,12 +7,10 @@ class NotesPhase extends Component {
     return (
       <div className="row">
         <form className="col s12" onSubmit={this.handleSubmit}>
-          <div className="row">
             <div className="input-field col s12">
               <textarea id="textarea1" className="materialize-textarea" />
               <label htmlFor="textarea1">Textarea</label>
             </div>
-          </div>
         </form>
         <button type="submit" disabled={pristine || submitting}>
           Submit
