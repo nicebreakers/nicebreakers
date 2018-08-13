@@ -48,7 +48,7 @@ class Controller extends Component {
   render() {
     const whichComponentToRender = this.checkPhase()
     return (
-      <div>
+      <div className="container">
         {whichComponentToRender}
         <button type="button" onClick={() => this.nextPhase()}>
           Next
