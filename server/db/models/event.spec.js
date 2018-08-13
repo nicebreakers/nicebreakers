@@ -52,4 +52,3 @@ describe('Event model', () => {
     //   expect(event[0].name).to.be.equal('Test Event2')
     // })
   })
-})
