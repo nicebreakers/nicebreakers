@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, FourOFour} from './components'
+import {Login, Signup, UserHome, FourOFour, LandingPage} from './components'
 import {me} from './store'
 import PictureSubmission from './components/game-forms/PictureSubmitPage'
 
@@ -19,6 +19,7 @@ class Routes extends Component {
 
     return (
       <Switch>
+        <Route exact path="/" component={LandingPage} />
         <Route path="/createProfile" component={PictureSubmission} />
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
