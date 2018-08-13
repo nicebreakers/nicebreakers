@@ -51,5 +51,4 @@ describe('Event model', () => {
     //   expect(event).to.be.an('array')
     //   expect(event[0].name).to.be.equal('Test Event2')
     // })
-  })
 })
