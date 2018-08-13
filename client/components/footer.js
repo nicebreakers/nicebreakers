@@ -15,7 +15,7 @@ const Footer = props => (
     </div>
     <div className="footer-copyright">
       <div className="container">
-        Made with ❤︎ by Patrick Kilgore, Kevin Lim, and Brenden Meyer @
+        Made with ❤︎ by Patrick Kilgore, Kevin Lim, and Brendan Meyer @
         <a className="white-text" href="http://fullstackacademy.com">
           Fullstack Academy of Code
         </a>
