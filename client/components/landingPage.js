@@ -129,13 +129,12 @@ const LandingPage = props => (
           <h5 className="header white-text">Get the fun started today.</h5>
           <br />
           <div className="row center">
-            <a
-              href="http://materializecss.com/getting-started.html"
-              id="download-button"
+            <Link
+              to="/signup"
               className="btn-large waves-effect waves-light blue lighten-1"
             >
               Get Started
-            </a>
+            </Link>
           </div>
         </div>
       </div>
