@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, FourOFour, LandingPage} from './components'
 import {me} from './store'
 import PictureSubmission from './components/game-forms/PictureSubmitPage'
+import EventFormPage from './components/event-create-page'
 import Controller from './components/controllers/Controller'
 
 /**
@@ -23,6 +24,7 @@ class Routes extends Component {
         <Route exact path="/" component={LandingPage} />
         <Route path="/createProfile" component={PictureSubmission} />
         {/* Routes placed here are available to all visitors */}
+        <Route path="/createEvent" component={EventFormPage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (
