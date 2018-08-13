@@ -4,6 +4,11 @@ const Prompt = require('./prompt')
 const PromptType = require('./promptType')
 const Interaction = require('./interaction')
 
+User.belongsToMany(Event, {through: 'UsersAtEvents'})
+Event.belongsToMany(User, {through: 'UsersAtEvents'})
+
+Event.hasMany(Interaction, {foreignKey: 'interactionId'})
+
 User.belongsToMany(User, {
   through: Interaction,
   as: 'Pair',
