@@ -1,7 +1,8 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const LandingPage = props => (
-  <div>
+  <div ref={() => $('.parallax').parallax()}>
     <div id="index-banner" className="parallax-container">
       <div className="section no-pad-bot">
         <div className="container row center">
@@ -17,13 +18,12 @@ const LandingPage = props => (
               <h5 className="header col s12 light">Meet each other.</h5>
             </div>
             <div className="row center">
-              <a
-                href="http://materializecss.com/getting-started.html"
-                id="download-button"
+              <Link
+                to="/signup"
                 className="btn-large waves-effect waves-light blue lighten-1"
               >
                 Get Started
-              </a>
+              </Link>
             </div>
           </div>
           <br />
