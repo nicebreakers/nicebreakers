@@ -9,8 +9,9 @@ dist: trusty # uses trusty environment
 sudo: false # when on trusty, uses Docker containers for speed
 notifications:
   email:
-    on_success: change # default: change (only when going from broken to fixed)
-    on_failure: always # default: always (which is annoying, as it should be)
+    on_failure: always
+  slack:
+    secure: gANpcKYuasz0StOtwavDyJ4HKurNwIRJKkQD72Z5jU1G3Vi7lbBSIzB58L+EmM56gTUQAmhHMNCFHg131Fx86z4Mbra4MK8jWg5nYFjFZiWhVTnEWjbG4PLYEOFB3d3lGGm9DN5BwVGDRBYkranzMnAKAjN2EVu+tKerbnd83HN3+hFB7CAFlJTEyPVgSnRQ9qdk0v2ABuEr682V9lJloxkZaHre+c+AvLjIxo5dK7LP+yHdVc12wjT8FE7FGHi44Xe8JMHwQQHqU5voqRnPo9x8MDv9kNcytXH1hp9llhqzlUjqGV4MUlkZ+sDuuY7zDI4u3O2CoAFnamtc9wiyWbUoyQ76hu8SzfwO/UXv3is4hUHjKqPlmP5iB+puVE5qpC/0zO1D/Pg22dhdeIQPXEDTWg6mDgYlFf1RwLUINcvDn/yiiDXkyTeCU44vCfPAckwG9nmNtiyMbksHkn1xkqZUcFQNqNtMoujs8V0qF1ldigxQ28TL6h8EbF2Z3tD71F81LgnSArqokS9cr4BCWyqE4J0gCJE8vZaO46A3254kGK+S07qM514Fb4Ix0/sP2FuaR64JkRLIOo9OGpDmhlbP21rv3MdC3xeYlxLddMY/h/Wo5g8S4FkSQP9BSGH4xgEeLPiAc6MhzkW6Icp9JnS9cL1AWema1DJUJRHSoNU=
 install:
   - npm ci # faster, goes only from package-lock
 before_script:
@@ -24,4 +25,4 @@ deploy:
   provider: heroku
   app: nicebreakers # see README
   api_key:
-    secure: "zl2aq2wVvYf18Rs/JevYJJaON7ynRIxA0ZW/BrkqfGF/Oa4V+VEzNuRnaEyb5oT59nedw/8IqXzBmtV8Kf2OJlyhr1cx//dE1+1/7Zd4TEMEjJXf6r4vZELuL6Si1R6D3noKY/8UXITTy5NibTdd78ScPnwl7yp7iTxu/qUhxatLUda7JeXXGSnCIU4VxiO85/wiBCvznyh85NOxrgl6CFW5u6zaoAFOFBFmdO72SUhuWJmG/RVoBZx4eLE0EY3BHG6wgvwT7zK8dtFl1RaS3lA5RMX5o5w8YIfhEvjlV5r61Yjx1Hk4mBJCORC8sFMeh9E5Wl0/mRUewJvHUT74K+kW8z+/c68lsd2TMYLcIPpS/G2g5oqmtMN+PWl84BCvNdQ+VkW2GZ2usPgJDEpDasX9WuOMUrlnhk4a6Aik6lKH11nBW8Rp+ZW8qk6SghUuauLrA5qbOXOJhuVfzcUojBe3fZh6oIIG46I36bvWty6u46U3Cl97jaJ137haDOzBH0Glyw2f2Q1hwIgR55c6sSqPArFquqCPJiJCNnK8TIsCKsjQYbSXkJ+P89gTp9JTgmj3nz1WPz/0NLqBInE1ecJvLYIuzswFb1FX+JJTkVMUdeSenz0huz6uqPfHibPTNe6sP/t/ovYDMmGKa5iDd72A4XPR08/X57urs+q0KLc="
+    secure: 'zl2aq2wVvYf18Rs/JevYJJaON7ynRIxA0ZW/BrkqfGF/Oa4V+VEzNuRnaEyb5oT59nedw/8IqXzBmtV8Kf2OJlyhr1cx//dE1+1/7Zd4TEMEjJXf6r4vZELuL6Si1R6D3noKY/8UXITTy5NibTdd78ScPnwl7yp7iTxu/qUhxatLUda7JeXXGSnCIU4VxiO85/wiBCvznyh85NOxrgl6CFW5u6zaoAFOFBFmdO72SUhuWJmG/RVoBZx4eLE0EY3BHG6wgvwT7zK8dtFl1RaS3lA5RMX5o5w8YIfhEvjlV5r61Yjx1Hk4mBJCORC8sFMeh9E5Wl0/mRUewJvHUT74K+kW8z+/c68lsd2TMYLcIPpS/G2g5oqmtMN+PWl84BCvNdQ+VkW2GZ2usPgJDEpDasX9WuOMUrlnhk4a6Aik6lKH11nBW8Rp+ZW8qk6SghUuauLrA5qbOXOJhuVfzcUojBe3fZh6oIIG46I36bvWty6u46U3Cl97jaJ137haDOzBH0Glyw2f2Q1hwIgR55c6sSqPArFquqCPJiJCNnK8TIsCKsjQYbSXkJ+P89gTp9JTgmj3nz1WPz/0NLqBInE1ecJvLYIuzswFb1FX+JJTkVMUdeSenz0huz6uqPfHibPTNe6sP/t/ovYDMmGKa5iDd72A4XPR08/X57urs+q0KLc='
