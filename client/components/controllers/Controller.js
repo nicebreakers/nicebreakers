@@ -12,20 +12,19 @@ class Controller extends Component {
   }
 
   componentDidMount() {
-    //retrieve picture and url from db
+    //retrieve picture and url from db or from the public folder
   }
 
+  //temporary (goes through the components until we have sockets in place)
   nextPhase = () => {
     const curr = this.state.value
     let next = (curr + 1) % 5
-    console.log(next)
-    this.setState = {
+    this.setState({
       value: next
-    }
+    })
   }
 
   checkPhase() {
-    //use sockets to determine phase?
     const phases = ['PreGame', 'Prompt', 'Notes', 'PostNotes', 'GameEnded']
     const expr = phases[this.state.value]
     switch (expr) {
@@ -61,8 +60,8 @@ class Controller extends Component {
 
 const mapStateToProps = state => {
   return {
-    shape: '',
-    prompt: ''
+    shape: '/dumbpics/circle.png',
+    prompt: 'This is the prompt'
   }
 }
 

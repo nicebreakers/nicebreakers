@@ -4,7 +4,7 @@ const PromptPhase = props => {
   const {shape, prompt} = props
   return (
     <div className="row">
-      <div className="col">
+      <div className="col s12 m7">
         <div className="card">
           <div className="card-image">
             <img src={shape} />
