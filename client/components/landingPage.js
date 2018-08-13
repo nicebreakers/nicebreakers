@@ -9,6 +9,11 @@ const LandingPage = props => (
           <div className="card-panel white col s12 m10 offset-m1 l8 offset-l2 xl6 offset-xl3">
             <h1 className="header center blue-text">Nicebreakers</h1>
             <div className="row center">
+              <i className="material-icons large blue-text text-lighten-2">
+                ac_unit
+              </i>
+            </div>
+            <div className="row center">
               <h5 className="header col s12 light">Meet each other.</h5>
             </div>
             <div className="row center">
