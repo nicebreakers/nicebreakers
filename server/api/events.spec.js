@@ -25,7 +25,7 @@ describe.only('Event routes', () => {
     })
     it('GETS all events /api/events', async () => {
       const res = await request(app)
-        .get('/api/events')
+        .get('/api/events/all')
         .expect(200)
 
       expect(res.body).to.be.an('array')
