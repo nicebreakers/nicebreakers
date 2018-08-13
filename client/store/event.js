@@ -4,8 +4,7 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const GET_EVENTS = 'GET_EVENTS'
-const GET_EVENT_BY_ID = 'GET_EVENT_BY_ID'
-const GET_EVENT_BY_NAME = 'GET_EVENT_BY_NAME'
+const GET_EVENT = 'GET_EVENT'
 
 const ADD_EVENT = 'ADD_EVENT'
 const UPDATE_EVENT_ALL = 'UPDATE_EVENT_ALL'
@@ -16,8 +15,8 @@ const UPDATE_EVENT_DATE = 'UPDATE_EVENT_DATE'
  * ACTION CREATORS
  */
 const getEvents = events => ({type: GET_EVENTS, events})
-const gotEventById = event => ({type: GET_EVENT_BY_ID, event})
-const gotEventByName = event => ({type: GET_EVENT_BY_NAME, event})
+const gotEventById = event => ({type: GET_EVENT, event})
+const gotEventByName = event => ({type: GET_EVENT, event})
 const addEvent = event => ({type: ADD_EVENT, event})
 //Update all fields on event
 const updateEventAll = event => ({
@@ -45,16 +44,6 @@ export const postEvent = event => async dispatch => {
 export const fetchAllEvents = () => async dispatch => {
   const {data: events} = await axios.get('/api/events')
   dispatch(getEvents(events))
-}
-//fetch an event by name
-export const fetchEventByName = eventName => async dispatch => {
-  const {data: event} = await axios.get(`/api/events/name/${eventName}`)
-  dispatch(gotEventByName(event))
-}
-//fetch an event by id
-export const fetchEventsById = eventId => async dispatch => {
-  const {data: event} = await axios.get(`/api/events/${eventId}`)
-  dispatch(gotEventById(event))
 }
 //Put Request for all fields on event
 export const changeEventAllFields = (
@@ -86,6 +75,16 @@ export const changeEventDate = (newDate, eventId) => async dispatch => {
 }
 
 /**
+ * Utility Function
+ *
+ */
+//fetch an event by name, don't need to change state here if we're just looking up
+export const fetchEventByName = async eventName => {
+  const {data: event} = await axios.get(`/api/events/name/${eventName}`)
+  return event
+}
+
+/**
  * INITIAL STATE
  */
 const defaultEvents = {
@@ -104,24 +103,10 @@ export default function(state = defaultEvents, action) {
           return result
         }, {})
       }
-    case GET_EVENT_BY_ID:
-      return {
-        byId: {
-          [action.event.id]: action.event
-        }
-      }
-    case GET_EVENT_BY_NAME:
-      return {
-        byId: {
-          [action.event.id]: action.event
-        }
-      }
-
     case ADD_EVENT:
       return {
         byId: {...state.byId, [action.event.id]: action.event}
       }
-
     case UPDATE_EVENT_ALL:
       return {
         byId: {
