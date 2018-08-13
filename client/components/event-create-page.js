@@ -1,25 +1,21 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import CreateGameForm from './game-forms/CreateGameForm'
-class CreateGamePage extends Component {
-  onSubmit = newEvent => {
-    console.log('newEvent', newEvent)
-  }
+import EventForm from './game-forms/EventForm'
+import {postEvent} from '../store/event'
 
+class EventFormPage extends Component {
+  onSubmit = newEvent => {
+    this.props.submitEvent(newEvent)
+  }
   render() {
     return (
       <div>
-        <h2> Create a Game</h2>
-        <CreateGameForm onSubmit={this.onSubmit} />
+        <EventForm onSubmit={this.onSubmit} />
       </div>
     )
   }
 }
-
-export default CreateGamePage
-
-// const mapDispatchToProps = dispatch => ({
-//   submitGame: dispatch()
-// })
-
-// export default connect(null, mapDispatchToProps)(CreateGamePage)
+const mapDispatchToProps = dispatch => ({
+  submitEvent: newEvent => dispatch(postEvent(newEvent))
+})
+export default connect(null, mapDispatchToProps)(EventFormPage)

@@ -3,7 +3,7 @@ import React from 'react'
 import enzyme, {shallow} from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import sinon, {spy} from 'sinon'
-import {CreateGameForm} from './CreateGameForm'
+import EventForm from './EventForm'
 import history from '../../history'
 const adapter = new Adapter()
 enzyme.configure({adapter})

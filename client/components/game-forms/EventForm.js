@@ -2,7 +2,7 @@ import React from 'react'
 import {Field, reduxForm} from 'redux-form'
 import propTypes from 'prop-types'
 
-let CreateGameForm = props => {
+let EventForm = props => {
   const {handleSubmit, pristine, submitting} = props
   return (
     <form onSubmit={handleSubmit}>
@@ -37,11 +37,11 @@ let CreateGameForm = props => {
   )
 }
 
-CreateGameForm = reduxForm({form: 'createGameForm'})(CreateGameForm)
+EventForm = reduxForm({form: 'eventForm'})(EventForm)
 
-export default CreateGameForm
+export default EventForm
 
-CreateGameForm.propTypes = {
+EventForm.propTypes = {
   description: propTypes.string,
   name: propTypes.string
 }

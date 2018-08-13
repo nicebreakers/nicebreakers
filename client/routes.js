@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, FourOFour} from './components'
 import {me} from './store'
 import PictureSubmission from './components/game-forms/PictureSubmitPage'
-
+import EventFormPage from './components/event-create-page'
 /**
  * COMPONENT
  */
@@ -21,6 +21,7 @@ class Routes extends Component {
       <Switch>
         <Route path="/createProfile" component={PictureSubmission} />
         {/* Routes placed here are available to all visitors */}
+        <Route path="/createEvent" component={EventFormPage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (

@@ -16,10 +16,12 @@ const UPDATE_EVENT_DATE = 'UPDATE_EVENT_DATE'
  * ACTION CREATORS
  */
 const getEvents = events => ({type: GET_EVENTS, events})
+const gotEventById = event => ({type: GET_EVENT_BY_ID, event})
+const gotEventByName = event => ({type: GET_EVENT_BY_NAME, event})
 const addEvent = event => ({type: ADD_EVENT, event})
 //Update all fields on event
 const updateEventAll = event => ({
-  type: UPDATE_EVENT_STATUS,
+  type: UPDATE_EVENT_ALL,
   event
 })
 //Update only an event's status
@@ -44,16 +46,15 @@ export const fetchAllEvents = () => async dispatch => {
   const {data: events} = await axios.get('/api/events')
   dispatch(getEvents(events))
 }
-
 //fetch an event by name
 export const fetchEventByName = eventName => async dispatch => {
   const {data: event} = await axios.get(`/api/events/name/${eventName}`)
-  dispatch(getEvents(event))
+  dispatch(gotEventByName(event))
 }
 //fetch an event by id
-export const fetchByEvents = eventId => async dispatch => {
+export const fetchEventsById = eventId => async dispatch => {
   const {data: event} = await axios.get(`/api/events/${eventId}`)
-  dispatch(getEvents(event))
+  dispatch(gotEventById(event))
 }
 //Put Request for all fields on event
 export const changeEventAllFields = (
@@ -87,7 +88,9 @@ export const changeEventDate = (newDate, eventId) => async dispatch => {
 /**
  * INITIAL STATE
  */
-const defaultEvents = []
+const defaultEvents = {
+  byId: {}
+}
 
 /**
  * REDUCER
@@ -95,25 +98,51 @@ const defaultEvents = []
 export default function(state = defaultEvents, action) {
   switch (action.type) {
     case GET_EVENTS:
-      return action.events
+      return {
+        byId: action.events.reduce((result, event) => {
+          result[event.id] = event
+          return result
+        }, {})
+      }
     case GET_EVENT_BY_ID:
-      return [action.event]
+      return {
+        byId: {
+          [action.event.id]: action.event
+        }
+      }
     case GET_EVENT_BY_NAME:
-      return [action.event]
+      return {
+        byId: {
+          [action.event.id]: action.event
+        }
+      }
+
     case ADD_EVENT:
-      return [...state, action.event]
+      return {
+        byId: {...state.byId, [action.event.id]: action.event}
+      }
+
     case UPDATE_EVENT_ALL:
-      return state.map(event => {
-        return event.id === action.event.id ? action.event : event
-      })
+      return {
+        byId: {
+          ...state.byId,
+          [action.event.id]: action.event
+        }
+      }
     case UPDATE_EVENT_STATUS:
-      return state.map(event => {
-        return event.id === action.event.id ? action.event : event
-      })
+      return {
+        byId: {
+          ...state.byId,
+          [action.event.id]: action.event
+        }
+      }
     case UPDATE_EVENT_DATE:
-      return state.map(event => {
-        return event.id === action.event.id ? action.event : event
-      })
+      return {
+        byId: {
+          ...state.byId,
+          [action.event.id]: action.event
+        }
+      }
     default:
       return state
   }
