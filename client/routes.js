@@ -10,6 +10,7 @@ import {
   FourOFour,
   LandingPage,
   ProtectedRoute,
+  EventControl,
   ProfileForm
 } from './components'
 import {me} from './store'
@@ -43,6 +44,12 @@ class Routes extends Component {
             <ProtectedRoute
               path="/home"
               component={UserHome}
+              condition={isLoggedIn}
+              redirect="/login"
+            />
+            <ProtectedRoute
+              path="/eventControl"
+              component={EventControl}
               condition={isLoggedIn}
               redirect="/login"
             />
