@@ -4,6 +4,7 @@ import propTypes from 'prop-types'
 
 let EventForm = props => {
   const {handleSubmit, pristine, submitting} = props
+
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="eventName">Event Name </label>
@@ -16,6 +17,7 @@ let EventForm = props => {
         placeholder={Date.now()}
       />
       <label htmlFor="location"> Event Location</label>
+
       <Field
         name="location"
         component="input"
@@ -29,6 +31,16 @@ let EventForm = props => {
         type="text"
         placeholder="An Event in Chicago"
       />
+      <label>Event Status</label>
+      <Field
+        name="status"
+        component="select"
+        ref={() => $('select').formSelect()}
+      >
+        <option value="pending">Pending</option>
+        <option value="in_progress">In Progress</option>
+        <option value="done">Done</option>
+      </Field>
       <button type="submit" disabled={pristine || submitting}>
         {' '}
         Create Game{' '}
@@ -37,11 +49,15 @@ let EventForm = props => {
   )
 }
 
-EventForm = reduxForm({form: 'eventForm'})(EventForm)
+EventForm = reduxForm({
+  form: 'eventForm'
+})(EventForm)
 
 export default EventForm
 
 EventForm.propTypes = {
   description: propTypes.string,
-  name: propTypes.string
+  name: propTypes.string,
+  location: propTypes.string
+
 }

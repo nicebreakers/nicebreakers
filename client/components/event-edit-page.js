@@ -1,0 +1,21 @@
+import React from 'react'
+import {connect} from 'react-redux'
+import EventForm from './game-forms/EventForm'
+import {changeEventAllFields} from '../store/event'
+
+export const EditEventFormPage = props => {
+  return (
+    <div>
+      <h1> Edit Event </h1>
+      <EventForm initialValues={props.event} onSubmit={props.onSubmit} />
+    </div>
+  )
+}
+const mapState = (state, {match}) => ({
+  event: state.events.byId[match.params.eventId]
+})
+
+const mapDispatch = dispatch => ({
+  onSubmit: updatedValues => dispatch(changeEventAllFields(updatedValues))
+})
+export default connect(mapState, mapDispatch)(EditEventFormPage)

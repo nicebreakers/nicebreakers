@@ -2,6 +2,10 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
+import {me, fetchAllEvents} from './store'
+import PictureSubmission from './components/game-forms/PictureSubmitPage'
+import EventFormPage from './components/event-create-page'
+import EditEventPage from './components/event-edit-page'
 
 import {
   Login,
@@ -13,9 +17,6 @@ import {
   EventControl,
   ProfileForm
 } from './components'
-import {me} from './store'
-import PictureSubmission from './components/game-forms/PictureSubmitPage'
-import EventFormPage from './components/event-create-page'
 import Controller from './components/controllers/Controller'
 
 /**
@@ -34,7 +35,11 @@ class Routes extends Component {
         <Route exact path="/" component={LandingPage} />
         <Route path="/createProfile" component={PictureSubmission} />
         {/* Routes placed here are available to all visitors */}
-        <Route path="/createEvent" component={EventFormPage} />
+        <Route path="/events/create" component={EventFormPage} />
+        <Route
+          path="/events/:eventId/edit"
+          render={routeProps => <EditEventPage {...routeProps} />}
+        />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
 
@@ -89,6 +94,7 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+      dispatch(fetchAllEvents())
     }
   }
 }

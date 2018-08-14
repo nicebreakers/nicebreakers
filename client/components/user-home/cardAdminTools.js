@@ -8,7 +8,7 @@ const CardAdminTools = ({id, type}) => {
 
   return (
     <div className="card-action right-align">
-      <Link to={`/api/events/${id}/${actionName}`} className="deep-orange-text">
+      <Link to={`/events/${id}/${actionName}`} className="deep-orange-text">
         {actionName}
       </Link>
     </div>

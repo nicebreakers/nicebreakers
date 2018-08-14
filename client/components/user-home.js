@@ -1,55 +1,76 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {PlayerAdd, PlayerList, GameCard, GameActionButton} from '../components'
+import {getEventsByStatus} from '../store/event'
+import {
+  PlayerAdd,
+  PlayerList,
+  EventCard,
+  EventActionButton
+} from '../components'
 
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  const {email} = props
-
-  return (
-    <div className="container">
-      <h5>Welcome, {email}</h5>
-      <div className="divider" />
-      <div className="section">
-        {' '}
-        <h6>Pending Games</h6>{' '}
-      </div>
-      <div className="divider" />
-      <div className="row">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map(card => (
-          <GameCard key={card} type="pending" />
-        ))}
-      </div>
-      <div className="section">
-        {' '}
-        <h6>Completed Games</h6>{' '}
-      </div>
-      <div className="divider" />
-      <div className="row">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map(card => (
-          <GameCard key={card} type="done" />
-        ))}
-      </div>
-      {/* <PlayerAdd />
-      <PlayerList /> */}
-      <GameActionButton />
+export const UserHome = props => (
+  <div className="container">
+    <h5>Welcome, {props.email}</h5>
+    <div className="divider" />
+    <div className="section">
+      {' '}
+      <h6>Pending Events</h6>{' '}
     </div>
-  )
-}
+    <div className="divider" />
+    <div className="row">
+      {props.pendingEvents.map(event => {
+        return (
+          <EventCard
+            key={event.id}
+            id={event.id}
+            details={event.description}
+            title={event.name}
+            type="pending"
+          />
+        )
+      })}
+    </div>
+    <div className="section">
+      {' '}
+      <h6>Completed Events</h6>{' '}
+    </div>
+    <div className="divider" />
+    <div className="row">
+      {props.doneEvents.map(event => (
+        <EventCard
+          key={event.id}
+          details={event.description}
+          title={event.name}
+          type="done"
+        />
+      ))}
+    </div>
+    {/* <PlayerAdd />
+      <PlayerList /> */}
+    <EventActionButton />
+  </div>
+)
 
 /**
  * CONTAINER
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    events: state.events,
+    pendingEvents: getEventsByStatus(state, 'pending'),
+    doneEvents: getEventsByStatus(state, 'done')
   }
 }
+const mapDispatch = dispatch => ({
+  getUsersEvents: () => dispatch(fetchAllEvents())
+})
 
-export default connect(mapState)(UserHome)
+export default connect(mapState, mapDispatch)(UserHome)
 
 /**
  * PROP TYPES
