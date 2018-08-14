@@ -60,7 +60,6 @@ export const logout = () => async dispatch => {
 
 export const updateUser = newValues => async dispatch => {
   try {
-    console.log('GOT', newValues, 'in updateUser')
     let {data} = await axios.put(`/api/users/${newValues.id}`, newValues)
     dispatch(updatedUser(data))
     history.push('/profile?success=true')
