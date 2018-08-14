@@ -5,9 +5,10 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import player from './player'
 import prompt from './prompt'
+import event from './event'
 import {reducer as formReducer} from 'redux-form'
 
-const reducer = combineReducers({user, player, prompt, form: formReducer})
+const reducer = combineReducers({user, event, player, prompt, form: formReducer})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
