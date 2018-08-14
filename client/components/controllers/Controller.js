@@ -37,9 +37,12 @@ class Controller extends Component {
   checkPhase() {
     const phases = ['PreGame', 'Prompt', 'Notes', 'PostNotes', 'GameEnded']
     const expr = phases[this.state.value]
+    const gameEndedMessage = `Thank you for playing`
+    const postNotesPhaseMessage = `Waiting for the next round`
+    const preGameMessage = `Please wait for the event to begin`
     switch (expr) {
       case 'PreGame':
-        return <PreGameMessenger />
+        return <PreGameMessenger preGameMessage={preGameMessage} />
       case 'Prompt':
         return (
           <PromptPhase shape={this.props.shape} prompt={this.randomPrompt()} />
@@ -47,11 +50,11 @@ class Controller extends Component {
       case 'Notes':
         return <NotesPhase />
       case 'PostNotes':
-        return <PostNotesPhase />
+        return <PostNotesPhase postNotesPhaseMessage={postNotesPhaseMessage} />
       case 'GameEnded':
-        return <GameEnded />
+        return <GameEnded gameEndedMessage={gameEndedMessage} />
       default:
-        return <PreGameMessenger />
+        return <PreGameMessenger preGameMessage={preGameMessage} />
     }
   }
 
@@ -60,7 +63,11 @@ class Controller extends Component {
     return (
       <div className="container">
         {whichComponentToRender}
-        <button type="button" onClick={() => this.nextPhase()}>
+        <button
+          className="waves-effect waves-light btn"
+          type="button"
+          onClick={() => this.nextPhase()}
+        >
           Next
         </button>
       </div>
