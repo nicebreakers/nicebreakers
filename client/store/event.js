@@ -36,7 +36,7 @@ const updateEventDate = event => ({
  * THUNK CREATORS
  */
 export const postEvent = event => async dispatch => {
-  const {data: newEvent} = await axios.get('/api/events', event)
+  const {data: newEvent} = await axios.post('/api/events', event)
   dispatch(addEvent(newEvent))
 }
 export const fetchAllEvents = () => async dispatch => {
