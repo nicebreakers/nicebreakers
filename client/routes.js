@@ -2,9 +2,18 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, FourOFour} from './components'
+
+import {
+  Login,
+  Signup,
+  UserHome,
+  FourOFour,
+  LandingPage,
+  ProtectedRoute
+} from './components'
 import {me} from './store'
 import PictureSubmission from './components/game-forms/PictureSubmitPage'
+import EventFormPage from './components/event-create-page'
 import Controller from './components/controllers/Controller'
 
 /**
@@ -20,23 +29,28 @@ class Routes extends Component {
 
     return (
       <Switch>
+        <Route exact path="/" component={LandingPage} />
         <Route path="/createProfile" component={PictureSubmission} />
         {/* Routes placed here are available to all visitors */}
+        <Route path="/createEvent" component={EventFormPage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-            <Route exact path="/home" component={UserHome} />
-            <Route exact path="/" component={UserHome} />
-            <Route path="/game" component={Controller} />
-            {/* <Route path="/createProfile" component={PictureSubmit} */}
-            <Route path="*" component={FourOFour} />
-          </Switch>
-        )}
-        {/* Displays our Login component as a fallback */}
-        {/* <Route path="/" component={Login} /> */}
-        {/* <Route path="*" component={FourOFour} /> */}
+
+        {/* Protected Routes */}
+        <ProtectedRoute
+          path="/home"
+          component={UserHome}
+          condition={isLoggedIn}
+          redirect="/login"
+        />
+        <ProtectedRoute
+          path="/controller"
+          component={Controller}
+          condition={isLoggedIn}
+          redirect="/login"
+        />
+        {isLoggedIn && <Route exact path="/" component={UserHome} />}
+        <Route path="*" component={FourOFour} />
       </Switch>
     )
   }
