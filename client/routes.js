@@ -9,7 +9,8 @@ import {
   UserHome,
   FourOFour,
   LandingPage,
-  ProtectedRoute
+  ProtectedRoute,
+  ProfileForm
 } from './components'
 import {me} from './store'
 import PictureSubmission from './components/game-forms/PictureSubmitPage'
@@ -40,6 +41,12 @@ class Routes extends Component {
         <ProtectedRoute
           path="/home"
           component={UserHome}
+          condition={isLoggedIn}
+          redirect="/login"
+        />
+        <ProtectedRoute
+          path="/profile"
+          component={ProfileForm}
           condition={isLoggedIn}
           redirect="/login"
         />
