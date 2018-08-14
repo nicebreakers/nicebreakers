@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, FourOFour} from './components'
-import {me} from './store'
+import {me, fetchAllEvents} from './store'
 import PictureSubmission from './components/game-forms/PictureSubmitPage'
 import EventFormPage from './components/event-create-page'
 import EditEventPage from './components/event-edit-page'
@@ -66,6 +66,7 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+      dispatch(fetchAllEvents())
     }
   }
 }

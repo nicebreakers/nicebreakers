@@ -26,6 +26,16 @@ let EventForm = props => {
         type="text"
         placeholder="An Event in Chicago"
       />
+      <label>Event Status</label>
+      <Field
+        name="status"
+        component="select"
+        ref={() => $('select').formSelect()}
+      >
+        <option value="pending">Pending</option>
+        <option value="in_progress">In Progress</option>
+        <option value="done">Done</option>
+      </Field>
       <button type="submit" disabled={pristine || submitting}>
         {' '}
         Create Game{' '}
@@ -42,5 +52,6 @@ export default EventForm
 
 EventForm.propTypes = {
   description: propTypes.string,
-  name: propTypes.string
+  name: propTypes.string,
+  location: propTypes.string
 }
