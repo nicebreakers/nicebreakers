@@ -42,7 +42,7 @@ const Navbar = props => (
         <ul className="right hide-on-med-and-down">
           {props.isLoggedIn ? <LoggedInLinks {...props} /> : <LoggedOutLinks />}
         </ul>
-        <ul id="nav-mobile" className="sidenav">
+        <ul id="nav-mobile" className="sidenav" ref={el => $(el).sidenav()}>
           {props.isLoggedIn ? <LoggedInLinks {...props} /> : <LoggedOutLinks />}
         </ul>
         <a href="#" data-target="nav-mobile" className="sidenav-trigger">
