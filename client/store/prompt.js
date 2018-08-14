@@ -44,7 +44,9 @@ export const deletePrompt = promptId => async dispatch => {
 /**
  * INITIAL STATE
  */
-const defaultPrompt = []
+const defaultPrompt = {
+  byId: {}
+}
 
 /**
  * REDUCER
@@ -52,15 +54,20 @@ const defaultPrompt = []
 export default function(state = defaultPrompt, action) {
   switch (action.type) {
     case GET_ALL_PROMPTS:
-      return action.prompts
+      return {
+        byId: action.prompts.reduce((result, prompt) => {
+          return {...result, [result[prompt.id]]: prompt}
+        }, {})
+      }
     case ADD_PROMPT:
-      return [...state, action.prompt]
-    case REMOVE_PROMPT:
-      return state.map(ele => {
-        if (ele.id !== action.promptId) {
-          return ele
-        }
-      })
+      return {
+        byId: {...state.byId, [action.prompt.id]: action.prompt}
+      }
+    case REMOVE_PROMPT: {
+      const ids = state.byId
+      delete ids[action.promptId]
+      return {...ids}
+    }
     default:
       return state
   }
