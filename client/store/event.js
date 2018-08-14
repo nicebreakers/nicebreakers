@@ -130,3 +130,6 @@ export default function(state = defaultEvents, action) {
       return state
   }
 }
+
+export const getEventsByStatus = (allState, status) =>
+  Object.values(allState.events.byId).filter(event => event.status === status)
