@@ -6,6 +6,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const UPDATE_USER = 'UPDATE_USER'
 
 /**
  * INITIAL STATE
@@ -17,6 +18,7 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+const updatedUser = user => ({type: UPDATE_USER, user})
 
 /**
  * THUNK CREATORS
@@ -56,11 +58,24 @@ export const logout = () => async dispatch => {
   }
 }
 
+export const updateUser = newValues => async dispatch => {
+  try {
+    console.log('GOT', newValues, 'in updateUser')
+    let {data} = await axios.put(`/api/users/${newValues.id}`, newValues)
+    dispatch(updatedUser(data))
+    history.push('/profile?success=true')
+  } catch (err) {
+    history.push('/profile?success=false')
+    console.error(err)
+  }
+}
+
 /**
  * REDUCER
  */
 export default function(state = defaultUser, action) {
   switch (action.type) {
+    case UPDATE_USER: // intentional fallthrough
     case GET_USER:
       return action.user
     case REMOVE_USER:

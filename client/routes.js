@@ -10,7 +10,8 @@ import {
   FourOFour,
   LandingPage,
   ProtectedRoute,
-  EventControl
+  EventControl,
+  ProfileForm
 } from './components'
 import {me} from './store'
 import PictureSubmission from './components/game-forms/PictureSubmitPage'
@@ -49,6 +50,12 @@ class Routes extends Component {
             <ProtectedRoute
               path="/eventControl"
               component={EventControl}
+              condition={isLoggedIn}
+              redirect="/login"
+            />
+            <ProtectedRoute
+              path="/profile"
+              component={ProfileForm}
               condition={isLoggedIn}
               redirect="/login"
             />

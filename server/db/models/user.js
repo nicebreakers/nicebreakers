@@ -35,6 +35,11 @@ const User = db.define('User', {
   },
   imageURL: {
     type: Sequelize.STRING
+  },
+  role: {
+    type: Sequelize.ENUM('participant', 'leader', 'admin'),
+    defaultValue: 'participant',
+    allowNull: false
   }
 })
 
