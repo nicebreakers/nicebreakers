@@ -15,8 +15,6 @@ const UPDATE_EVENT_DATE = 'UPDATE_EVENT_DATE'
  * ACTION CREATORS
  */
 const getEvents = events => ({type: GET_EVENTS, events})
-const gotEventById = event => ({type: GET_EVENT, event})
-const gotEventByName = event => ({type: GET_EVENT, event})
 const addEvent = event => ({type: ADD_EVENT, event})
 //Update all fields on event
 const updateEventAll = event => ({

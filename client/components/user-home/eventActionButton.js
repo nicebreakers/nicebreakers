@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-const GameActionButton = props => (
+const EventActionButton = props => (
   // The 'ref' here will pass a reference to this div when it is rendered to
   // the function provided.  So here, it just calls some init code for this
   // button using JQuery.  Fun!
@@ -37,4 +37,4 @@ const GameActionButton = props => (
   </div>
 )
 
-export default GameActionButton
+export default EventActionButton

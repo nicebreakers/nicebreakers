@@ -15,7 +15,7 @@ const style = {
   }
 }
 
-const GameCard = ({type, title, details, id}) => (
+const EventCard = ({type, title, details, id}) => (
   <div className="col s12 m6 l4 xl3">
     <div className={`card hoverable ${style[type].background}`}>
       <Link to="#">
@@ -31,4 +31,4 @@ const GameCard = ({type, title, details, id}) => (
   </div>
 )
 
-export default GameCard
+export default EventCard

@@ -1,43 +1,82 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {PlayerAdd, PlayerList, GameCard, GameActionButton} from '../components'
+import {
+  PlayerAdd,
+  PlayerList,
+  EventCard,
+  EventActionButton
+} from '../components'
+import {fetchAllEvents} from '../store/event'
 
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  const {email} = props
+export class UserHome extends React.Component {
+  constructor(props) {
+    super(props)
+  }
 
-  return (
-    <div className="container">
-      <h5>Welcome, {email}</h5>
-      <div className="divider" />
-      <div className="section">
-        {' '}
-        <h6>Pending Games</h6>{' '}
-      </div>
-      <div className="divider" />
-      <div className="row">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map(card => (
-          <GameCard key={card} type="pending" />
-        ))}
-      </div>
-      <div className="section">
-        {' '}
-        <h6>Completed Games</h6>{' '}
-      </div>
-      <div className="divider" />
-      <div className="row">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map(card => (
-          <GameCard key={card} type="done" />
-        ))}
-      </div>
-      {/* <PlayerAdd />
+  componentDidMount() {
+    this.props.getUsersEvents()
+  }
+
+  render() {
+    const userEvents = Object.values(this.props.events.byId)
+    return userEvents ? (
+      <div className="container">
+        <h5>Welcome, {this.props.email}</h5>
+        <div className="divider" />
+        <div className="section">
+          {' '}
+          <h6>Pending Games</h6>{' '}
+        </div>
+        <div className="divider" />
+        <div className="row">
+          {/* Might Not Be the Best way to do this,
+        filter out the events of the appropriate type, then map over them with JSX components */}
+          {userEvents.filter(event => event.status === 'pending').map(event => {
+            console.log(event)
+            return (
+              <EventCard
+                key={event.id}
+                id={event.id}
+                details={event.description}
+                title={event.name}
+                type="pending"
+              />
+            )
+          })}
+        </div>
+        <div className="section">
+          {' '}
+          <h6>Completed Games</h6>{' '}
+        </div>
+        <div className="divider" />
+        <div className="row">
+          {/* Once again, filter out the events of the appropriate type, then map over them with JSX components
+
+          Other Idea would be to map and return null when failure of condition, but would then have several null values
+          */}
+          {userEvents
+            .filter(event => event.status === 'done')
+            .map(event => (
+              <EventCard
+                key={event.id}
+                details={event.description}
+                title={event.name}
+                type="done"
+              />
+            ))}
+        </div>
+        {/* <PlayerAdd />
       <PlayerList /> */}
-      <GameActionButton />
-    </div>
-  )
+        <EventActionButton />
+      </div>
+    ) : (
+      <h1> Loading </h1>
+    )
+  }
 }
 
 /**
@@ -45,11 +84,15 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    events: state.events
   }
 }
+const mapDispatch = dispatch => ({
+  getUsersEvents: () => dispatch(fetchAllEvents())
+})
 
-export default connect(mapState)(UserHome)
+export default connect(mapState, mapDispatch)(UserHome)
 
 /**
  * PROP TYPES

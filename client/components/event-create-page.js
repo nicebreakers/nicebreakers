@@ -10,6 +10,7 @@ class EventFormPage extends Component {
   render() {
     return (
       <div>
+        <h1> Create Event </h1>
         <EventForm onSubmit={this.onSubmit} />
       </div>
     )

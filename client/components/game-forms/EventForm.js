@@ -4,18 +4,15 @@ import propTypes from 'prop-types'
 
 let EventForm = props => {
   const {handleSubmit, pristine, submitting} = props
+
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="eventName">Event Name </label>
-      <Field name="name" component="input" type="text" placeholder="My Event" />
+      <label htmlFor="eventName"> Event Name </label>
+      <Field name="name" component="input" type="text" placeholder="Event" />
       <label htmlFor="date">Date of Event</label>
-      <Field
-        name="date"
-        component="input"
-        type="date"
-        placeholder={Date.now()}
-      />
+      <Field name="date" component="input" type="date" />
       <label htmlFor="location"> Event Location</label>
+
       <Field
         name="location"
         component="input"
@@ -37,7 +34,9 @@ let EventForm = props => {
   )
 }
 
-EventForm = reduxForm({form: 'eventForm'})(EventForm)
+EventForm = reduxForm({
+  form: 'eventForm'
+})(EventForm)
 
 export default EventForm
 

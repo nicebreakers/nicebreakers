@@ -6,6 +6,7 @@ import {Login, Signup, UserHome, FourOFour} from './components'
 import {me} from './store'
 import PictureSubmission from './components/game-forms/PictureSubmitPage'
 import EventFormPage from './components/event-create-page'
+import EditEventPage from './components/event-edit-page'
 import Controller from './components/controllers/Controller'
 
 /**
@@ -23,9 +24,15 @@ class Routes extends Component {
       <Switch>
         <Route path="/createProfile" component={PictureSubmission} />
         {/* Routes placed here are available to all visitors */}
-        <Route path="/createEvent" component={EventFormPage} />
+        <Route path="/events/create" component={EventFormPage} />
+        <Route
+          path="/events/:eventId/edit"
+          render={routeProps => <EditEventPage {...routeProps} />}
+        />
+
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
