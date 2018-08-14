@@ -16,7 +16,7 @@ const EventActionButton = props => (
     <ul>
       <li>
         <Link
-          to="/games/add"
+          to="/events/create"
           className="btn-floating red"
           alt="new dating game"
         >
@@ -24,12 +24,12 @@ const EventActionButton = props => (
         </Link>
       </li>
       <li>
-        <Link to="/games/add" className="btn-floating yellow darken-1">
+        <Link to="/events/create" className="btn-floating yellow darken-1">
           <i className="material-icons">business_center</i>
         </Link>
       </li>
       <li>
-        <Link to="/games/add" className="btn-floating green">
+        <Link to="/events/create" className="btn-floating green">
           <i className="material-icons">group</i>
         </Link>
       </li>
