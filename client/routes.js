@@ -14,7 +14,9 @@ import {
   UserHome,
   FourOFour,
   LandingPage,
-  ProtectedRoute
+  ProtectedRoute,
+  EventControl,
+  ProfileForm
 } from './components'
 import Controller from './components/controllers/Controller'
 
@@ -28,7 +30,7 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
-
+    console.log('I am logged in', isLoggedIn)
     return (
       <Switch>
         <Route exact path="/" component={LandingPage} />
@@ -43,18 +45,34 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
 
         {/* Protected Routes */}
-        <ProtectedRoute
-          path="/home"
-          component={UserHome}
-          condition={isLoggedIn}
-          redirect="/login"
-        />
-        <ProtectedRoute
-          path="/controller"
-          component={Controller}
-          condition={isLoggedIn}
-          redirect="/login"
-        />
+        {isLoggedIn && (
+          <Switch>
+            <ProtectedRoute
+              path="/home"
+              component={UserHome}
+              condition={isLoggedIn}
+              redirect="/login"
+            />
+            <ProtectedRoute
+              path="/eventControl"
+              component={EventControl}
+              condition={isLoggedIn}
+              redirect="/login"
+            />
+            <ProtectedRoute
+              path="/profile"
+              component={ProfileForm}
+              condition={isLoggedIn}
+              redirect="/login"
+            />
+            <ProtectedRoute
+              path="/controller"
+              component={Controller}
+              condition={isLoggedIn}
+              redirect="/login"
+            />
+          </Switch>
+        )}
         {isLoggedIn && <Route exact path="/" component={UserHome} />}
         <Route path="*" component={FourOFour} />
       </Switch>

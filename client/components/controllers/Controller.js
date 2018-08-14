@@ -5,6 +5,7 @@ import PostNotesPhase from './PostNotesPhase'
 import NotesPhase from './NotesPhase'
 import PromptPhase from './PromptPhase'
 import {connect} from 'react-redux'
+import {fetchAllPrompts} from '../../store'
 
 class Controller extends Component {
   state = {
@@ -24,24 +25,37 @@ class Controller extends Component {
     })
   }
 
+  randomPrompt = () => {
+    const promptLength = this.props.prompt.length
+    if (promptLength > 0) {
+      const randNum = Math.floor(Math.random() * promptLength)
+      return this.props.prompt[randNum].question
+    }
+    return 'No question'
+  }
+
   checkPhase() {
+    console.log(this.props.prompt)
     const phases = ['PreGame', 'Prompt', 'Notes', 'PostNotes', 'GameEnded']
     const expr = phases[this.state.value]
+    const gameEndedMessage = `Thank you for playing`
+    const postNotesPhaseMessage = `Waiting for the next round`
+    const preGameMessage = `Please wait for the event to begin`
     switch (expr) {
       case 'PreGame':
-        return <PreGameMessenger />
+        return <PreGameMessenger preGameMessage={preGameMessage} />
       case 'Prompt':
         return (
-          <PromptPhase shape={this.props.shape} prompt={this.props.prompt} />
+          <PromptPhase shape={this.props.shape} prompt={this.randomPrompt()} />
         )
       case 'Notes':
         return <NotesPhase />
       case 'PostNotes':
-        return <PostNotesPhase />
+        return <PostNotesPhase postNotesPhaseMessage={postNotesPhaseMessage} />
       case 'GameEnded':
-        return <GameEnded />
+        return <GameEnded gameEndedMessage={gameEndedMessage} />
       default:
-        return <PreGameMessenger />
+        return <PreGameMessenger preGameMessage={preGameMessage} />
     }
   }
 
@@ -50,7 +64,11 @@ class Controller extends Component {
     return (
       <div className="container">
         {whichComponentToRender}
-        <button type="button" onClick={() => this.nextPhase()}>
+        <button
+          className="waves-effect waves-light btn"
+          type="button"
+          onClick={() => this.nextPhase()}
+        >
           Next
         </button>
       </div>
@@ -61,12 +79,14 @@ class Controller extends Component {
 const mapStateToProps = state => {
   return {
     shape: '/dumbpics/circle.png',
-    prompt: 'This is the prompt'
+    prompt: Object.values(state.prompt.byId)
   }
 }
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    getAllPrompts: dispatch(fetchAllPrompts())
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controller)

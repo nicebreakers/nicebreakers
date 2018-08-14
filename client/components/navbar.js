@@ -12,6 +12,9 @@ const LoggedInLinks = props => (
       <Link to="/home">Home</Link>
     </li>
     <li>
+      <Link to="/profile">Profile</Link>
+    </li>
+    <li>
       <a href="#" onClick={props.handleClick}>
         Logout
       </a>
