@@ -6,7 +6,6 @@ import {me, fetchAllEvents} from './store'
 import PictureSubmission from './components/game-forms/PictureSubmitPage'
 import EventFormPage from './components/event-create-page'
 import EditEventPage from './components/event-edit-page'
-=======
 
 import {
   Login,
