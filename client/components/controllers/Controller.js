@@ -35,6 +35,7 @@ class Controller extends Component {
   }
 
   checkPhase() {
+    console.log(this.props.prompt)
     const phases = ['PreGame', 'Prompt', 'Notes', 'PostNotes', 'GameEnded']
     const expr = phases[this.state.value]
     const gameEndedMessage = `Thank you for playing`
@@ -78,7 +79,7 @@ class Controller extends Component {
 const mapStateToProps = state => {
   return {
     shape: '/dumbpics/circle.png',
-    prompt: state.prompt
+    prompt: Object.values(state.prompt.byId)
   }
 }
 

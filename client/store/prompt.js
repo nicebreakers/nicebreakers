@@ -56,7 +56,7 @@ export default function(state = defaultPrompt, action) {
     case GET_ALL_PROMPTS:
       return {
         byId: action.prompts.reduce((result, prompt) => {
-          return {...result, [result[prompt.id]]: prompt}
+          return {...result, [prompt.id]: prompt}
         }, {})
       }
     case ADD_PROMPT:
