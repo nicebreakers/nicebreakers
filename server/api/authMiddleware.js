@@ -1,17 +1,14 @@
-const isAdmin = (req, res, next) => {
-  if (req.user /*&& INSERT HOW WE STORE ROLES HERE*/) next()
+const canOnlyBeUsedBy = (...roles) => (req, res, next) => {
+  console.log(`Auth requested for route restricted to ${roles}`)
+  if (req.user && roles.includes('self') && +req.params.userId === req.user.id)
+    next()
+  else if (req.user && roles.includes(req.user.role)) next()
   else {
-    console.log('AUTH-MIDDLEWARE: Request failed @ isAdmin')
+    console.log(
+      `Auth Middleware: User ${req.user} does not have permissions for ${roles}`
+    )
     res.sendStatus(404)
   }
 }
 
-const isAuthenticated = (req, res, next) => {
-  if (req.user) next()
-  else {
-    console.log('AUTH-MIDDLEWARE: Request failed @ isAuthenticated')
-    res.sendStatus(404)
-  }
-}
-
-module.exports = {isAdmin, isAuthenticated}
+module.exports = canOnlyBeUsedBy
