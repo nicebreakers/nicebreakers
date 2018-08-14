@@ -4,7 +4,7 @@ const db = require('../db')
 const app = require('../index')
 const Event = db.model('Event')
 
-describe.only('Event routes', () => {
+describe('Event routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
