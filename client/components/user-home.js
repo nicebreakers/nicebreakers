@@ -8,73 +8,52 @@ import {
   EventCard,
   EventActionButton
 } from '../components'
-import {fetchAllEvents} from '../store/event'
 
 /**
  * COMPONENT
  */
-export class UserHome extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  componentDidMount() {
-    this.props.getUsersEvents()
-  }
-
-  render() {
-    const userEvents = Object.values(this.props.events.byId)
-    return userEvents ? (
-      <div className="container">
-        <h5>Welcome, {this.props.email}</h5>
-        <div className="divider" />
-        <div className="section">
-          {' '}
-          <h6>Pending Events</h6>{' '}
-        </div>
-        <div className="divider" />
-        <div className="row">
-          {this.props.pendingEvents.map(event => {
-            console.log(event)
-            return (
-              <EventCard
-                key={event.id}
-                id={event.id}
-                details={event.description}
-                title={event.name}
-                type="pending"
-              />
-            )
-          })}
-        </div>
-        <div className="section">
-          {' '}
-          <h6>Completed Events</h6>{' '}
-        </div>
-        <div className="divider" />
-        <div className="row">
-          {/* Once again, filter out the events of the appropriate type, then map over them with JSX components
-
-          Other Idea would be to map and return null when failure of condition, but would then have several null values
-          */}
-          {this.props.doneEvents.map(event => (
-            <EventCard
-              key={event.id}
-              details={event.description}
-              title={event.name}
-              type="done"
-            />
-          ))}
-        </div>
-        {/* <PlayerAdd />
+export const UserHome = props => (
+  <div className="container">
+    <h5>Welcome, {props.email}</h5>
+    <div className="divider" />
+    <div className="section">
+      {' '}
+      <h6>Pending Events</h6>{' '}
+    </div>
+    <div className="divider" />
+    <div className="row">
+      {props.pendingEvents.map(event => {
+        return (
+          <EventCard
+            key={event.id}
+            id={event.id}
+            details={event.description}
+            title={event.name}
+            type="pending"
+          />
+        )
+      })}
+    </div>
+    <div className="section">
+      {' '}
+      <h6>Completed Events</h6>{' '}
+    </div>
+    <div className="divider" />
+    <div className="row">
+      {props.doneEvents.map(event => (
+        <EventCard
+          key={event.id}
+          details={event.description}
+          title={event.name}
+          type="done"
+        />
+      ))}
+    </div>
+    {/* <PlayerAdd />
       <PlayerList /> */}
-        <EventActionButton />
-      </div>
-    ) : (
-      <h1> Loading </h1>
-    )
-  }
-}
+    <EventActionButton />
+  </div>
+)
 
 /**
  * CONTAINER

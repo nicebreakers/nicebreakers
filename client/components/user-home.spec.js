@@ -13,7 +13,9 @@ describe('UserHome', () => {
   let userHome
 
   beforeEach(() => {
-    userHome = shallow(<UserHome email="cody@email.com" />)
+    userHome = shallow(
+      <UserHome email="cody@email.com" pendingEvents={[]} doneEvents={[]} />
+    )
   })
 
   it('renders the email in an h5', () => {
