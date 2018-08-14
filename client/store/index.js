@@ -7,7 +7,9 @@ import player from './player'
 import events from './event'
 import {reducer as formReducer} from 'redux-form'
 
-const reducer = combineReducers({user, events, player, form: formReducer})
+import prompt from './prompt'
+
+const reducer = combineReducers({user, event, player, prompt, form: formReducer})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
@@ -17,3 +19,4 @@ export default store
 export * from './user'
 export * from './player'
 export * from './event'
+export * from './prompt'

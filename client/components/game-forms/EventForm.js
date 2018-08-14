@@ -7,10 +7,15 @@ let EventForm = props => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="eventName"> Event Name </label>
-      <Field name="name" component="input" type="text" placeholder="Event" />
+      <label htmlFor="eventName">Event Name </label>
+      <Field name="name" component="input" type="text" placeholder="My Event" />
       <label htmlFor="date">Date of Event</label>
-      <Field name="date" component="input" type="date" />
+      <Field
+        name="date"
+        component="input"
+        type="date"
+        placeholder={Date.now()}
+      />
       <label htmlFor="location"> Event Location</label>
 
       <Field
@@ -54,4 +59,5 @@ EventForm.propTypes = {
   description: propTypes.string,
   name: propTypes.string,
   location: propTypes.string
+
 }
