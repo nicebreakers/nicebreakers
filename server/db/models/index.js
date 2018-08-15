@@ -13,8 +13,7 @@ User.belongsToMany(User, {
   through: Interaction,
   as: 'Pair',
   foreignKey: 'aId',
-  otherKey: 'bId',
-  constraints: false
+  otherKey: 'bId'
 })
 
 Interaction.belongsTo(Event, {foreignKey: 'eventId'})
