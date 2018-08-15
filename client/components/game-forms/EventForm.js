@@ -43,7 +43,7 @@ let EventForm = props => {
       </Field>
       <button type="submit" disabled={pristine || submitting}>
         {' '}
-        Create Game{' '}
+        {props.formAction} This Event{' '}
       </button>
     </form>
   )
@@ -59,5 +59,4 @@ EventForm.propTypes = {
   description: propTypes.string,
   name: propTypes.string,
   location: propTypes.string
-
 }

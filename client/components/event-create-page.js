@@ -7,7 +7,7 @@ import {postEvent} from '../store/event'
 export const EventFormPage = props => (
   <div>
     <h1> Create Event </h1>
-    <EventForm onSubmit={props.onSubmit} />
+    <EventForm formAction="Create" onSubmit={props.onSubmit} />
   </div>
 )
 const mapDispatchToProps = dispatch => ({
