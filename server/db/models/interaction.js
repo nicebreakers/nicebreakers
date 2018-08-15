@@ -26,6 +26,9 @@ const Interaction = db.define('Interaction', {
   },
   bScore: {
     type: Sequelize.INTEGER
+  },
+  round: {
+    type: Sequelize.INTEGER
   }
 })
 

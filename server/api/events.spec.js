@@ -3,8 +3,10 @@ const request = require('supertest')
 const db = require('../db')
 const app = require('../index')
 const Event = db.model('Event')
+const User = db.model('User')
+const Interaction = db.model('Interaction')
 
-describe('Event routes', () => {
+describe.only('Event routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
@@ -86,29 +88,74 @@ describe('Event routes', () => {
           expect(res.body.date).to.be.equal('2018-02-01T00:00:00.000Z')
         })
     })
+    // describe('Interaction Sort and Create', () => {
+    //   beforeEach(async () => {
+    //     const event1 = await Event.create({
+    //       name: 'Event 1',
+    //       status: 'pending',
+    //       description: 'Ipsum Lorae'
+    //     })
+    //     const user1 = await User.create({
+    //       name: 'User 1',
+    //       email: 'john@email.com',
+    //       role: 'participant'
+    //     })
+    //     const user2 = await User.create({
+    //       name: 'User 2',
+    //       email: 'john@email.com',
+    //       role: 'participant'
+    //     })
+    //     const user3 = await User.create({
+    //       name: 'User 3',
+    //       email: 'john@email.com',
+    //       role: 'participant'
+    //     })
+    //     const user4 = await User.create({
+    //       name: 'User 4',
+    //       email: 'john@email.com',
+    //       role: 'participant'
+    //     })
+
+    //     event1.addUser(user1)
+    //     event1.addUser(user2)
+    //     event1.addUser(user3)
+    //     event1.addUser(user4)
+    //   })
+    //   it('Has users', async () => {
+    //     const users = await User.findAll()
+    //     console.log(users)
+    //     const events = await Event.findAll()
+    //     console.log(event)
+
+    //     return await request(app)
+    //       .post('/api/events/1/interactions')
+    //       .send({tes: 'tes'})
+    //       .expect(res => expect(res.body).to.be.an('array'))
+    //   })
   })
-  //TODO: Disabled Test: Must Figure out how to account to req.user
-
-  // describe('POST Routes', () => {
-  //   it('POST /api/events', () => {
-  //     return request(app)
-  //       .post('/api/events')
-  //       .send({name: 'CreatedEvent', status: 'in_progress'})
-  //       .expect(res => {
-  //         expect(res.body.name).to.be.equal('CreatedEvent')
-  //         expect(res.body.status).to.be.equal('in_progress')
-  //       })
-  //   })
-  //TODO:This will test that that instance was successfully created in DB.
-  //PAUSED: Unneccesary Blocker
-
-  // it('A post will create correct instance in the DB')
-  // const res = request(app)
-  //   .post('/api/events')
-  //   .send({name: 'CreatedEvent', status: 'in_progress'})
-  // Event.findById(1).then(event => {
-  //   expect(event.name).to.be.equal('CreatedEvent')
-  //   expect(event.status).to.be.equal('in_progress')
-  // })
-  // })
 })
+
+//TODO: Disabled Test: Must Figure out how to account to req.user
+
+// describe('POST Routes', () => {
+//   it('POST /api/events', () => {
+//     return request(app)
+//       .post('/api/events')
+//       .send({name: 'CreatedEvent', status: 'in_progress'})
+//       .expect(res => {
+//         expect(res.body.name).to.be.equal('CreatedEvent')
+//         expect(res.body.status).to.be.equal('in_progress')
+//       })
+//   })
+//TODO:This will test that that instance was successfully created in DB.
+//PAUSED: Unneccesary Blocker
+
+// it('A post will create correct instance in the DB')
+// const res = request(app)
+//   .post('/api/events')
+//   .send({name: 'CreatedEvent', status: 'in_progress'})
+// Event.findById(1).then(event => {
+//   expect(event.name).to.be.equal('CreatedEvent')
+//   expect(event.status).to.be.equal('in_progress')
+// })
+// })

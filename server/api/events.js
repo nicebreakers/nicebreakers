@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Event, User} = require('../db/models')
+const {Event, User, Interaction} = require('../db/models')
 const canOnlyBeUsedBy = require('./authMiddleware')
 module.exports = router
 
@@ -32,13 +32,17 @@ router.get('/name/:eventName', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const events = await Event.findAll(
-      {
-        include: [User]
-      },
-      {where: {id: req.user.id}}
-    )
-    res.send(events)
+    if (req.user) {
+      const events = await Event.findAll(
+        {
+          include: [User]
+        },
+        {where: {id: req.user.id}}
+      )
+      res.send(events)
+    } else {
+      res.send('Cannot grant access to events')
+    }
   } catch (err) {
     next(err)
   }
@@ -105,6 +109,69 @@ router.post('/', async (req, res, next) => {
     const currentUser = await User.findById(req.user.id)
     newEvent.addUser(currentUser)
     res.send(newEvent)
+  } catch (err) {
+    next(err)
+  }
+})
+
+/*
+      * Event Init - Creates interactions for each player, joins pairs and adds a round number
+      */
+router.get('/:eventId/interactions', async (req, res, next) => {
+  try {
+    /*
+            Find the target event and eager load Users
+          */
+    const eventInfo = await Event.findById(req.params.eventId, {
+      include: [{model: User}]
+    })
+    /*
+            Extract Users
+          */
+    const users = eventInfo.Users
+    /*
+           Formulate Pairs
+        */
+    let interactions = []
+    let pairs = []
+
+    for (let i = 0; i < users.length; i++) {
+      for (let j = 1; j < users.length - i; j++) {
+        //For each User, create a pair with all of the following users in the the array
+        let entry = [users[i], users[i + j]]
+        pairs.push(entry)
+      }
+    }
+
+    /*
+        Group into Rounds and Create Interaction Instances
+    */
+    for (let roundNum = 0; roundNum < pairs.length / 2; roundNum++) {
+      /*
+        For each round, take a pair from the start of the pairs array and a pair from the end of the pairs array
+        Create the instance with round number
+      */
+      const interactionFromStart = await Interaction.create({
+        aInput: 'enter input here',
+        bInput: 'enter input here',
+        round: roundNum + 1,
+        aId: pairs[roundNum][0].id,
+        bId: pairs[roundNum][1].id,
+        eventId: eventInfo.id,
+        promptId: roundNum + 1
+      })
+      const interactionFromEnd = await Interaction.create({
+        aInput: 'enter input here',
+        bInput: 'enter input here',
+        round: roundNum + 1,
+        aId: pairs[pairs.length - (1 + roundNum)][0].id,
+        bId: pairs[pairs.length - (1 + roundNum)][1].id,
+        eventId: eventInfo.id,
+        promptId: roundNum + 1
+      })
+      interactions.push(interactionFromStart)
+    }
+    res.send({interactions, eventInfo})
   } catch (err) {
     next(err)
   }
