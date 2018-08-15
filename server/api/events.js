@@ -1,8 +1,9 @@
 const router = require('express').Router()
 const {Event, User} = require('../db/models')
+const canOnlyBeUsedBy = require('./authMiddleware')
 module.exports = router
 
-router.get('/all', async (req, res, next) => {
+router.get('/all', canOnlyBeUsedBy('admin'), async (req, res, next) => {
   try {
     const events = await Event.findAll({})
     res.send(events)
@@ -10,6 +11,7 @@ router.get('/all', async (req, res, next) => {
     next(err)
   }
 })
+
 router.get('/:eventId', async (req, res, next) => {
   try {
     const events = await Event.findById(req.params.eventId)
@@ -30,9 +32,12 @@ router.get('/name/:eventName', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const events = await Event.findAll({
-      include: [{model: User, where: {id: req.user.id}}]
-    })
+    const events = await Event.findAll(
+      {
+        include: [User]
+      },
+      {where: {id: req.user.id}}
+    )
     res.send(events)
   } catch (err) {
     next(err)

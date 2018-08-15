@@ -41,7 +41,11 @@ let EventForm = props => {
         <option value="in_progress">In Progress</option>
         <option value="done">Done</option>
       </Field>
-      <button type="submit" disabled={pristine || submitting}>
+      <button
+        className="btn waves waves-light"
+        type="submit"
+        disabled={pristine || submitting}
+      >
         {' '}
         Create Game{' '}
       </button>
@@ -59,5 +63,4 @@ EventForm.propTypes = {
   description: propTypes.string,
   name: propTypes.string,
   location: propTypes.string
-
 }
