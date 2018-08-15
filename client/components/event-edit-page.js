@@ -7,7 +7,11 @@ export const EditEventFormPage = props => {
   return (
     <div>
       <h1> Edit Event </h1>
-      <EventForm initialValues={props.event} onSubmit={props.onSubmit} />
+      <EventForm
+        formAction="Edit"
+        initialValues={props.event}
+        onSubmit={props.onSubmit}
+      />
     </div>
   )
 }
@@ -15,7 +19,8 @@ const mapState = (state, {match}) => ({
   event: state.events.byId[match.params.eventId]
 })
 
-const mapDispatch = dispatch => ({
-  onSubmit: updatedValues => dispatch(changeEventAllFields(updatedValues))
+const mapDispatch = (dispatch, {match}) => ({
+  onSubmit: updatedValues =>
+    dispatch(changeEventAllFields(updatedValues, match.params.eventId))
 })
 export default connect(mapState, mapDispatch)(EditEventFormPage)
