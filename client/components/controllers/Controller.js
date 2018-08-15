@@ -7,13 +7,27 @@ import PromptPhase from './PromptPhase'
 import {connect} from 'react-redux'
 import {fetchAllPrompts} from '../../store'
 
+import socket from '../../socket'
+import {
+  REQUEST_NEXT_ROUND,
+  START_EVENT,
+  ROOM,
+  EVENT_PREFIX
+} from '../../../server/socket/events'
+
 class Controller extends Component {
   state = {
     value: 0
   }
 
   componentDidMount() {
-    //retrieve picture and url from db or from the public folder
+    // Oh hey, this component is only rendered when we want to join
+    // an event.  So let's ask the server for a room for that
+    const {eventId} = this.props.match.params
+    if (eventId) {
+      socket.emit(ROOM, {room: EVENT_PREFIX + eventId})
+      console.log(`Emitted ${ROOM} for event ${eventId}`)
+    }
   }
 
   //temporary (goes through the components until we have sockets in place)
@@ -36,12 +50,12 @@ class Controller extends Component {
 
   checkPhase() {
     console.log(this.props.prompt)
-    const phases = ['PreGame', 'Prompt', 'Notes', 'PostNotes', 'GameEnded']
-    const expr = phases[this.state.value]
+    // const phases = ['PreGame', 'Prompt', 'Notes', 'PostNotes', 'GameEnded']
+    // const expr = phases[this.state.value]
     const gameEndedMessage = `Thank you for playing`
     const postNotesPhaseMessage = `Waiting for the next round`
     const preGameMessage = `Please wait for the event to begin`
-    switch (expr) {
+    switch (this.props.phase) {
       case 'PreGame':
         return <PreGameMessenger preGameMessage={preGameMessage} />
       case 'Prompt':
