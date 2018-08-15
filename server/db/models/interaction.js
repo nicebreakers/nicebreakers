@@ -8,8 +8,7 @@ const Interaction = db.define('Interaction', {
     autoIncrement: true
   },
   aInput: {
-    type: Sequelize.TEXT,
-    allowNull: false
+    type: Sequelize.TEXT
   },
   aInputMsec: {
     type: Sequelize.INTEGER
@@ -18,13 +17,15 @@ const Interaction = db.define('Interaction', {
     type: Sequelize.INTEGER
   },
   bInput: {
-    type: Sequelize.TEXT,
-    allowNull: false
+    type: Sequelize.TEXT
   },
   bInputMsec: {
     type: Sequelize.INTEGER
   },
   bScore: {
+    type: Sequelize.INTEGER
+  },
+  round: {
     type: Sequelize.INTEGER
   }
 })
