@@ -18,7 +18,7 @@ const style = {
 const EventCard = ({type, title, details, id}) => (
   <div className="col s12 m6 l4 xl3">
     <div className={`card hoverable ${style[type].background}`}>
-      <Link to="#">
+      <Link to={`/events/${id}/controller`}>
         <div className={`card-content ${style[type].contentText}`}>
           <span className={`card-title ${style[type].titleText}`}>
             {title ? title : 'Placeholder title'}
