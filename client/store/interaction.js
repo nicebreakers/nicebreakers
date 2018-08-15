@@ -101,7 +101,7 @@ const defaultInteractions = {
 
 export const getRoundInteraction = (eventId, round) => dispatch => {
   axios
-    .get(`api/events/${eventId}/round/${round}`)
+    .get(`/api/events/${eventId}/round/${round}`)
     .then(({data}) => dispatch(gotNextInteraction(data)))
     .catch(error => console.error(error))
 }
