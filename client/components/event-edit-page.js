@@ -7,7 +7,11 @@ export const EditEventFormPage = props => {
   return (
     <div>
       <h1> Edit Event </h1>
-      <EventForm initialValues={props.event} onSubmit={props.onSubmit} />
+      <EventForm
+        formAction="Edit"
+        initialValues={props.event}
+        onSubmit={props.onSubmit}
+      />
     </div>
   )
 }

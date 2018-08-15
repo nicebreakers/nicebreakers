@@ -47,7 +47,7 @@ let EventForm = props => {
         disabled={pristine || submitting}
       >
         {' '}
-        Create Game{' '}
+        {props.formAction} This Event{' '}
       </button>
     </form>
   )
