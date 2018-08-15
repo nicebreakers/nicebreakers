@@ -5,7 +5,6 @@ import history from '../history'
  * ACTION TYPES
  */
 const GET_EVENTS = 'GET_EVENTS'
-const GET_EVENT = 'GET_EVENT'
 
 const ADD_EVENT = 'ADD_EVENT'
 const UPDATE_EVENT_ALL = 'UPDATE_EVENT_ALL'
@@ -54,12 +53,9 @@ export const fetchAllEvents = () => async dispatch => {
   }
 }
 //Put Request for all fields on event
-export const changeEventAllFields = (
-  eventSubmission,
-  eventId
-) => async dispatch => {
+export const changeEventAllFields = eventSubmission => async dispatch => {
   const {data: updatedEvent} = await axios.put(
-    `/api/events/${eventId}`,
+    `/api/events/${eventSubmission}`,
     eventSubmission
   )
   dispatch(updateEventAll(updatedEvent))
