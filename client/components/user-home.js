@@ -1,60 +1,62 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {getEventsByStatus} from '../store/event'
-import {
-  PlayerAdd,
-  PlayerList,
-  EventCard,
-  EventActionButton
-} from '../components'
+import {getEventsByStatus, fetchAllEvents} from '../store/event'
+import {EventCard, EventActionButton} from '../components'
 
 /**
  * COMPONENT
  */
-export const UserHome = props => (
-  <div className="container">
-    <h5>Welcome, {props.email}</h5>
-    <div className="divider" />
-    <div className="section">
-      {' '}
-      <h6>Pending Events</h6>{' '}
-    </div>
-    <div className="divider" />
-    <div className="row">
-      {props.pendingEvents.map(event => {
-        return (
-          <EventCard
-            key={event.id}
-            id={event.id}
-            details={event.description}
-            title={event.name}
-            type="pending"
-          />
-        )
-      })}
-    </div>
-    <div className="section">
-      {' '}
-      <h6>Completed Events</h6>{' '}
-    </div>
-    <div className="divider" />
-    <div className="row">
-      {props.doneEvents.map(event => (
-        <EventCard
-          key={event.id}
-          details={event.description}
-          title={event.name}
-          type="done"
-        />
-      ))}
-    </div>
-    {/* <PlayerAdd />
+class UserHome extends React.Component {
+  componentDidMount() {
+    this.props.getUsersEvents()
+  }
+  render() {
+    const props = this.props
+    return (
+      <div className="container">
+        <h5>Welcome, {props.email}</h5>
+        <div className="divider" />
+        <div className="section">
+          {' '}
+          <h6>Pending Events</h6>{' '}
+        </div>
+        <div className="divider" />
+        <div className="row">
+          {props.pendingEvents.map(event => {
+            return (
+              <EventCard
+                key={event.id}
+                id={event.id}
+                details={event.description}
+                title={event.name}
+                type="pending"
+              />
+            )
+          })}
+        </div>
+        <div className="section">
+          {' '}
+          <h6>Completed Events</h6>{' '}
+        </div>
+        <div className="divider" />
+        <div className="row">
+          {props.doneEvents.map(event => (
+            <EventCard
+              key={event.id}
+              details={event.description}
+              title={event.name}
+              type="done"
+            />
+          ))}
+        </div>
+        {/* <PlayerAdd />
       <PlayerList /> */}
-    <EventActionButton />
-  </div>
-)
-
+        <EventActionButton />
+      </div>
+    )
+  }
+}
 /**
  * CONTAINER
  */
