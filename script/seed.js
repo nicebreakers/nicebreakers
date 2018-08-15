@@ -2,61 +2,37 @@
 
 const db = require('../server/db')
 const {User, Event, Prompt} = require('../server/db/models')
+const userData = require('./users.json')
+const eventData = require('./events.json')
+const promptData = require('./prompts.json')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const users = await Promise.all([
-    User.create({email: 'testAdmin@email.com', password: '123', role: 'admin'}),
-    User.create({
-      email: 'testLeader@email.com',
-      password: '456',
-      role: 'leader'
-    }),
-    User.create({
-      email: 'testUser1@email.com',
-      password: '789',
-      role: 'participant'
-    }),
-    User.create({
-      email: 'testUser2@email.com',
-      password: '789',
-      role: 'participant'
-    }),
-    User.create({
-      email: 'testUser3@email.com',
-      password: '789',
-      role: 'participant'
-    }),
-    User.create({
-      email: 'testUser4@email.com',
-      password: '789',
-      role: 'participant'
-    }),
-    User.create({
-      email: 'testUser5@email.com',
-      password: '789',
-      role: 'participant'
-    }),
-    User.create({
-      email: 'testUser6@email.com',
-      password: '789',
-      role: 'participant'
-    }),
-    User.create({
-      email: 'testUser7@email.com',
-      password: '789',
-      role: 'participant'
-    })
-  ])
-  console.log(`seeded ${users.length} users`)
+  const users = await Promise.all(userData.map(user => User.create(user)))
+  console.log(`seeded ${userData.length} users`)
 
-  const prompts = await Promise.all([
-    Prompt.create({question: 'What is your name?'}),
-    Prompt.create({question: 'What is your favorite color?'})
-  ])
-  console.log(`seeded ${prompts.length} prompts`)
+  const events = await Promise.all(eventData.map(event => Event.create(event)))
+  console.log(`seeded ${eventData.length} events`)
+
+  const prompts = await Promise.all(
+    promptData.map(prompt => Prompt.create(prompt))
+  )
+  console.log(`seeded ${promptData.length} prompts`)
+
+  const user1 = await User.findById(3)
+  const user2 = await User.findById(4)
+  const user3 = await User.findById(5)
+  const user4 = await User.findById(6)
+
+  const event1 = await Event.findById(1)
+
+  await user1.setEvents(event1)
+  await user2.setEvents(event1)
+  await user3.setEvents(event1)
+  await user4.setEvents(event1)
+
   console.log(`seeded successfully`)
 }
 
