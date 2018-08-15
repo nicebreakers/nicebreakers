@@ -1,0 +1,51 @@
+[
+  {"email": "testAdmin@email.com", "password": "123", "role": "admin", "id": 1},
+  {
+    "email": "testLeader@email.com",
+    "password": "456",
+    "role": "leader",
+    "id": 2
+  },
+  {
+    "email": "testUser1@email.com",
+    "password": "789",
+    "role": "participant",
+    "id": 3
+  },
+  {
+    "email": "testUser2@email.com",
+    "password": "789",
+    "role": "participant",
+    "id": 4
+  },
+  {
+    "email": "testUser3@email.com",
+    "password": "789",
+    "role": "participant",
+    "id": 5
+  },
+  {
+    "email": "testUser4@email.com",
+    "password": "789",
+    "role": "participant",
+    "id": 6
+  },
+  {
+    "email": "testUser5@email.com",
+    "password": "789",
+    "role": "participant",
+    "id": 7
+  },
+  {
+    "email": "testUser6@email.com",
+    "password": "789",
+    "role": "participant",
+    "id": 8
+  },
+  {
+    "email": "testUser7@email.com",
+    "password": "789",
+    "role": "participant",
+    "id": 9
+  }
+]
