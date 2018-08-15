@@ -32,6 +32,7 @@ router.get('/name/:eventName', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
+    canOnlyBeUsedBy('admin', 'participant', 'self')
     if (req.user) {
       const events = await Event.findAll(
         {
@@ -117,8 +118,9 @@ router.post('/', async (req, res, next) => {
 /*
       * Event Init - Creates interactions for each player, joins pairs and adds a round number
       */
-router.get('/:eventId/interactions', async (req, res, next) => {
+router.post('/:eventId/interactions', async (req, res, next) => {
   try {
+    canOnlyBeUsedBy('admin', 'self')
     /*
             Find the target event and eager load Users
           */
@@ -152,8 +154,6 @@ router.get('/:eventId/interactions', async (req, res, next) => {
         Create the instance with round number
       */
       const interactionFromStart = await Interaction.create({
-        aInput: 'enter input here',
-        bInput: 'enter input here',
         round: roundNum + 1,
         aId: pairs[roundNum][0].id,
         bId: pairs[roundNum][1].id,
@@ -161,17 +161,15 @@ router.get('/:eventId/interactions', async (req, res, next) => {
         promptId: roundNum + 1
       })
       const interactionFromEnd = await Interaction.create({
-        aInput: 'enter input here',
-        bInput: 'enter input here',
         round: roundNum + 1,
         aId: pairs[pairs.length - (1 + roundNum)][0].id,
         bId: pairs[pairs.length - (1 + roundNum)][1].id,
         eventId: eventInfo.id,
         promptId: roundNum + 1
       })
-      interactions.push(interactionFromStart)
+      interactions.push(interactionFromStart, interactionFromEnd)
     }
-    res.send({interactions, eventInfo})
+    res.send(interactions)
   } catch (err) {
     next(err)
   }
