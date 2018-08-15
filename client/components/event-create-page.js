@@ -5,7 +5,7 @@ import EventForm from './game-forms/EventForm'
 import {postEvent} from '../store/event'
 
 export const EventFormPage = props => (
-  <div>
+  <div className="container">
     <h1> Create Event </h1>
     <EventForm formAction="Create" onSubmit={props.onSubmit} />
   </div>

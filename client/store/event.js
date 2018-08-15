@@ -1,4 +1,5 @@
 import axios from 'axios'
+import history from '../history'
 
 /**
  * ACTION TYPES
@@ -35,12 +36,21 @@ const updateEventDate = event => ({
  * THUNK CREATORS
  */
 export const postEvent = event => async dispatch => {
-  const {data: newEvent} = await axios.post('/api/events', event)
-  dispatch(addEvent(newEvent))
+  try {
+    const {data: newEvent} = await axios.post('/api/events', event)
+    dispatch(addEvent(newEvent))
+    history.push('/home')
+  } catch (error) {
+    console.log(error)
+  }
 }
 export const fetchAllEvents = () => async dispatch => {
-  const {data: events} = await axios.get('/api/events')
-  dispatch(getEvents(events))
+  try {
+    const {data: events} = await axios.get('/api/events')
+    dispatch(getEvents(events))
+  } catch (error) {
+    console.log(error)
+  }
 }
 //Put Request for all fields on event
 export const changeEventAllFields = eventSubmission => async dispatch => {
