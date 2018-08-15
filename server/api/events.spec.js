@@ -6,7 +6,7 @@ const Event = db.model('Event')
 const User = db.model('User')
 const Interaction = db.model('Interaction')
 
-describe.only('Event routes', () => {
+describe('Event routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
