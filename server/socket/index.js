@@ -4,6 +4,7 @@ const {
   ROOM,
   EVENT_STARTED,
   EVENT_PREFIX
+  // NEXT_ROUND
 } = require('./events')
 
 module.exports = io => {
@@ -26,11 +27,12 @@ module.exports = io => {
 
     socket.on(START_EVENT, ({eventId}) => {
       console.log(`Signal received to start eventId=${eventId}`)
-      io.to(EVENT_PREFIX + eventId).emit(EVENT_STARTED, {})
+      io.to(EVENT_PREFIX + eventId).emit(EVENT_STARTED, {eventId})
     })
 
     socket.on(REQUEST_NEXT_ROUND, ({eventId}) => {
       console.log(`Signal received to start next round in eventId=${eventId}`)
+      // io.to(EVENT_PREFIX + eventId).emit(NEXT_ROUND, {})
     })
 
     socket.on('disconnect', () => {

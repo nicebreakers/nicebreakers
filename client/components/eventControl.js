@@ -1,14 +1,17 @@
 import React from 'react'
+import {connect} from 'react-redux'
+
+import {sendGameInitEvent} from '../store'
 
 import socket from '../socket'
 import {
   REQUEST_NEXT_ROUND,
-  START_EVENT,
+  // START_EVENT,
   ROOM,
   EVENT_PREFIX
 } from '../../server/socket/events'
 
-export default class EventControl extends React.Component {
+class EventControl extends React.Component {
   componentDidMount = () => {
     // Oh hey, this component is only rendered when we want to run
     // an event.  So let's ask the server for a room for that
@@ -26,12 +29,10 @@ export default class EventControl extends React.Component {
   sendMoveToReviewEvent = () => {
     //socket code
   }
-  sendGameInitEvent = () => {
-    const {eventId} = this.props.match.params
-    socket.emit(START_EVENT, {eventId})
-    console.log(`Emitted ${START_EVENT} for event ${eventId}`)
-  }
+
   render() {
+    const {initGame, match} = this.props
+    const {eventId} = match.params
     return (
       <div className="container">
         <h3 className="heading">Leader Control</h3>
@@ -41,7 +42,7 @@ export default class EventControl extends React.Component {
             <button
               className="btn waves waves-effect"
               type="button"
-              onClick={this.sendGameInitEvent}
+              onClick={() => initGame(eventId)}
             >
               Start Event
             </button>
@@ -69,3 +70,9 @@ export default class EventControl extends React.Component {
     )
   }
 }
+
+const mapDispatch = dispatch => ({
+  initGame: eventId => dispatch(sendGameInitEvent(eventId))
+})
+
+export default connect(null, mapDispatch)(EventControl)

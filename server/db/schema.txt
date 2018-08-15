@@ -27,6 +27,7 @@ Interaction(s)
 	aId			    FK_PARTICIPANT
 	bId			    FK_PARTICIPANT
 	eventId		  FK_EVENT
+  round       Integer (unsigned)
 	promptId	  FK_PROMPT
 	aInput		  Text
 	aInputMsec	Integer (unsigned)
