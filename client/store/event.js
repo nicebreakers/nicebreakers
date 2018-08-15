@@ -1,11 +1,21 @@
 import axios from 'axios'
 import history from '../history'
+import socket from '../socket'
+import {gotInteractions} from './interaction'
+/*
+* SOCKET EVENT TYPES
+*/
+import {
+  REQUEST_NEXT_ROUND,
+  START_EVENT,
+  ROOM,
+  EVENT_PREFIX
+} from '../../server/socket/events'
 
 /**
  * ACTION TYPES
  */
 const GET_EVENTS = 'GET_EVENTS'
-
 const ADD_EVENT = 'ADD_EVENT'
 const UPDATE_EVENT_ALL = 'UPDATE_EVENT_ALL'
 const UPDATE_EVENT_STATUS = 'UPDATE_EVENT_STATUS'
@@ -14,26 +24,33 @@ const UPDATE_EVENT_DATE = 'UPDATE_EVENT_DATE'
 /**
  * ACTION CREATORS
  */
+export const updateEventStatus = event => ({type: UPDATE_EVENT_STATUS, event})
 const getEvents = events => ({type: GET_EVENTS, events})
 const addEvent = event => ({type: ADD_EVENT, event})
-//Update all fields on event
-const updateEventAll = event => ({
-  type: UPDATE_EVENT_ALL,
-  event
-})
-//Update only an event's status
-const updateEventStatus = event => ({
-  type: UPDATE_EVENT_STATUS,
-  event
-})
-//Update only an event's date
-const updateEventDate = event => ({
-  type: UPDATE_EVENT_DATE,
-  event
-})
+const updateEventAll = event => ({type: UPDATE_EVENT_ALL, event})
+const updateEventDate = event => ({type: UPDATE_EVENT_DATE, event})
 
 /**
- * THUNK CREATORS
+ * SOCKET THUNK CREATORS
+ */
+
+export const sendGameInitEvent = eventId => dispatch => {
+  axios
+    .put(`/api/events/${eventId}/status`, {status: 'in_progress'})
+    .then(({data}) => dispatch(updateEventStatus(data)))
+    // .then(() => axios.post(`/api/events/${eventId}/interactions/`))
+    .then(({data}) => dispatch(gotInteractions(eventId, data)))
+    .then(() => {
+      socket.emit(START_EVENT, {eventId})
+      console.log(`Emitted ${START_EVENT} for event ${eventId}`)
+    })
+    .catch(err => console.error(err))
+}
+
+//  export const leaderRequestNextRound =
+
+/**
+ * NON-SOCKET THUNK CREATORS
  */
 export const postEvent = event => async dispatch => {
   try {
@@ -52,8 +69,11 @@ export const fetchAllEvents = () => async dispatch => {
     console.log(error)
   }
 }
-//Put Request for all fields on event
-export const changeEventAllFields = eventSubmission => async dispatch => {
+
+export const changeEventAllFields = (
+  eventSubmission,
+  eventId
+) => async dispatch => {
   const {data: updatedEvent} = await axios.put(
     `/api/events/${eventSubmission}`,
     eventSubmission
@@ -61,15 +81,15 @@ export const changeEventAllFields = eventSubmission => async dispatch => {
   dispatch(updateEventAll(updatedEvent))
 }
 
-//Put request for An Event's Status
-export const changeEventStatus = (newStatus, eventId) => async dispatch => {
+export const changeEventStatus = (status, eventId) => async dispatch => {
   const {data: updatedEvent} = await axios.put(
-    `/api/events/${eventId}`,
-    newStatus
+    `/api/events/${eventId}/status`,
+    {
+      status
+    }
   )
   dispatch(updateEventStatus(updatedEvent))
 }
-//Put request for An Event's Date
 export const changeEventDate = (newDate, eventId) => async dispatch => {
   const {data: updatedEvent} = await axios.put(
     `/api/events/${eventId}`,
@@ -79,22 +99,9 @@ export const changeEventDate = (newDate, eventId) => async dispatch => {
 }
 
 /**
- * Utility Function
- *
- */
-//fetch an event by name, don't need to change state here if we're just looking up
-export const fetchEventByName = async eventName => {
-  const {data: event} = await axios.get(`/api/events/name/${eventName}`)
-  return event
-}
-
-/**
  * INITIAL STATE
  */
-const defaultEvents = {
-  byId: {}
-}
-
+const defaultEvents = {byId: {}}
 /**
  * REDUCER
  */
@@ -107,24 +114,9 @@ export default function(state = defaultEvents, action) {
           return result
         }, {})
       }
-    case ADD_EVENT:
-      return {
-        byId: {...state.byId, [action.event.id]: action.event}
-      }
-    case UPDATE_EVENT_ALL:
-      return {
-        byId: {
-          ...state.byId,
-          [action.event.id]: action.event
-        }
-      }
-    case UPDATE_EVENT_STATUS:
-      return {
-        byId: {
-          ...state.byId,
-          [action.event.id]: action.event
-        }
-      }
+    case ADD_EVENT: // intentional fallthrough
+    case UPDATE_EVENT_ALL: // intentional fallthrough
+    case UPDATE_EVENT_STATUS: // intentional fallthrough
     case UPDATE_EVENT_DATE:
       return {
         byId: {
@@ -137,10 +129,18 @@ export default function(state = defaultEvents, action) {
   }
 }
 
+/*
+ *  SELECTORS
+ */
 export const getEventsByStatus = (allState, status) => {
   return (
     Object.values(allState.events.byId).filter(
       event => event.status === status
     ) || []
   )
+}
+
+export const isEventPending = (state, eventId) => {
+  const event = state.events.byId[eventId]
+  return event ? event.status === 'pending' : false
 }
