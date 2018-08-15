@@ -15,9 +15,9 @@ import {
   LandingPage,
   ProtectedRoute,
   EventControl,
-  ProfileForm
+  ProfileForm,
+  Controller
 } from './components'
-import Controller from './components/controllers/Controller'
 
 /**
  * COMPONENT
@@ -29,17 +29,11 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
-    console.log('I am logged in', isLoggedIn)
     return (
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route path="/createProfile" component={PictureSubmission} />
         {/* Routes placed here are available to all visitors */}
-        <Route path="/events/create" component={EventFormPage} />
-        <Route
-          path="/events/:eventId/edit"
-          render={routeProps => <EditEventPage {...routeProps} />}
-        />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
 
@@ -47,15 +41,27 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             <ProtectedRoute
+              path="/events/create"
+              component={EventFormPage}
+              condition={isLoggedIn} // TODO: Limit to Leader/Admin
+              redirect="/login"
+            />
+            <ProtectedRoute
+              path="/events/:eventId/edit"
+              component={EditEventPage}
+              condition={isLoggedIn} // TODO: Limit to Leader/Admin
+              redirect="/login"
+            />
+            <ProtectedRoute
               path="/home"
               component={UserHome}
               condition={isLoggedIn}
               redirect="/login"
             />
             <ProtectedRoute
-              path="/eventControl"
+              path="/events/:eventId/console"
               component={EventControl}
-              condition={isLoggedIn}
+              condition={isLoggedIn} // TODO: Limit to Leader/Admin
               redirect="/login"
             />
             <ProtectedRoute
@@ -65,7 +71,7 @@ class Routes extends Component {
               redirect="/login"
             />
             <ProtectedRoute
-              path="/controller"
+              path="/events/:eventId/controller"
               component={Controller}
               condition={isLoggedIn}
               redirect="/login"
