@@ -1,62 +1,53 @@
 [
   {
-    "id": 1,
     "name": "Awesome Event",
     "description": "Be there or be square",
     "status": "pending",
     "location": "Fullstack Academy"
   },
   {
-    "id": 2,
     "name": "Super Event",
     "description": "Be there or be a triangle",
     "status": "pending",
     "location": "Fullstack Academy"
   },
   {
-    "id": 3,
     "name": "Bad Event",
     "description": "The best",
     "status": "pending",
     "location": "Fullstack Academy"
   },
   {
-    "id": 4,
     "name": "Meh Event",
     "description": "Don't come",
     "status": "pending",
     "location": "Fullstack Academy"
   },
   {
-    "id": 5,
     "name": "Whoa Event",
     "description": "Nothing",
     "status": "pending",
     "location": "Fullstack Academy"
   },
   {
-    "id": 6,
     "name": "Yeah Event",
     "description": "Wait up",
     "status": "pending",
     "location": "Fullstack Academy"
   },
   {
-    "id": 7,
     "name": "No Event",
     "description": "Wake me up",
     "status": "pending",
     "location": "Fullstack Academy"
   },
   {
-    "id": 8,
     "name": "Yes Event",
     "description": "When September",
     "status": "pending",
     "location": "Fullstack Academy"
   },
   {
-    "id": 9,
     "name": "WHAAA Event",
     "description": "Ends",
     "status": "pending",
