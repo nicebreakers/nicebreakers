@@ -10,6 +10,8 @@ import {
   isEventPending,
   updateEventStatus,
   getRoundInteraction,
+  getDisplayShape,
+
   isEventDone,
   getRound
 } from '../../store'
@@ -139,8 +141,20 @@ class Controller extends Component {
 }
 
 const mapStateToProps = (state, {match}) => {
+  // const stoot = {
+  //   interaction: {
+  //     byId: {
+  //       0: 'John',
+  //       1: 'Susan'
+  //     },
+  //     currentInteraction: {
+  //       id: 2,
+  //       round: 3
+  //     }
+  //   }
+  // }
   return {
-    shape: '/dumbpics/circle.png',
+    shape: getDisplayShape(state),
     prompt: Object.values(state.prompt.byId),
     pending: isEventPending(state, match.params.eventId),
     event: state.events.byId[match.params.eventId],
