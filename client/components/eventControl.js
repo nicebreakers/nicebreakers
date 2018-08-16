@@ -39,7 +39,6 @@ class EventControl extends React.Component {
   }
 
   nextRoundWrapper = (eventId, currRound) => {
-    console.log('this is the current round', currRound)
     if (currRound >= 4) {
       //do nothing
     } else {

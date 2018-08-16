@@ -29,10 +29,6 @@ import {
 } from '../../../server/socket/events'
 
 class Controller extends Component {
-  // state = {
-  //   value: 0
-  // }
-
   componentDidMount() {
     socket.removeAllListeners([
       EVENT_STARTED,
@@ -99,8 +95,6 @@ class Controller extends Component {
   componentWillUnmount() {
     socket.removeAllListeners()
     // Make sure to clean up all socket events in case this is re-rendered.
-    // console.log(`Removed listeners`)
-    // socket.removeAllListeners([EVENT_STARTED, NEXT_ROUND, EVENT_ENDED, START_EVENT, END_EVENT, REQUEST_NEXT_ROUND])
   }
 
   randomPrompt = () => {
