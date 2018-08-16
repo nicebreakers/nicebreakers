@@ -24,9 +24,7 @@ const mapState = (state, {match}) => ({
 })
 
 const mapDispatch = (dispatch, {match}) => ({
-  onSubmit: updatedValues => {
+  onSubmit: updatedValues =>
     dispatch(changeEventAllFields(updatedValues, match.params.eventId))
-    history.push('/home')
-  }
 })
 export default connect(mapState, mapDispatch)(EditEventFormPage)

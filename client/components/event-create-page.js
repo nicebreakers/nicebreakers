@@ -12,9 +12,6 @@ export const EventFormPage = props => (
   </div>
 )
 const mapDispatchToProps = dispatch => ({
-  onSubmit: newEvent => {
-    dispatch(postEvent(newEvent))
-    history.push('/home')
-  }
+  onSubmit: newEvent => dispatch(postEvent(newEvent))
 })
 export default connect(null, mapDispatchToProps)(EventFormPage)
