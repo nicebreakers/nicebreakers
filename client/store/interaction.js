@@ -100,10 +100,10 @@ const defaultInteractions = {
  */
 
 export const getRoundInteraction = (eventId, round) => dispatch => {
-  // axios
-  //   .get(`/api/events/${eventId}/round/${round}`)
-  //   .then(({data}) => dispatch(gotNextInteraction(data)))
-  //   .catch(error => console.error(error))
+  axios
+    .get(`/api/events/${eventId}/round/${round}`)
+    .then(({data}) => dispatch(gotNextInteraction(data)))
+    .catch(error => console.error(error))
 }
 export default function(state = defaultInteractions, action) {
   switch (action.type) {
