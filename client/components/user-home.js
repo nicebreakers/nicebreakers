@@ -33,6 +33,7 @@ class UserHome extends React.Component {
                 details={event.description}
                 title={event.name}
                 type="pending"
+                notParticipant={props.notParticipant}
               />
             )
           })}
@@ -49,6 +50,7 @@ class UserHome extends React.Component {
               details={event.description}
               title={event.name}
               type="done"
+              notParticipant={props.notParticipant}
             />
           ))}
         </div>
@@ -68,7 +70,8 @@ const mapState = state => {
     email: state.user.email,
     events: state.events,
     pendingEvents: getEventsByStatus(state, 'pending'),
-    doneEvents: getEventsByStatus(state, 'done')
+    doneEvents: getEventsByStatus(state, 'done'),
+    notParticipant: state.user.role !== 'participant'
   }
 }
 const mapDispatch = dispatch => ({

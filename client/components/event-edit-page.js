@@ -22,9 +22,9 @@ export const EditEventFormPage = props => {
 const mapState = (state, {match}) => ({
   event: state.events.byId[match.params.eventId]
 })
-
-const mapDispatch = (dispatch, {match}) => ({
-  onSubmit: updatedValues =>
-    dispatch(changeEventAllFields(updatedValues, match.params.eventId))
+const mapDispatch = dispatch => ({
+  onSubmit: updatedValues => {
+    dispatch(changeEventAllFields(updatedValues))
+  }
 })
 export default connect(mapState, mapDispatch)(EditEventFormPage)
