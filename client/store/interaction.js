@@ -137,9 +137,9 @@ export const getDisplayShape = state => {
     const numParticipants = Object.values(state.interaction.byId).length
     //Interchange Shapes and Animals from Round to Round
     if (state.interaction.currentInteraction.round % 2 === 0)
-      photoUrl = getShapeById(interactionId, numParticipants)
+      photoUrl = getShapeById(interactionId, 4)
     else {
-      photoUrl = getAnimalById(interactionId, numParticipants)
+      photoUrl = getAnimalById(interactionId, 4)
     }
   }
   return photoUrl
