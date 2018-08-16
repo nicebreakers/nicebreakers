@@ -37,11 +37,9 @@ module.exports = io => {
       io.to(EVENT_PREFIX + eventId).emit(EVENT_ENDED, {eventId})
     })
     //temporary
-    let currRound = 1
-
     socket.on(REQUEST_NEXT_ROUND, ({eventId}) => {
       console.log(`Signal received to start next round in eventId=${eventId}`)
-      io.to(EVENT_PREFIX + eventId).emit(NEXT_ROUND, {roundNumber: ++currRound})
+      io.to(EVENT_PREFIX + eventId).emit(NEXT_ROUND, {roundNumber: 1})
     })
 
     socket.on('disconnect', () => {

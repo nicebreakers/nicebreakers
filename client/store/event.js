@@ -21,6 +21,7 @@ const ADD_EVENT = 'ADD_EVENT'
 const UPDATE_EVENT_ALL = 'UPDATE_EVENT_ALL'
 const UPDATE_EVENT_STATUS = 'UPDATE_EVENT_STATUS'
 const UPDATE_EVENT_DATE = 'UPDATE_EVENT_DATE'
+const INCREASE_ROUND = 'INCREASE_ROUND'
 
 /**
  * ACTION CREATORS
@@ -30,6 +31,7 @@ const getEvents = events => ({type: GET_EVENTS, events})
 const addEvent = event => ({type: ADD_EVENT, event})
 const updateEventAll = event => ({type: UPDATE_EVENT_ALL, event})
 const updateEventDate = event => ({type: UPDATE_EVENT_DATE, event})
+const incrementRound = () => ({type: INCREASE_ROUND})
 
 /**
  * SOCKET THUNK CREATORS
@@ -39,7 +41,7 @@ export const sendGameInitEvent = eventId => dispatch => {
   axios
     .put(`/api/events/${eventId}/status`, {status: 'in_progress'})
     .then(({data}) => dispatch(updateEventStatus(data)))
-    // .then(() => axios.post(`/api/events/${eventId}/interactions/`))
+    .then(() => axios.post(`/api/events/${eventId}/interactions/`))
     .then(({data}) => dispatch(gotInteractions(eventId, data)))
     .then(() => {
       socket.emit(START_EVENT, {eventId})
@@ -60,6 +62,7 @@ export const sendEndGameEvent = eventId => dispatch => {
 }
 
 export const leaderRequestNextRound = eventId => dispatch => {
+  dispatch(incrementRound())
   socket.emit(REQUEST_NEXT_ROUND, {eventId})
   console.log(`Emitted ${REQUEST_NEXT_ROUND} for event ${eventId}`)
 }
@@ -114,7 +117,7 @@ export const changeEventDate = (newDate, eventId) => async dispatch => {
 /**
  * INITIAL STATE
  */
-const defaultEvents = {byId: {}}
+const defaultEvents = {byId: {}, round: 1}
 /**
  * REDUCER
  */
@@ -137,6 +140,12 @@ export default function(state = defaultEvents, action) {
           [action.event.id]: action.event
         }
       }
+    case INCREASE_ROUND: {
+      return {
+        byId: {...state.byId},
+        round: state.events.round++
+      }
+    }
     default:
       return state
   }

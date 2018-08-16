@@ -12,29 +12,6 @@ router.get('/all', canOnlyBeUsedBy('admin'), async (req, res, next) => {
   }
 })
 
-router.get(
-  '/:eventId/round/:roundId',
-  canOnlyBeUsedBy(
-    'admin',
-    'participant',
-    'self',
-    'leader',
-    async (req, res, next) => {
-      try {
-        const rounds = await Event.findAll({
-          where: {
-            round: req.params.roundId,
-            eventId: req.params.eventId
-          }
-        })
-        res.send(rounds)
-      } catch (err) {
-        next(err)
-      }
-    }
-  )
-)
-
 router.get('/:eventId', canOnlyBeUsedBy('admin'), async (req, res, next) => {
   try {
     const events = await Event.findById(req.params.eventId)
