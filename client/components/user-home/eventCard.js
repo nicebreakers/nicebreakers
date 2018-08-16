@@ -15,7 +15,7 @@ const style = {
   }
 }
 
-const EventCard = ({type, title, details, id}) => (
+const EventCard = ({type, title, details, id, notParticipant}) => (
   <div className="col s12 m6 l4 xl3">
     <div className={`card hoverable ${style[type].background}`}>
       <Link to={`/events/${id}/controller`}>
@@ -26,7 +26,7 @@ const EventCard = ({type, title, details, id}) => (
           <p>{details ? details : 'Placeholder content'}</p>
         </div>
       </Link>
-      <CardAdminTools {...{id, type}} />
+      {notParticipant && <CardAdminTools {...{id, type}} />}
     </div>
   </div>
 )
