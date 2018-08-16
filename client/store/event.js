@@ -70,10 +70,8 @@ export const fetchAllEvents = () => async dispatch => {
   }
 }
 
-export const changeEventAllFields = (
-  eventSubmission,
-  eventId
-) => async dispatch => {
+export const changeEventAllFields = eventSubmission => async dispatch => {
+  const eventId = eventSubmission.id
   const {data: updatedEvent} = await axios.put(
     `/api/events/${eventId}`,
     eventSubmission
