@@ -10,7 +10,7 @@ import {
   isEventPending,
   updateEventStatus,
   getRoundInteraction,
-  getDisplayShape
+  getDisplayShape,
 
   isEventDone,
   getRound
