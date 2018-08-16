@@ -1,4 +1,6 @@
 import axios from 'axios'
+import {getShapeById, getAnimalById} from '../components/pictureHashLookup'
+
 // import history from '../history'
 // import socket from '../socket'
 
@@ -126,3 +128,19 @@ export default function(state = defaultInteractions, action) {
 /*
  *  SELECTORS
  */
+export const getDisplayShape = state => {
+  //if there is an interaction currently in store, use the id to look up a pic in the tables
+  let photoUrl = null
+  if (state.interaction.currentInteraction.id) {
+    //extract the id and the number of Participants in the Event
+    const interactionId = state.interaction.currentInteraction.id
+    const numParticipants = Object.values(state.interaction.byId).length
+    //Interchange Shapes and Animals from Round to Round
+    if (state.interaction.currentInteraction.round % 2 === 0)
+      photoUrl = getShapeById(interactionId, numParticipants)
+    else {
+      photoUrl = getAnimalById(interactionId, numParticipants)
+    }
+  }
+  return photoUrl
+}

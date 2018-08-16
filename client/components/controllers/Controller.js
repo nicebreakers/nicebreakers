@@ -9,9 +9,9 @@ import {
   fetchAllPrompts,
   isEventPending,
   updateEventStatus,
-  getRoundInteraction
+  getRoundInteraction,
+  getDisplayShape
 } from '../../store'
-import {getShapeById, getAnimalById} from '../pictureHashLookup'
 
 import socket from '../../socket'
 import {
@@ -146,8 +146,20 @@ class Controller extends Component {
 }
 
 const mapStateToProps = (state, {match}) => {
+  // const stoot = {
+  //   interaction: {
+  //     byId: {
+  //       0: 'John',
+  //       1: 'Susan'
+  //     },
+  //     currentInteraction: {
+  //       id: 2,
+  //       round: 3
+  //     }
+  //   }
+  // }
   return {
-    shape: getShapeById(state.interaction.id),
+    shape: getDisplayShape(state),
     prompt: Object.values(state.prompt.byId),
     pending: isEventPending(state, match.params.eventId),
     event: state.events.byId[match.params.eventId]
