@@ -77,6 +77,7 @@ export const changeEventAllFields = eventSubmission => async dispatch => {
     eventSubmission
   )
   dispatch(updateEventAll(updatedEvent))
+  history.push('/home')
 }
 
 export const changeEventStatus = (status, eventId) => async dispatch => {

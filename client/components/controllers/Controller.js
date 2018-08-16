@@ -11,6 +11,7 @@ import {
   updateEventStatus,
   getRoundInteraction
 } from '../../store'
+import {getShapeById, getAnimalById} from '../pictureHashLookup'
 
 import socket from '../../socket'
 import {
@@ -146,7 +147,7 @@ class Controller extends Component {
 
 const mapStateToProps = (state, {match}) => {
   return {
-    shape: '/dumbpics/circle.png',
+    shape: getShapeById(state.interaction.id),
     prompt: Object.values(state.prompt.byId),
     pending: isEventPending(state, match.params.eventId),
     event: state.events.byId[match.params.eventId]

@@ -23,6 +23,8 @@ const mapState = (state, {match}) => ({
 })
 
 const mapDispatch = dispatch => ({
-  onSubmit: updatedValues => dispatch(changeEventAllFields(updatedValues))
+  onSubmit: updatedValues => {
+    dispatch(changeEventAllFields(updatedValues))
+  }
 })
 export default connect(mapState, mapDispatch)(EditEventFormPage)
