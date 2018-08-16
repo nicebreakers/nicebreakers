@@ -22,6 +22,7 @@ const UPDATE_EVENT_ALL = 'UPDATE_EVENT_ALL'
 const UPDATE_EVENT_STATUS = 'UPDATE_EVENT_STATUS'
 const UPDATE_EVENT_DATE = 'UPDATE_EVENT_DATE'
 const INCREASE_ROUND = 'INCREASE_ROUND'
+const RESET_ROUNDS = 'RESET_ROUNDS'
 
 /**
  * ACTION CREATORS
@@ -32,6 +33,7 @@ const addEvent = event => ({type: ADD_EVENT, event})
 const updateEventAll = event => ({type: UPDATE_EVENT_ALL, event})
 const updateEventDate = event => ({type: UPDATE_EVENT_DATE, event})
 const incrementRound = () => ({type: INCREASE_ROUND})
+const resetRound = () => ({type: RESET_ROUNDS})
 
 /**
  * SOCKET THUNK CREATORS
@@ -47,6 +49,7 @@ export const sendGameInitEvent = eventId => dispatch => {
       socket.emit(START_EVENT, {eventId})
       console.log(`Emitted ${START_EVENT} for event ${eventId}`)
     })
+    .then(() => dispatch(resetRound))
     .catch(err => console.error(err))
 }
 
@@ -61,10 +64,12 @@ export const sendEndGameEvent = eventId => dispatch => {
     .catch(err => console.error(err))
 }
 
-export const leaderRequestNextRound = eventId => dispatch => {
+export const leaderRequestNextRound = (eventId, round) => dispatch => {
   dispatch(incrementRound())
-  socket.emit(REQUEST_NEXT_ROUND, {eventId})
-  console.log(`Emitted ${REQUEST_NEXT_ROUND} for event ${eventId}`)
+  socket.emit(REQUEST_NEXT_ROUND, {eventId, round})
+  console.log(
+    `Emitted ${REQUEST_NEXT_ROUND} for event ${eventId} with round ${round}`
+  )
 }
 
 /**
@@ -127,6 +132,7 @@ export default function(state = defaultEvents, action) {
   switch (action.type) {
     case GET_EVENTS:
       return {
+        ...state,
         byId: action.events.reduce((result, event) => {
           result[event.id] = event
           return result
@@ -137,6 +143,7 @@ export default function(state = defaultEvents, action) {
     case UPDATE_EVENT_STATUS: // intentional fallthrough
     case UPDATE_EVENT_DATE:
       return {
+        ...state,
         byId: {
           ...state.byId,
           [action.event.id]: action.event
@@ -145,7 +152,13 @@ export default function(state = defaultEvents, action) {
     case INCREASE_ROUND: {
       return {
         byId: {...state.byId},
-        round: state.events.round++
+        round: state.round + 1
+      }
+    }
+    case RESET_ROUNDS: {
+      return {
+        byId: {...state.byId},
+        round: 1
       }
     }
     default:
@@ -172,4 +185,8 @@ export const isEventPending = (state, eventId) => {
 export const isEventDone = (state, eventId) => {
   const event = state.events.byId[eventId]
   return event ? event.status === 'done' : false
+}
+
+export const getRound = state => {
+  return state.events.round
 }

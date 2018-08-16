@@ -5,7 +5,8 @@ import {
   sendGameInitEvent,
   sendEndGameEvent,
   isEventDone,
-  leaderRequestNextRound
+  leaderRequestNextRound,
+  getRound
 } from '../store'
 
 import socket from '../socket'
@@ -26,11 +27,7 @@ class EventControl extends React.Component {
       console.log(`Emitted ${ROOM} for event ${eventId}`)
     }
   }
-  sendRequestNextRoundEvent = () => {
-    const {eventId} = this.props.match.params
-    socket.emit(REQUEST_NEXT_ROUND, {eventId})
-    console.log(`Emitted ${REQUEST_NEXT_ROUND} for event ${eventId}`)
-  }
+
   sendMoveToReviewEvent = () => {
     //socket code
   }
@@ -57,7 +54,7 @@ class EventControl extends React.Component {
               className="btn waves waves-effect"
               type="button"
               disabled={this.props.isGameDone}
-              onClick={() => nextRound(eventId)}
+              onClick={() => nextRound(eventId, this.props.currRound)}
             >
               Next Round
             </button>
@@ -87,13 +84,15 @@ class EventControl extends React.Component {
 }
 
 const mapState = (state, {match}) => ({
-  isGameDone: isEventDone(state, match.params.eventId)
+  isGameDone: isEventDone(state, match.params.eventId),
+  currRound: getRound(state)
 })
 
 const mapDispatch = dispatch => ({
   initGame: eventId => dispatch(sendGameInitEvent(eventId)),
   endGame: eventId => dispatch(sendEndGameEvent(eventId)),
-  nextRound: eventId => dispatch(leaderRequestNextRound(eventId))
+  nextRound: (eventId, round) =>
+    dispatch(leaderRequestNextRound(eventId, round))
 })
 
 export default connect(mapState, mapDispatch)(EventControl)
