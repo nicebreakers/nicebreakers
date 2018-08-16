@@ -5,12 +5,13 @@ const EventActionButton = props => (
   // The 'ref' here will pass a reference to this div when it is rendered to
   // the function provided.  So here, it just calls some init code for this
   // button using JQuery.  Fun!
+
   <div
     id="menu"
     className="fixed-action-btn "
     ref={el => $(el).floatingActionButton()}
   >
-    <a className="btn-floating btn-large light-blue">
+    <a className="btn-floating btn-large yellow darken-3">
       <i className="large material-icons">add</i>
     </a>
     <ul>

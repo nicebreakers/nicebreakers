@@ -16,6 +16,7 @@ class UserHome extends React.Component {
     const props = this.props
     return (
       <div className="container">
+        <InstructionPanel />
         <h5>Welcome, {props.email}</h5>
         <div className="divider" />
         <div className="section">
@@ -53,9 +54,7 @@ class UserHome extends React.Component {
         </div>
         {/* <PlayerAdd />
       <PlayerList /> */}
-        <div className="section">
-          <InstructionPanel />
-        </div>
+
         <EventActionButton />
       </div>
     )
