@@ -71,7 +71,7 @@ class Controller extends Component {
 
     socket.on(NEXT_ROUND, data => {
       console.log(`Got ${NEXT_ROUND} with payload=`, data)
-      // do other stuff.
+      this.props.fetchRound(eventId, data.roundNumber)
     })
   }
 
@@ -83,7 +83,7 @@ class Controller extends Component {
 
   componentWillUnmount() {
     // Make sure to clean up all socket events in case this is re-rendered.
-    socket.removeAllListeners([EVENT_STARTED, NEXT_ROUND])
+    socket.removeAllListeners([EVENT_STARTED, NEXT_ROUND, EVENT_ENDED])
   }
 
   randomPrompt = () => {
@@ -113,7 +113,7 @@ class Controller extends Component {
                 shape={this.props.shape}
                 prompt={this.randomPrompt()}
               />
-              <NotesPhase />
+              <NotesPhase handleSubmit={this.props.onSubmit} />
             </div>
           )
         // case 'Notes':
@@ -152,6 +152,7 @@ const mapDispatchToProps = dispatch => {
     updateEventStatus: event => dispatch(updateEventStatus(event)),
     fetchRound: (eventId, round) =>
       dispatch(getRoundInteraction(eventId, round))
+    // onSubmit: newInteraction => dispatch(postInteraction(newInteraction))
   }
 }
 

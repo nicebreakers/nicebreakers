@@ -5,8 +5,8 @@ const {
   EVENT_STARTED,
   EVENT_PREFIX,
   END_EVENT,
-  EVENT_ENDED
-  // NEXT_ROUND
+  EVENT_ENDED,
+  NEXT_ROUND
 } = require('./events')
 
 module.exports = io => {
@@ -36,10 +36,10 @@ module.exports = io => {
       console.log(`Signal received to end eventId=${eventId}`)
       io.to(EVENT_PREFIX + eventId).emit(EVENT_ENDED, {eventId})
     })
-
+    //temporary
     socket.on(REQUEST_NEXT_ROUND, ({eventId}) => {
       console.log(`Signal received to start next round in eventId=${eventId}`)
-      // io.to(EVENT_PREFIX + eventId).emit(NEXT_ROUND, {})
+      io.to(EVENT_PREFIX + eventId).emit(NEXT_ROUND, {roundNumber: 1})
     })
 
     socket.on('disconnect', () => {

@@ -1,7 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import {sendGameInitEvent, sendEndGameEvent, isEventDone} from '../store'
+import {
+  sendGameInitEvent,
+  sendEndGameEvent,
+  isEventDone,
+  leaderRequestNextRound
+} from '../store'
 
 import socket from '../socket'
 import {
@@ -31,8 +36,7 @@ class EventControl extends React.Component {
   }
 
   render() {
-    console.log('done?', this.props.isGameDone)
-    const {initGame, match} = this.props
+    const {initGame, nextRound, match} = this.props
     const {eventId} = match.params
     return (
       <div className="container">
@@ -52,8 +56,8 @@ class EventControl extends React.Component {
             <button
               className="btn waves waves-effect"
               type="button"
-              onClick={this.sendRequestNextRoundEvent}
               disabled={this.props.isGameDone}
+              onClick={() => nextRound(eventId)}
             >
               Next Round
             </button>
@@ -88,7 +92,8 @@ const mapState = (state, {match}) => ({
 
 const mapDispatch = dispatch => ({
   initGame: eventId => dispatch(sendGameInitEvent(eventId)),
-  endGame: eventId => dispatch(sendEndGameEvent(eventId))
+  endGame: eventId => dispatch(sendEndGameEvent(eventId)),
+  nextRound: eventId => dispatch(leaderRequestNextRound(eventId))
 })
 
 export default connect(mapState, mapDispatch)(EventControl)

@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 
 class NotesPhase extends Component {
-  handleSubmit = () => {}
   render() {
     const {interactionId, pristine, submitting} = this.props
     return (
