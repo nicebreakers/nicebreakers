@@ -71,7 +71,7 @@ class Controller extends Component {
 
     socket.on(NEXT_ROUND, data => {
       console.log(`Got ${NEXT_ROUND} with payload=`, data)
-      // do other stuff.
+      this.props.fetchRound(eventId, data.roundNumber)
     })
   }
 
