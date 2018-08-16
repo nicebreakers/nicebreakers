@@ -133,6 +133,8 @@ export const getPrompt = state => {
   const {promptId} = state.interaction.currentInteraction
   if (promptId) return state.prompt.byId[promptId].question
   else return 'Where is the question?'
+}
+
 export const getDisplayShape = state => {
   //if there is an interaction currently in store, use the id to look up a pic in the tables
   let photoUrl = null
