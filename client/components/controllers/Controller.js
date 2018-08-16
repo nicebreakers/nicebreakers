@@ -13,7 +13,8 @@ import {
   getDisplayShape,
 
   isEventDone,
-  getRound
+  getRound,
+  getPrompt
 } from '../../store'
 
 import socket from '../../socket'
@@ -115,7 +116,7 @@ class Controller extends Component {
             <div>
               <PromptPhase
                 shape={this.props.shape}
-                prompt={this.randomPrompt()}
+                prompt={this.props.question}
               />
               <NotesPhase handleSubmit={this.props.onSubmit} />
             </div>
@@ -159,7 +160,8 @@ const mapStateToProps = (state, {match}) => {
     pending: isEventPending(state, match.params.eventId),
     event: state.events.byId[match.params.eventId],
     isDone: isEventDone(state, match.params.eventId),
-    currentRound: getRound(state)
+    currentRound: getRound(state),
+    question: getPrompt(state)
   }
 }
 

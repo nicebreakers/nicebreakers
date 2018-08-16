@@ -6,7 +6,8 @@ import {
   sendEndGameEvent,
   isEventDone,
   leaderRequestNextRound,
-  getRound
+  getRound,
+  resetRound
 } from '../store'
 
 import socket from '../socket'
@@ -32,6 +33,19 @@ class EventControl extends React.Component {
     //socket code
   }
 
+  initGameWrapper = eventId => {
+    this.props.initGame(eventId)
+    this.props.resetRounds()
+  }
+
+  nextRoundWrapper = (eventId, currRound) => {
+    if (currRound >= 4) {
+      //do nothing
+    } else {
+      this.props.nextRound(eventId, currRound)
+    }
+  }
+
   render() {
     const {initGame, nextRound, match} = this.props
     const {eventId} = match.params
@@ -44,7 +58,7 @@ class EventControl extends React.Component {
             <button
               className="btn waves waves-effect"
               type="button"
-              onClick={() => initGame(eventId)}
+              onClick={() => this.initGameWrapper(eventId)}
             >
               Start Event
             </button>
@@ -54,7 +68,9 @@ class EventControl extends React.Component {
               className="btn waves waves-effect"
               type="button"
               disabled={this.props.isGameDone}
-              onClick={() => nextRound(eventId, this.props.currRound)}
+              onClick={() =>
+                this.nextRoundWrapper(eventId, this.props.currRound)
+              }
             >
               Next Round
             </button>
@@ -92,7 +108,8 @@ const mapDispatch = dispatch => ({
   initGame: eventId => dispatch(sendGameInitEvent(eventId)),
   endGame: eventId => dispatch(sendEndGameEvent(eventId)),
   nextRound: (eventId, round) =>
-    dispatch(leaderRequestNextRound(eventId, round))
+    dispatch(leaderRequestNextRound(eventId, round)),
+  resetRounds: () => dispatch(resetRound())
 })
 
 export default connect(mapState, mapDispatch)(EventControl)

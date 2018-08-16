@@ -33,7 +33,7 @@ const addEvent = event => ({type: ADD_EVENT, event})
 const updateEventAll = event => ({type: UPDATE_EVENT_ALL, event})
 const updateEventDate = event => ({type: UPDATE_EVENT_DATE, event})
 const incrementRound = () => ({type: INCREASE_ROUND})
-const resetRound = () => ({type: RESET_ROUNDS})
+export const resetRound = () => ({type: RESET_ROUNDS})
 
 /**
  * SOCKET THUNK CREATORS
@@ -124,7 +124,7 @@ export const changeEventDate = (newDate, eventId) => async dispatch => {
 /**
  * INITIAL STATE
  */
-const defaultEvents = {byId: {}, round: 1}
+const defaultEvents = {byId: {}, round: 2}
 /**
  * REDUCER
  */

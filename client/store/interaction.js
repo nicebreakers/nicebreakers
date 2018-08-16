@@ -116,6 +116,7 @@ export default function(state = defaultInteractions, action) {
       }
     case GOT_INTERACTIONS:
       return {
+        ...state,
         byId: action.interactions.reduce((nextById, interaction) => {
           return {...nextById, [interaction.id]: interaction}
         }, {})
@@ -128,6 +129,12 @@ export default function(state = defaultInteractions, action) {
 /*
  *  SELECTORS
  */
+export const getPrompt = state => {
+  const {promptId} = state.interaction.currentInteraction
+  if (promptId) return state.prompt.byId[promptId].question
+  else return 'Where is the question?'
+}
+
 export const getDisplayShape = state => {
   //if there is an interaction currently in store, use the id to look up a pic in the tables
   let photoUrl = null
