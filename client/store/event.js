@@ -48,7 +48,6 @@ export const sendGameInitEvent = eventId => dispatch => {
     .catch(err => console.error(err))
 }
 
-<<<<<<< HEAD
 export const sendEndGameEvent = eventId => dispatch => {
   axios
     .put(`/api/events/${eventId}/status`, {status: 'done'})
@@ -58,11 +57,11 @@ export const sendEndGameEvent = eventId => dispatch => {
       console.log(`Emitted ${END_EVENT} for event ${eventId}`)
     })
     .catch(err => console.error(err))
-=======
+}
+
 export const leaderRequestNextRound = eventId => dispatch => {
   socket.emit(REQUEST_NEXT_ROUND, {eventId})
   console.log(`Emitted ${REQUEST_NEXT_ROUND} for event ${eventId}`)
->>>>>>> next round signal
 }
 
 /**
