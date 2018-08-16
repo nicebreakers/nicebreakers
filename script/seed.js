@@ -26,12 +26,11 @@ async function seed() {
   const user3 = await User.findById(5)
   const user4 = await User.findById(6)
 
-  const event1 = await Event.findById(1)
-
-  await user1.setEvents(event1)
-  await user2.setEvents(event1)
-  await user3.setEvents(event1)
-  await user4.setEvents(event1)
+  const eventIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  await user1.setEvents(eventIds)
+  await user2.setEvents(eventIds)
+  await user3.setEvents(eventIds)
+  await user4.setEvents(eventIds)
 
   console.log(`seeded successfully`)
 }
