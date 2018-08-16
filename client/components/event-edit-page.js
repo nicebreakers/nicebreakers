@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import EventForm from './game-forms/EventForm'
 import {changeEventAllFields} from '../store/event'
+import history from '../history'
 
 export const EditEventFormPage = props => {
   if (props.event.date) {
@@ -21,7 +22,6 @@ export const EditEventFormPage = props => {
 const mapState = (state, {match}) => ({
   event: state.events.byId[match.params.eventId]
 })
-
 const mapDispatch = dispatch => ({
   onSubmit: updatedValues => {
     dispatch(changeEventAllFields(updatedValues))

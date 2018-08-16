@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {Event, User, Interaction} = require('../db/models')
 const canOnlyBeUsedBy = require('./authMiddleware')
+const {Op} = require('sequelize')
 module.exports = router
 
 router.get('/all', canOnlyBeUsedBy('admin'), async (req, res, next) => {
@@ -12,43 +13,60 @@ router.get('/all', canOnlyBeUsedBy('admin'), async (req, res, next) => {
   }
 })
 
-router.get('/:eventId', canOnlyBeUsedBy('admin'), async (req, res, next) => {
-  try {
-    const events = await Event.findById(req.params.eventId)
-    res.send(events)
-  } catch (err) {
-    next(err)
-  }
-})
-
-router.get(
-  '/',
-  canOnlyBeUsedBy('admin', 'participant', 'self', 'leader'),
-  async (req, res, next) => {
-    try {
-      if (req.user) {
-        const events = await Event.findAll(
-          {
-            include: [User]
-          },
-          {where: {id: req.user.id}}
-        )
-        res.send(events)
-      } else {
-        res.send('Cannot grant access to events')
+router
+  .route('/')
+  .get(
+    canOnlyBeUsedBy('admin', 'participant', 'self', 'leader'),
+    async (req, res, next) => {
+      try {
+        if (req.user) {
+          const events = await Event.findAll(
+            {
+              include: [User]
+            },
+            {where: {id: req.user.id}}
+          )
+          res.send(events)
+        } else {
+          res.send('Cannot grant access to events')
+        }
+      } catch (err) {
+        next(err)
       }
+    }
+  )
+  .post(canOnlyBeUsedBy('admin', 'leader'), async (req, res, next) => {
+    const {name, status, description, date, location} = req.body
+    try {
+      const newEvent = await Event.create({
+        name,
+        status,
+        description,
+        date,
+        location
+      })
+      //add user to the event
+      const currentUser = await User.findById(req.user.id)
+      newEvent.addUser(currentUser)
+      res.send(newEvent)
     } catch (err) {
       next(err)
     }
-  }
-)
+  })
 
 //This route takes in the entire object and changes the entire object
 //Presumes that values meant to remain consistent will be passed in
-router.put(
-  '/:eventId',
-  canOnlyBeUsedBy('admin', 'leader'),
-  async (req, res, next) => {
+router
+  .route('/:eventId')
+  .get(canOnlyBeUsedBy('admin'), async (req, res, next) => {
+    try {
+      const events = await Event.findById(req.params.eventId)
+      res.send(events)
+    } catch (err) {
+      next(err)
+    }
+  })
+  .put(canOnlyBeUsedBy('admin', 'leader'), async (req, res, next) => {
     const {name, status, description, date, location} = req.body
     try {
       const targetEvent = await Event.findById(req.params.eventId)
@@ -67,8 +85,7 @@ router.put(
     } catch (err) {
       next(err)
     }
-  }
-)
+  })
 
 //This route Specifically changes status
 router.put(
@@ -98,23 +115,16 @@ router.put('/:eventId/date', async (req, res, next) => {
   }
 })
 
-router.post('/', canOnlyBeUsedBy('admin', 'leader'), async (req, res, next) => {
-  const {name, status, description, date, location} = req.body
-  try {
-    const newEvent = await Event.create({
-      name,
-      status,
-      description,
-      date,
-      location
-    })
-    //add user to the event
-    const currentUser = await User.findById(req.user.id)
-    newEvent.addUser(currentUser)
-    res.send(newEvent)
-  } catch (err) {
-    next(err)
-  }
+router.route('/:eventId/round/:round').get((req, res, next) => {
+  Interaction.findOne({
+    where: {
+      [Op.or]: [{aId: req.user.id}, {bId: req.user.id}],
+      round: +req.params.round,
+      eventId: +req.params.eventId
+    }
+  })
+    .then(data => res.json(data))
+    .catch(next)
 })
 
 /*
