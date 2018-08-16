@@ -16,7 +16,7 @@ router.put(
 
       //Check the Round?
       if (round !== interaction.round)
-        throw 'Round does not match the interaction round'
+        throw Error('Round does not match the interaction round')
 
       //Check to see if the user is either a or b
       if (req.user.id === aId) await interaction.update({aInput: userInput})
