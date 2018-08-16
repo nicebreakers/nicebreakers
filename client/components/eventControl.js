@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import {sendGameInitEvent} from '../store'
+import {sendGameInitEvent, sendEndGameEvent, isEventDone} from '../store'
 
 import socket from '../socket'
 import {
@@ -31,6 +31,7 @@ class EventControl extends React.Component {
   }
 
   render() {
+    console.log('done?', this.props.isGameDone)
     const {initGame, match} = this.props
     const {eventId} = match.params
     return (
@@ -52,17 +53,27 @@ class EventControl extends React.Component {
               className="btn waves waves-effect"
               type="button"
               onClick={this.sendRequestNextRoundEvent}
+              disabled={this.props.isGameDone}
             >
               Next Round
             </button>
           </div>
-          <div className="col s12 m4">
+          {/* <div className="col s12 m4">
             <button
               className="btn waves waves-effect"
               type="button"
               onClick={this.sendMoveToReviewEvent}
             >
               Move To Review
+            </button>
+          </div> */}
+          <div className="col s12 m4">
+            <button
+              className="btn waves waves-effect"
+              type="button"
+              onClick={() => this.props.endGame(eventId)}
+            >
+              End Game
             </button>
           </div>
         </div>
@@ -71,8 +82,13 @@ class EventControl extends React.Component {
   }
 }
 
-const mapDispatch = dispatch => ({
-  initGame: eventId => dispatch(sendGameInitEvent(eventId))
+const mapState = (state, {match}) => ({
+  isGameDone: isEventDone(state, match.params.eventId)
 })
 
-export default connect(null, mapDispatch)(EventControl)
+const mapDispatch = dispatch => ({
+  initGame: eventId => dispatch(sendGameInitEvent(eventId)),
+  endGame: eventId => dispatch(sendEndGameEvent(eventId))
+})
+
+export default connect(mapState, mapDispatch)(EventControl)

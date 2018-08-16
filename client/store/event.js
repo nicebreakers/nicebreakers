@@ -9,7 +9,8 @@ import {
   REQUEST_NEXT_ROUND,
   START_EVENT,
   ROOM,
-  EVENT_PREFIX
+  EVENT_PREFIX,
+  END_EVENT
 } from '../../server/socket/events'
 
 /**
@@ -47,7 +48,16 @@ export const sendGameInitEvent = eventId => dispatch => {
     .catch(err => console.error(err))
 }
 
-//  export const leaderRequestNextRound =
+export const sendEndGameEvent = eventId => dispatch => {
+  axios
+    .put(`/api/events/${eventId}/status`, {status: 'done'})
+    .then(({data}) => dispatch(updateEventStatus(data)))
+    .then(() => {
+      socket.emit(END_EVENT, {eventId})
+      console.log(`Emitted ${END_EVENT} for event ${eventId}`)
+    })
+    .catch(err => console.error(err))
+}
 
 /**
  * NON-SOCKET THUNK CREATORS
@@ -143,4 +153,9 @@ export const getEventsByStatus = (allState, status) => {
 export const isEventPending = (state, eventId) => {
   const event = state.events.byId[eventId]
   return event ? event.status === 'pending' : false
+}
+
+export const isEventDone = (state, eventId) => {
+  const event = state.events.byId[eventId]
+  return event ? event.status === 'done' : false
 }

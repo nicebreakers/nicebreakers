@@ -9,7 +9,8 @@ import {
   fetchAllPrompts,
   isEventPending,
   updateEventStatus,
-  getRoundInteraction
+  getRoundInteraction,
+  isEventDone
 } from '../../store'
 
 import socket from '../../socket'
@@ -19,7 +20,8 @@ import {
   EVENT_STARTED,
   NEXT_ROUND,
   ROOM,
-  EVENT_PREFIX
+  EVENT_PREFIX,
+  EVENT_ENDED
 } from '../../../server/socket/events'
 
 class Controller extends Component {
@@ -53,10 +55,18 @@ class Controller extends Component {
 
       this.props.fetchRound(eventId, 1)
 
-      // this.props.updateEventStatus({
-      //   ...this.props.event, // THIS MUST STAY LIKE THIS OTHERWISE BUG.
-      //   status: 'in_progress'
-      // })
+      this.props.updateEventStatus({
+        ...this.props.event, // THIS MUST STAY LIKE THIS OTHERWISE BUG.
+        status: 'in_progress'
+      })
+    })
+
+    socket.on(EVENT_ENDED, ({eventId}) => {
+      console.log(`Got ${EVENT_ENDED} with payload=`, eventId)
+      this.props.updateEventStatus({
+        ...this.props.event, // THIS MUST STAY LIKE THIS OTHERWISE BUG.
+        status: 'done'
+      })
     })
 
     socket.on(NEXT_ROUND, data => {
@@ -76,15 +86,6 @@ class Controller extends Component {
     socket.removeAllListeners([EVENT_STARTED, NEXT_ROUND])
   }
 
-  //temporary (goes through the components until we have sockets in place)
-  nextPhase = () => {
-    const curr = this.state.value
-    let next = (curr + 1) % 5
-    this.setState({
-      value: next
-    })
-  }
-
   randomPrompt = () => {
     const promptLength = this.props.prompt.length
     if (promptLength > 0) {
@@ -95,30 +96,32 @@ class Controller extends Component {
   }
 
   checkPhase() {
-    // console.log(this.props.prompt)
-    // const phases = ['PreGame', 'Prompt', 'Notes', 'PostNotes', 'GameEnded']
-    // const expr = phases[this.state.value]
     const gameEndedMessage = `Thank you for playing`
     const postNotesPhaseMessage = `Waiting for the next round`
     const preGameMessage = `Please wait for the event to begin`
 
     if (this.props.pending) {
       return <PreGameMessenger preGameMessage={preGameMessage} />
+    } else if (this.props.isDone) {
+      return <GameEnded gameEndedMessage={gameEndedMessage} />
     } else {
       switch ('Prompt') {
         case 'Prompt':
           return (
-            <PromptPhase
-              shape={this.props.shape}
-              prompt={this.randomPrompt()}
-            />
+            <div>
+              <PromptPhase
+                shape={this.props.shape}
+                prompt={this.randomPrompt()}
+              />
+              <NotesPhase />
+            </div>
           )
-        case 'Notes':
-          return <NotesPhase />
-        case 'PostNotes':
-          return (
-            <PostNotesPhase postNotesPhaseMessage={postNotesPhaseMessage} />
-          )
+        // case 'Notes':
+        //   return <NotesPhase />
+        // case 'PostNotes':
+        //   return (
+        //     <PostNotesPhase postNotesPhaseMessage={postNotesPhaseMessage} />
+        //   )
         case 'GameEnded':
           return <GameEnded gameEndedMessage={gameEndedMessage} />
         default:
@@ -129,18 +132,7 @@ class Controller extends Component {
 
   render() {
     const whichComponentToRender = this.checkPhase()
-    return (
-      <div className="container">
-        {whichComponentToRender}
-        <button
-          className="waves-effect waves-light btn"
-          type="button"
-          onClick={() => this.nextPhase()}
-        >
-          Next
-        </button>
-      </div>
-    )
+    return <div className="container">{whichComponentToRender}</div>
   }
 }
 
@@ -149,7 +141,8 @@ const mapStateToProps = (state, {match}) => {
     shape: '/dumbpics/circle.png',
     prompt: Object.values(state.prompt.byId),
     pending: isEventPending(state, match.params.eventId),
-    event: state.events.byId[match.params.eventId]
+    event: state.events.byId[match.params.eventId],
+    isDone: isEventDone(state, match.params.eventId)
   }
 }
 
