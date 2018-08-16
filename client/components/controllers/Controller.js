@@ -10,7 +10,8 @@ import {
   isEventPending,
   updateEventStatus,
   getRoundInteraction,
-  isEventDone
+  isEventDone,
+  getRound
 } from '../../store'
 
 import socket from '../../socket'
@@ -71,7 +72,8 @@ class Controller extends Component {
 
     socket.on(NEXT_ROUND, data => {
       console.log(`Got ${NEXT_ROUND} with payload=`, data)
-      this.props.fetchRound(eventId, data.roundNumber)
+      console.log(`fetching round ${data.round} for event ${data.eventId}`)
+      this.props.fetchRound(eventId, data.round)
     })
   }
 
@@ -142,7 +144,8 @@ const mapStateToProps = (state, {match}) => {
     prompt: Object.values(state.prompt.byId),
     pending: isEventPending(state, match.params.eventId),
     event: state.events.byId[match.params.eventId],
-    isDone: isEventDone(state, match.params.eventId)
+    isDone: isEventDone(state, match.params.eventId),
+    currentRound: getRound(state)
   }
 }
 
