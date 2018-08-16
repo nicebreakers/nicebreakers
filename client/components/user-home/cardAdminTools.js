@@ -8,8 +8,9 @@ const CardAdminTools = ({id, type}) => {
   return (
     <div className="card-action right-align">
       <Link to={`/events/${id}/${actionName}`} className="deep-orange-text">
-        {actionName}
+        {actionName} Event
       </Link>
+      <br />
       {type === 'pending' && (
         <Link to={`/events/${id}/console`} className="teal-text">
           Start Event
