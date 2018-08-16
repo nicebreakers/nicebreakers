@@ -158,7 +158,7 @@ export default function(state = defaultEvents, action) {
     case RESET_ROUNDS: {
       return {
         byId: {...state.byId},
-        round: 1
+        round: 2
       }
     }
     default:
