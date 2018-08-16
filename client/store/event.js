@@ -79,6 +79,7 @@ export const changeEventAllFields = (
     eventSubmission
   )
   dispatch(updateEventAll(updatedEvent))
+  history.push('/home')
 }
 
 export const changeEventStatus = (status, eventId) => async dispatch => {
@@ -89,6 +90,7 @@ export const changeEventStatus = (status, eventId) => async dispatch => {
     }
   )
   dispatch(updateEventStatus(updatedEvent))
+  history.push('/home')
 }
 export const changeEventDate = (newDate, eventId) => async dispatch => {
   const {data: updatedEvent} = await axios.put(
