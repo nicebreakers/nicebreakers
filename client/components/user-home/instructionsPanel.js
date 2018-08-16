@@ -19,7 +19,7 @@ const InstructionPanel = props => (
         <h4>Getting Started</h4>
         <p>
           {' '}
-          Press the orange button in the bottom left corner to create an event{' '}
+          Press the orange button in the bottom right corner to create an event{' '}
         </p>
         <p> You're going to need four friends and a leader to do an event.</p>
         <p>
