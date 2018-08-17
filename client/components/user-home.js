@@ -17,7 +17,31 @@ class UserHome extends React.Component {
     return (
       <div className="container">
         <InstructionPanel />
-        <h5>Welcome, {props.email}</h5>
+
+        <div className="divider" />
+        <div className="section">
+          {' '}
+          <h6>In Progress Events</h6>{' '}
+        </div>
+        <div className="divider" />
+        <div className="row">
+          {props.inProgressEvents.length > 0 ? (
+            props.inProgressEvents.map(event => {
+              return (
+                <EventCard
+                  key={event.id}
+                  id={event.id}
+                  details={event.description}
+                  title={event.name}
+                  type="in_progress"
+                  notParticipant={props.notParticipant}
+                />
+              )
+            })
+          ) : (
+            <h6>None</h6>
+          )}
+        </div>
         <div className="divider" />
         <div className="section">
           {' '}
@@ -69,6 +93,7 @@ const mapState = state => {
     events: state.events,
     pendingEvents: getEventsByStatus(state, 'pending'),
     doneEvents: getEventsByStatus(state, 'done'),
+    inProgressEvents: getEventsByStatus(state, 'in_progress'),
     notParticipant: state.user.role !== 'participant'
   }
 }
