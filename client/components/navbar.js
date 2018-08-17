@@ -23,6 +23,12 @@ const LoggedInLinks = props => (
         Logout
       </a>
     </li>
+    <li>
+      {' '}
+      <Link to="/events/create" className="sidenav-close">
+        Create Event
+      </Link>
+    </li>
   </span>
 )
 
