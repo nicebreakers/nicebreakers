@@ -41,7 +41,7 @@ const SignUpForm = props => {
         <div className="row">
           <div className="file-field input-field col s12">
             <div className="btn">
-              <span>File</span>
+              <span>Upload Profile Picture</span>
               <input type="file" />
             </div>
             <div className="file-path-wrapper">

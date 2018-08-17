@@ -18,7 +18,7 @@ describe('PlayerList', () => {
 
   beforeEach(() => {
     // playerList = shallow(<PlayerList players={testPlayers} />)
-    wrapper = shallow(<PlayerList players={testPlayers} />)
+    wrapper = shallow(<PlayerList participants={testPlayers} />)
 
     //need to add test
   })
