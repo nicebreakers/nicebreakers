@@ -3,8 +3,8 @@ import React from 'react'
 const PromptPhase = props => {
   const {shape, prompt} = props
   return (
-    <div>
-      <div className="section flow-text">
+    <div className="card">
+      {/* <div className="section flow-text">
         <blockquote>ROUND STARTED</blockquote>
         <p>
           Find a person with the same image that is on your phone below! You
@@ -12,13 +12,16 @@ const PromptPhase = props => {
           <strong>other person's</strong> answer.
         </p>
         <p>We'll let you know when the next round starts!</p>
-      </div>
-      <div className="card">
+      </div> */}
+      <div className="card-content">
+        <div className="card-title">
+          <p>
+            <strong>Prompt: </strong>
+            {prompt}
+          </p>
+        </div>
         <div className="card-image">
           <img src={shape} />
-        </div>
-        <div className="card-content">
-          <p>{prompt}</p>
         </div>
       </div>
     </div>

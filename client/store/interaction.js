@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {getShapeById, getAnimalById} from '../components/pictureHashLookup'
+import {updateEventStatus} from '../store'
 
 // import history from '../history'
 // import socket from '../socket'
@@ -14,52 +15,6 @@ import {getShapeById, getAnimalById} from '../components/pictureHashLookup'
 //   EVENT_PREFIX
 // } from '../../server/socket/events'
 
-const eventIdMock = 12
-const fakeData = [
-  {
-    id: 1,
-    eventId: eventIdMock,
-    aId: 1,
-    bId: 2,
-    promptId: 1
-  },
-  {
-    id: 2,
-    eventId: eventIdMock,
-    aId: 3,
-    bId: 4,
-    promptId: 1
-  },
-  {
-    id: 3,
-    eventId: eventIdMock,
-    aId: 1,
-    bId: 3,
-    promptId: 2
-  },
-  {
-    id: 4,
-    eventId: eventIdMock,
-    aId: 2,
-    bId: 4,
-    promptId: 2
-  },
-  {
-    id: 5,
-    eventId: eventIdMock,
-    aId: 1,
-    bId: 4,
-    promptId: 3
-  },
-  {
-    id: 6,
-    eventId: eventIdMock,
-    aId: 2,
-    bId: 3,
-    promptId: 3
-  }
-]
-
 /**
  * ACTION TYPES
  */
@@ -71,7 +26,7 @@ const GOT_NEXT_INTERACTION = 'GOT_NEXT_INTERACTION'
  */
 export const gotInteractions = (eventId, interactions) => ({
   type: GOT_INTERACTIONS,
-  interactions: fakeData
+  interactions: interactions
 })
 
 const gotNextInteraction = interaction => ({
@@ -101,18 +56,31 @@ const defaultInteractions = {
  * REDUCER
  */
 
-export const getRoundInteraction = (eventId, round) => dispatch => {
+export const getRoundInteraction = (
+  eventId,
+  round,
+  updatedEvent
+) => dispatch => {
   axios
     .get(`/api/events/${eventId}/round/${round}`)
     .then(({data}) => dispatch(gotNextInteraction(data)))
+    .then(() => dispatch(updateEventStatus({...updatedEvent})))
     .catch(error => console.error(error))
 }
+
+export const updateInteractionData = interaction => dispatch => {
+  axios
+    .put(`/api/interactions/${interaction.id}`, interaction)
+    .then(() => console.log('DEFINITELY DO STUFF AND FIX THIS'))
+    .catch(err => console.error(err))
+}
+
 export default function(state = defaultInteractions, action) {
   switch (action.type) {
     case GOT_NEXT_INTERACTION:
       return {
         ...state,
-        currentInteraction: action.interaction
+        currentInteraction: {...action.interaction}
       }
     case GOT_INTERACTIONS:
       return {

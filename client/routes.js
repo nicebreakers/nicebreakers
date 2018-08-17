@@ -16,7 +16,8 @@ import {
   ProtectedRoute,
   EventControl,
   ProfileForm,
-  Controller
+  Controller,
+  SingleEventPage
 } from './components'
 
 /**
@@ -75,6 +76,10 @@ class Routes extends Component {
               component={Controller}
               condition={isLoggedIn}
               redirect="/login"
+            />
+            <Route
+              path="/events/:eventId"
+              render={routeProps => <SingleEventPage {...routeProps} />}
             />
           </Switch>
         )}

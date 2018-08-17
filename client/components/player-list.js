@@ -1,26 +1,26 @@
 import React, {Component} from 'react'
 import {PlayerSingle} from '../components'
-import {deletePlayer, fetchAllPlayers} from '../store'
+import {deletePlayer, fetchPlayersByEventId} from '../store'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 class PlayerList extends Component {
   componentDidMount() {
-    const {getPlayers} = this.props
-    getPlayers()
+    const {getUsersAtEvent} = this.props
+    getUsersAtEvent()
   }
   handleClick = (event, data) => {
     event.preventDefault()
     this.props.removePlayer(data)
   }
   render() {
-    const {players} = this.props
+    const {participants} = this.props
     return (
       <div>
-        {players.map((singleEmail, index) => (
+        {participants.map(participant => (
           <PlayerSingle
-            key={index}
-            data={singleEmail}
+            key={participant.id}
+            participant={participant}
             handleClick={this.handleClick}
           />
         ))}
@@ -30,12 +30,12 @@ class PlayerList extends Component {
 }
 
 const mapStateToProps = state => ({
-  players: state.player || []
+  participants: state.usersAtEvent || []
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, {eventId}) => ({
   removePlayer: playerId => dispatch(deletePlayer(playerId)),
-  getPlayers: () => dispatch(fetchAllPlayers())
+  getUsersAtEvent: () => dispatch(fetchPlayersByEventId(eventId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayerList)
@@ -45,6 +45,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(PlayerList)
  */
 PlayerList.propTypes = {
   players: PropTypes.array,
-  getPlayers: PropTypes.func,
+  getUsersAtEvent: PropTypes.func,
   removePlayer: PropTypes.func
 }

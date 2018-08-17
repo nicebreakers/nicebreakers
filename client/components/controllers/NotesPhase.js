@@ -1,16 +1,19 @@
-import React, {Component} from 'react'
+import React from 'react'
+import {Field, reduxForm} from 'redux-form'
+import {connect} from 'react-redux'
+import {updateInteractionData} from '../../store'
 
-class NotesPhase extends Component {
-  render() {
-    const {interactionId, pristine, submitting} = this.props
-    return (
-      <div className="row">
-        <form className="col s12" onSubmit={this.handleSubmit}>
-          <div className="input-field col s12">
-            <textarea id="textarea1" className="materialize-textarea" />
-            <label htmlFor="textarea1">Textarea</label>
-          </div>
-        </form>
+let NotesPhase = ({pristine, submitting, handleSubmit, myId}) => (
+  <div className="row">
+    <form className="card col s12" onSubmit={handleSubmit}>
+      <div className="input-field col s12">
+        <Field
+          component="textarea"
+          id="inputarea"
+          name={`${myId}Input`}
+          className="materialize-textarea"
+        />
+        <label htmlFor="inputarea">Textarea</label>
         <button
           className="waves-effect waves-light btn"
           type="submit"
@@ -19,8 +22,23 @@ class NotesPhase extends Component {
           Submit
         </button>
       </div>
-    )
-  }
-}
+    </form>
+  </div>
+)
+
+const mapStateToProps = state => ({
+  initialValues: state.interaction.currentInteraction, //so we get the id etc...
+  myId: state.interaction.currentInteraction
+    ? state.user.id === state.interaction.currentInteraction.aId ? 'a' : 'b'
+    : ''
+})
+
+const mapDispatchToProps = dispatch => ({
+  onSubmit: values => dispatch(updateInteractionData(values))
+})
+
+NotesPhase = reduxForm({form: 'controllerInputForm'})(NotesPhase)
+
+NotesPhase = connect(mapStateToProps, mapDispatchToProps)(NotesPhase)
 
 export default NotesPhase

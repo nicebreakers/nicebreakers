@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import {Field, reduxForm} from 'redux-form'
 import propTypes from 'prop-types'
 
@@ -31,16 +31,20 @@ let EventForm = props => {
         type="text"
         placeholder="An Event in Chicago"
       />
-      <label>Event Status</label>
-      <Field
-        name="status"
-        component="select"
-        ref={() => $('select').formSelect()}
-      >
-        <option value="pending">Pending</option>
-        <option value="in_progress">In Progress</option>
-        <option value="done">Done</option>
-      </Field>
+      {props.formAction === 'Edit' && (
+        <Fragment>
+          <label>Event Status</label>
+          <Field
+            name="status"
+            component="select"
+            ref={() => $('select').formSelect()}
+          >
+            <option value="pending">Pending</option>
+            <option value="in_progress">In Progress</option>
+            <option value="done">Done</option>
+          </Field>
+        </Fragment>
+      )}
       <button
         className="btn waves waves-light"
         type="submit"
