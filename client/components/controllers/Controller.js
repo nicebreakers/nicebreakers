@@ -24,15 +24,20 @@ import {
   NEXT_ROUND,
   ROOM,
   EVENT_PREFIX,
-  EVENT_ENDED
+  EVENT_ENDED,
+  END_EVENT
 } from '../../../server/socket/events'
 
 class Controller extends Component {
-  // state = {
-  //   value: 0
-  // }
-
   componentDidMount() {
+    socket.removeAllListeners([
+      EVENT_STARTED,
+      NEXT_ROUND,
+      EVENT_ENDED,
+      START_EVENT,
+      END_EVENT,
+      REQUEST_NEXT_ROUND
+    ])
     /*
     *   Load in State
     */
@@ -64,6 +69,8 @@ class Controller extends Component {
       // we need to update the status only AFTER we get the interactions.
     })
 
+    const startFunc = ({eventId}) => {}
+
     socket.on(EVENT_ENDED, ({eventId}) => {
       console.log(`Got ${EVENT_ENDED} with payload=`, eventId)
       this.props.updateEventStatus({
@@ -86,8 +93,8 @@ class Controller extends Component {
   }
 
   componentWillUnmount() {
+    socket.removeAllListeners()
     // Make sure to clean up all socket events in case this is re-rendered.
-    socket.removeAllListeners([EVENT_STARTED, NEXT_ROUND, EVENT_ENDED])
   }
 
   randomPrompt = () => {
