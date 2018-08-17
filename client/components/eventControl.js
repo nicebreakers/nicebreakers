@@ -7,7 +7,8 @@ import {
   isEventDone,
   leaderRequestNextRound,
   getRound,
-  resetRound
+  resetRound,
+  isEventPending
 } from '../store'
 
 import socket from '../socket'
@@ -48,8 +49,29 @@ class EventControl extends React.Component {
     }
   }
 
+  disableStart = () => {
+    const {isGamePending} = this.props
+    return !isGamePending
+  }
+
+  disableNextRound = () => {
+    const {isGamePending, isGameDone} = this.props
+    if (isGameDone || isGamePending) {
+      return true
+    }
+    return false
+  }
+
+  disableEnd = () => {
+    const {isGamePending, isGameDone} = this.props
+    if (isGameDone || isGamePending) {
+      return true
+    }
+    return false
+  }
+
   render() {
-    const {initGame, nextRound, match} = this.props
+    const {isGameDone, isGamePending, match} = this.props
     const {eventId} = match.params
     return (
       <div className="container">
@@ -61,6 +83,7 @@ class EventControl extends React.Component {
               className="btn waves waves-effect"
               type="button"
               onClick={() => this.initGameWrapper(eventId)}
+              disabled={this.disableStart()}
             >
               Start Event
             </button>
@@ -69,7 +92,7 @@ class EventControl extends React.Component {
             <button
               className="btn waves waves-effect"
               type="button"
-              disabled={this.props.isGameDone}
+              disabled={this.disableNextRound()}
               onClick={() =>
                 this.nextRoundWrapper(eventId, this.props.currRound)
               }
@@ -91,6 +114,7 @@ class EventControl extends React.Component {
               className="btn waves waves-effect"
               type="button"
               onClick={() => this.props.endGame(eventId)}
+              disabled={this.disableEnd()}
             >
               End Game
             </button>
@@ -103,6 +127,7 @@ class EventControl extends React.Component {
 
 const mapState = (state, {match}) => ({
   isGameDone: isEventDone(state, match.params.eventId),
+  isGamePending: isEventPending(state, match.params.eventId),
   currRound: getRound(state, match.params.eventId)
 })
 
