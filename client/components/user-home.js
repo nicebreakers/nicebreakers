@@ -55,7 +55,6 @@ class UserHome extends React.Component {
             />
           ))}
         </div>
-        <EventActionButton />
       </div>
     )
   }
