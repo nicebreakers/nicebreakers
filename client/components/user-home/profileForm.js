@@ -5,7 +5,13 @@ import {Field, reduxForm} from 'redux-form'
 import {updateUser} from '../../store'
 import {connect} from 'react-redux'
 
-let ProfileForm = ({handleSubmit, pristine, submitting, reset}) => (
+let ProfileForm = ({
+  handleSubmit,
+  pristine,
+  submitting,
+  reset,
+  initialValues
+}) => (
   <div className="container">
     <h3>User Profile </h3>
     <br />
@@ -22,18 +28,22 @@ let ProfileForm = ({handleSubmit, pristine, submitting, reset}) => (
         <Field name="email" component="input" type="email" />
         <label htmlFor="email"> Email </label>
       </div>
-      {/* TODO: Add admin check */}
+
       <div className="col s12 input-field">
-        <Field
-          name="role"
-          component="select"
-          ref={() => $('select').formSelect()}
-        >
-          <option disabled>Choose User Role...</option>
-          <option value="participant">Event Participant</option>
-          <option value="leader">Event Leader</option>
-          <option value="admin">Administrator</option>
-        </Field>
+        {initialValues.role === 'admin' ? (
+          <Field
+            name="role"
+            component="select"
+            ref={() => $('select').formSelect()}
+          >
+            <option disabled>Choose User Role...</option>
+            <option value="participant">Event Participant</option>
+            <option value="leader">Event Leader</option>
+            <option value="admin">Administrator</option>
+          </Field>
+        ) : (
+          <Field name="role" component="input" type="text" disabled />
+        )}
         <label htmlFor="role">User Role</label>
       </div>
       <div className="col s6 m4 l3 xl2">
