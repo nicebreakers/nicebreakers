@@ -51,7 +51,7 @@ const SingleEventPage = props => {
           </button>
         </div>
       </div>
-      {props.event.status === 'pending' &&
+      {!props.event.status !== 'done' &&
         (props.user.role === 'admin' ? (
           <div className="btn m7">
             <Link
