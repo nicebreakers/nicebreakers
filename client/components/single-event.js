@@ -33,12 +33,12 @@ const SingleEventPage = props => {
         Edit Event
       </Link>
       <div className="row">
-        <PlayerList />
+        <PlayerList eventId={props.match.params.eventId} />
       </div>
       <div className="row">
         <div className="col s6">
           <p> Add Some Friends </p>
-          <PlayerAdd />
+          <PlayerAdd eventId={props.match.params.eventId} />
         </div>
         <div className="col s6">
           <button
