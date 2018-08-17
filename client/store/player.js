@@ -18,16 +18,24 @@ const removedUser = userId => ({type: REMOVE_USER_FROM_EVENT, userId})
  */
 
 export const fetchPlayersByEventId = eventId => async dispatch => {
-  const {data: players} = await axios.get(`/api/users/atEvents/${eventId}`)
-  dispatch(gotUsersForEvent(players))
+  try {
+    const {data: players} = await axios.get(`/api/users/atEvents/${eventId}`)
+    dispatch(gotUsersForEvent(players))
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 export const addUserToEvent = (userEmail, eventId) => async dispatch => {
-  const {data: user} = await axios.put('/api/users/atEvents', {
-    userEmail,
-    eventId
-  })
-  dispatch(addedUser(user))
+  try {
+    const {data: user} = await axios.put('/api/users/atEvents', {
+      userEmail,
+      eventId
+    })
+    dispatch(addedUser(user))
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 /**
@@ -41,7 +49,7 @@ const defaultUsersAtEvent = []
 export default function(state = defaultUsersAtEvent, action) {
   switch (action.type) {
     case GET_USERS_AT_EVENT:
-      return action.users.Users
+      return action.users
     case ADD_USER_TO_EVENT: {
       return [...state, action.user]
     }

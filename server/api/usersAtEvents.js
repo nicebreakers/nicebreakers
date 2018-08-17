@@ -8,10 +8,9 @@ router.get(
   canOnlyBeUsedBy('admin', 'leader', 'self', 'participant'),
   async (req, res, next) => {
     try {
-      const events = await Event.findById(req.params.eventId, {
-        include: [{model: User}]
-      })
-      res.json(events)
+      const events = await Event.findById(req.params.eventId)
+      const users = await events.getUsers()
+      res.json(users)
     } catch (err) {
       next(err)
     }

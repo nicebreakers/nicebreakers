@@ -43,7 +43,7 @@ const SingleEventPage = props => {
         <div className="col s6">
           <button
             className="btn"
-            button="button"
+            type="button"
             onClick={() => console.log('Invites Sent')}
           >
             {' '}
@@ -51,19 +51,34 @@ const SingleEventPage = props => {
           </button>
         </div>
       </div>
-      {props.event.status === 'pending' && (
-        <div className="btn m7">
-          <Link to={`/events/${props.event.id}/console`} className="white-text">
-            Go Event Controls
-          </Link>
-        </div>
-      )}
+      {props.event.status === 'pending' &&
+        (props.user.role === 'admin' ? (
+          <div className="btn m7">
+            <Link
+              to={`/events/${props.event.id}/console`}
+              className="white-text"
+            >
+              Go Event Controls
+            </Link>
+          </div>
+        ) : (
+          <div className="btn m7">
+            <Link
+              className="white-text"
+              to={`/events/${props.event.id}/controller`}
+            >
+              {' '}
+              Join the Event{' '}
+            </Link>
+          </div>
+        ))}
     </div>
   ) : (
     <h1> Loading </h1>
   )
 }
 const mapState = (state, {match}) => ({
+  user: state.user,
   event: state.events.byId[match.params.eventId]
 })
 
