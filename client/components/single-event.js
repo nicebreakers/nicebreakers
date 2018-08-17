@@ -1,54 +1,85 @@
 import React from 'react'
 import PlayerList from './player-list'
 import PlayerAdd from './player-add'
+import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
-const mockData = {
-  location: 'Chicago',
-  name: 'A Test Event',
-  date: '2018',
-  description: 'A Test Event that Tests',
-  status: 'Pending',
-  Players: [{name: 'John'}, {name: 'Jack'}, {name: 'Jill'}]
+const SingleEventPage = props => {
+  return props.event ? (
+    <div className="container">
+      <div className="row">
+        <div className="col s12 m6">
+          <label> Event Name</label>
+          <p> {props.event.name}</p>
+        </div>
+        <div className="col s12 m6">
+          <label> Date of Event </label>
+          <p> {props.event.date}</p>
+        </div>
+        <div className="col s12 m6 ">
+          <label> Location</label>
+          <p> {props.event.location}</p>
+        </div>
+        <div className="col s12 m6">
+          <label> Event Status </label>
+          <p> {props.event.status}</p>
+        </div>
+        <div className="col">
+          <label> Description</label>
+          <p> {props.event.description} </p>
+        </div>
+      </div>
+      <Link to={`/events/${props.event.id}/edit`} className="white-text btn">
+        Edit Event
+      </Link>
+      <div className="row">
+        <PlayerList eventId={props.match.params.eventId} />
+      </div>
+      <div className="row">
+        <div className="col s6">
+          <p> Add Some Friends </p>
+          <PlayerAdd eventId={props.match.params.eventId} />
+        </div>
+        <div className="col s6">
+          <button
+            className="btn"
+            type="button"
+            onClick={() => console.log('Invites Sent')}
+          >
+            {' '}
+            Send out Invites!{' '}
+          </button>
+        </div>
+      </div>
+      {props.event.status === 'pending' &&
+        (props.user.role === 'admin' ? (
+          <div className="btn m7">
+            <Link
+              to={`/events/${props.event.id}/console`}
+              className="white-text"
+            >
+              Go Event Controls
+            </Link>
+          </div>
+        ) : (
+          <div className="btn m7">
+            <Link
+              className="white-text"
+              to={`/events/${props.event.id}/controller`}
+            >
+              {' '}
+              Join the Event{' '}
+            </Link>
+          </div>
+        ))}
+    </div>
+  ) : (
+    <h1> Loading </h1>
+  )
 }
+const mapState = (state, {match}) => ({
+  user: state.user,
+  event: state.events.byId[match.params.eventId]
+})
 
-const SingleEventPage = props => (
-  <div className="Container">
-    <div className="row">
-      <div className="col s12 m6">
-        <label> Event Name</label>
-        <p> {mockData.name}</p>
-      </div>
-      <div className="col s12 m6">
-        <label> Date of Event </label>
-        <p> {mockData.date}</p>
-      </div>
-    </div>
-    <div className="row">
-      <div className="col s12 m6">
-        <label> Location</label>
-        <p> {mockData.location}</p>
-      </div>
-      <div className="col s12 m6">
-        <label> Event Status </label>
-        <p> {mockData.status}</p>
-      </div>
-    </div>
-    <div className="row">
-      <label> Description</label>
-      <p> {mockData.description} </p>
-    </div>
-    <div className="row">
-      <PlayerList />
-      <p> Add Some Friends </p>
-      <PlayerAdd />
-    </div>
-    <div className="row">
-      <button button="button" onClick={() => console.log('Invites Sent')}>
-        {' '}
-        Send out Invites!{' '}
-      </button>
-    </div>
-  </div>
-)
-
-export default SingleEventPage
+export default connect(mapState)(SingleEventPage)

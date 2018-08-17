@@ -64,6 +64,7 @@ export const sendEndGameEvent = eventId => dispatch => {
     .then(() => {
       socket.emit(END_EVENT, {eventId})
       console.log(`Emitted ${END_EVENT} for event ${eventId}`)
+      history.push(`/events/${eventId}`)
     })
     .catch(err => console.error(err))
 }

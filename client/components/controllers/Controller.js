@@ -24,15 +24,20 @@ import {
   NEXT_ROUND,
   ROOM,
   EVENT_PREFIX,
-  EVENT_ENDED
+  EVENT_ENDED,
+  END_EVENT
 } from '../../../server/socket/events'
 
 class Controller extends Component {
-  // state = {
-  //   value: 0
-  // }
-
   componentDidMount() {
+    socket.removeAllListeners([
+      EVENT_STARTED,
+      NEXT_ROUND,
+      EVENT_ENDED,
+      START_EVENT,
+      END_EVENT,
+      REQUEST_NEXT_ROUND
+    ])
     /*
     *   Load in State
     */
@@ -56,13 +61,15 @@ class Controller extends Component {
     socket.on(EVENT_STARTED, ({eventId}) => {
       console.log(`Got ${EVENT_STARTED} with payload=`, eventId)
 
-      this.props.fetchRound(eventId, 1)
-
-      this.props.updateEventStatus({
+      const updatedEvent = {
         ...this.props.event, // THIS MUST STAY LIKE THIS OTHERWISE BUG.
         status: 'in_progress'
-      })
+      }
+      this.props.fetchRound(eventId, 1, updatedEvent)
+      // we need to update the status only AFTER we get the interactions.
     })
+
+    const startFunc = ({eventId}) => {}
 
     socket.on(EVENT_ENDED, ({eventId}) => {
       console.log(`Got ${EVENT_ENDED} with payload=`, eventId)
@@ -86,8 +93,8 @@ class Controller extends Component {
   }
 
   componentWillUnmount() {
+    socket.removeAllListeners()
     // Make sure to clean up all socket events in case this is re-rendered.
-    socket.removeAllListeners([EVENT_STARTED, NEXT_ROUND, EVENT_ENDED])
   }
 
   randomPrompt = () => {
@@ -117,7 +124,7 @@ class Controller extends Component {
                 shape={this.props.shape}
                 prompt={this.props.question}
               />
-              <NotesPhase handleSubmit={this.props.onSubmit} />
+              <NotesPhase />
             </div>
           )
         // case 'Notes':
@@ -141,18 +148,6 @@ class Controller extends Component {
 }
 
 const mapStateToProps = (state, {match}) => {
-  // const stoot = {
-  //   interaction: {
-  //     byId: {
-  //       0: 'John',
-  //       1: 'Susan'
-  //     },
-  //     currentInteraction: {
-  //       id: 2,
-  //       round: 3
-  //     }
-  //   }
-  // }
   return {
     shape: getDisplayShape(state),
     prompt: Object.values(state.prompt.byId),
@@ -168,8 +163,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getAllPrompts: () => dispatch(fetchAllPrompts()),
     updateEventStatus: event => dispatch(updateEventStatus(event)),
-    fetchRound: (eventId, round) =>
-      dispatch(getRoundInteraction(eventId, round))
+    fetchRound: (eventId, round, updatedEvent) =>
+      dispatch(getRoundInteraction(eventId, round, updatedEvent))
     // onSubmit: newInteraction => dispatch(postInteraction(newInteraction))
   }
 }
