@@ -46,9 +46,8 @@ const LandingPage = props => (
                 <i className="material-icons">flash_on</i>
               </h2>
               <h5 className="center">Quick Setup</h5>
-
               <p className="light">
-                Enter emails and go--Nicebreakers takes care of the rest, easy,
+                Enter emails and go--Nicebreakers takes care of the rest, easy
                 and seamlessly.
               </p>
             </div>
@@ -73,7 +72,6 @@ const LandingPage = props => (
                 <i className="material-icons">settings</i>
               </h2>
               <h5 className="center">Easy to Use</h5>
-
               <p className="light">
                 No apps, no installs, no extra devices. We use responsive html
                 and websockets to create an interactive experience compatible
@@ -107,22 +105,12 @@ const LandingPage = props => (
               <i className="mdi-content-send brown-text" />
             </h3>
             <h4>Why Nicebreakers</h4>
-            <p className="left-align light">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-              scelerisque id nunc nec volutpat. Etiam pellentesque tristique
-              arcu, non consequat magna fermentum ac. Cras ut ultricies eros.
-              Maecenas eros justo, ullamcorper a sapien id, viverra ultrices
-              eros. Morbi sem neque, posuere et pretium eget, bibendum
-              sollicitudin lacus. Aliquam eleifend sollicitudin diam, eu mattis
-              nisl maximus sed. Nulla imperdiet semper molestie. Morbi massa
-              odio, condimentum sed ipsum ac, gravida ultrices erat. Nullam eget
-              dignissim mauris, non tristique erat. Vestibulum ante ipsum primis
-              in faucibus orci luctus et ultrices posuere cubilia Curae;
-            </p>
+            <p className="left-align light">Easy to use and free. Try it!</p>
           </div>
         </div>
       </div>
     </div>
+
     <div className="parallax-container valign-wrapper">
       <div className="container">
         <div className="container center">
@@ -138,6 +126,7 @@ const LandingPage = props => (
           </div>
         </div>
       </div>
+
       <div className="parallax">
         <img
           src="/media/background-landing-3.jpeg"
