@@ -82,7 +82,7 @@ class Controller extends Component {
     socket.on(NEXT_ROUND, data => {
       console.log(`Got ${NEXT_ROUND} with payload=`, data)
       console.log(`fetching round ${data.round} for event ${data.eventId}`)
-      this.props.fetchRound(eventId, data.round)
+      this.props.fetchRound(data.eventId, data.round)
     })
   }
 
@@ -154,7 +154,7 @@ const mapStateToProps = (state, {match}) => {
     pending: isEventPending(state, match.params.eventId),
     event: state.events.byId[match.params.eventId],
     isDone: isEventDone(state, match.params.eventId),
-    currentRound: getRound(state),
+    currentRound: getRound(state, match.params.eventId),
     question: getPrompt(state)
   }
 }
