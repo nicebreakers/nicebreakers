@@ -1,56 +1,62 @@
+import axios from 'axios'
 /**
  * ACTION TYPES
  */
-export const GET_PLAYERS = 'GET_PLAYERS'
-export const ADD_PLAYER = 'ADD_PLAYER'
-export const REMOVE_PLAYER = 'REMOVE_PLAYER'
+export const GET_USERS_AT_EVENT = 'GET_USERS_AT_EVENT'
+export const ADD_USER_TO_EVENT = 'ADD_USER_TO_EVENT'
+export const REMOVE_USER_FROM_EVENT = 'REMOVE_PLAYER'
 
 /**
  * ACTION CREATORS
  */
-export const getPlayers = players => ({type: GET_PLAYERS, players})
-export const addPlayer = player => ({type: ADD_PLAYER, player})
-export const removePlayer = playerId => ({type: REMOVE_PLAYER, playerId})
+const gotUsersForEvent = users => ({type: GET_USERS_AT_EVENT, users})
+const addedUser = user => ({type: ADD_USER_TO_EVENT, user})
+const removedUser = userId => ({type: REMOVE_USER_FROM_EVENT, userId})
 
-//global acting as temporary db seed
-let db = [
-  'email1@email.com',
-  'email2@email.com',
-  'email3@email.com',
-  'email4@email.com',
-  'email5@email.com'
-]
 /**
  * THUNK CREATORS
  */
-export const deletePlayer = playerId => dispatch => {
-  //using playerId as the email name since the temp db doesn't have an id
-  dispatch(removePlayer(playerId))
+
+export const fetchPlayersByEventId = eventId => async dispatch => {
+  try {
+    const {data: players} = await axios.get(`/api/users/atEvents/${eventId}`)
+    dispatch(gotUsersForEvent(players))
+  } catch (err) {
+    console.log(err)
+  }
 }
-export const createPlayer = player => dispatch => {
-  const {email} = player
-  dispatch(addPlayer(email))
+
+export const addUserToEvent = (userEmail, eventId) => async dispatch => {
+  try {
+    const {data: user} = await axios.put('/api/users/atEvents', {
+      userEmail,
+      eventId
+    })
+    dispatch(addedUser(user))
+  } catch (err) {
+    console.log(err)
+  }
 }
-export const fetchAllPlayers = () => dispatch => {
-  dispatch(getPlayers(db))
-}
+
 /**
  * INITIAL STATE
  */
-const defaultPlayers = []
+const defaultUsersAtEvent = []
 
 /**
  * REDUCER
  */
-export default function(state = defaultPlayers, action) {
+export default function(state = defaultUsersAtEvent, action) {
   switch (action.type) {
-    case GET_PLAYERS:
-      return action.players
-    case ADD_PLAYER:
-      return [...state, action.player]
-    case REMOVE_PLAYER:
-      // return state.filter(singlePlayer => singlePlayer.id !== action.playerId)
-      return state.filter(singlePlayer => singlePlayer !== action.playerId)
+    case GET_USERS_AT_EVENT:
+      return action.users
+    case ADD_USER_TO_EVENT: {
+      return [...state, action.user]
+    }
+
+    // case REMOVE_PLAYER:
+    //   // return state.filter(singlePlayer => singlePlayer.id !== action.playerId)
+    //   return state.filter(singlePlayer => singlePlayer !== action.playerId)
     default:
       return state
   }

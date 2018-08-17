@@ -3,7 +3,7 @@ import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
-import player from './player'
+import usersAtEvent from './player'
 import events from './event'
 import interaction from './interaction'
 import {reducer as formReducer} from 'redux-form'
@@ -14,7 +14,7 @@ const reducer = combineReducers({
   interaction,
   user,
   events,
-  player,
+  usersAtEvent,
   prompt,
   form: formReducer
 })

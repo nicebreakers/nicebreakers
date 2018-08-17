@@ -3,6 +3,8 @@ const {User} = require('../db/models')
 const canOnlyBeUsedBy = require('./authMiddleware')
 module.exports = router
 
+router.use('/atEvents', require('./usersAtEvents'))
+
 router
   .route('/')
   .all(canOnlyBeUsedBy('admin'))
