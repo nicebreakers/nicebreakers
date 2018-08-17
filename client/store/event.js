@@ -101,6 +101,7 @@ export const changeEventAllFields = eventSubmission => async dispatch => {
     eventSubmission
   )
   dispatch(updateEventAll(updatedEvent))
+  M.toast({html: 'Event Updated!', classes: 'green'})
   history.push('/home')
 }
 
