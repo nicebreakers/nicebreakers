@@ -5,7 +5,7 @@ import {changeEventAllFields} from '../store/event'
 import history from '../history'
 
 export const EditEventFormPage = props => {
-  if (props.event.date) {
+  if (props.event && props.event.date) {
     props.event.date = props.event.date.substring(0, 10) //fixes prepopulation of date
   }
   return (

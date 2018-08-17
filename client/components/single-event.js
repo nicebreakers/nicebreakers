@@ -1,55 +1,94 @@
 import React from 'react'
-import PlayerList from './player-list'
-import PlayerAdd from './player-add'
+import {PlayerList, PlayerAddForm} from '../components'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-const SingleEventPage = props => {
-  return props.event ? (
+const SingleEventPage = ({event, match, user}) => {
+  return event ? (
     <div className="container">
-      <div className="row">
-        <div className="col s12 m6">
-          <label> Event Name</label>
-          <p> {props.event.name}</p>
-        </div>
-        <div className="col s12 m6">
-          <label> Date of Event </label>
-          <p> {props.event.date}</p>
-        </div>
-        <div className="col s12 m6 ">
-          <label> Location</label>
-          <p> {props.event.location}</p>
-        </div>
-        <div className="col s12 m6">
-          <label> Event Status </label>
-          <p> {props.event.status}</p>
-        </div>
-        <div className="col">
-          <label> Description</label>
-          <p> {props.event.description} </p>
-        </div>
+      <div className="section">
+        <h6 className="blue-text lighten-3">
+          <Link to="/home">home > </Link>
+
+          <Link to={match.url}> event</Link>
+        </h6>
+        <h4 className="heading">{event.name}</h4>
+        {user.role !== 'participant' && (
+          <Link
+            to={`/events/${event.id}/edit`}
+            className="btn-flat yellow darken-4 white-text"
+          >
+            <i className="material-icons left">edit</i>
+            Edit Event
+          </Link>
+        )}
+        {event.status !== 'done' &&
+          (user.role !== 'participant' ? (
+            <Link
+              to={`/events/${event.id}/console`}
+              className="btn-flat green darken-4 white-text"
+            >
+              <i className="material-icons left">view_comfy</i>
+              Go to Event Controls
+            </Link>
+          ) : (
+            <Link
+              className="btn-flat green darken-4 white-text"
+              to={`/events/${event.id}/controller`}
+            >
+              <i className="material-icons left">important_devices</i>
+              Join Event!
+            </Link>
+          ))}
+        <div className="divider" />
       </div>
-      <Link to={`/events/${props.event.id}/edit`} className="white-text btn">
-        Edit Event
-      </Link>
       <div className="row">
-        <PlayerList eventId={props.match.params.eventId} />
-      </div>
-      <div className="row">
-        <div className="col s6">
-          <p> Add Some Friends </p>
-          <PlayerAdd eventId={props.match.params.eventId} />
-        </div>
-        <div className="col s6">
-          <button
-            className="btn"
-            type="button"
-            onClick={() => console.log('Invites Sent')}
+        <div
+          className={`col s12 m6 ${event.status === 'in_progress' &&
+            'green lighten-1 white-text'}`}
+        >
+          <h6
+            className={
+              event.status === 'in_progress'
+                ? 'green lighten-1 white-text'
+                : 'blue-text text-darken-3'
+            }
           >
             {' '}
-            Send out Invites!{' '}
-          </button>
+            Event Status{' '}
+          </h6>
+          <div className="divider" />
+          <p>
+            {event.status
+              .charAt(0)
+              .toUpperCase()
+              .concat(event.status.slice(1).replace(/_/, ' '))}
+          </p>
         </div>
+        <div className="col s12 m6">
+          <h6 className="blue-text text-darken-3"> Date of Event </h6>
+          <div className="divider" />
+          <p> {event.date || "This event hasn't been scheduled."}</p>
+        </div>
+        <div className="col s12 m6 ">
+          <h6 className="blue-text text-darken-3"> Location</h6>
+          <div className="divider" />
+          <p> {event.location || 'No location set.'}</p>
+        </div>
+        <div className="col s12 m6">
+          <h6 className="blue-text text-darken-3"> Description</h6>
+          <div className="divider" />
+          <p> {event.description} </p>
+        </div>
+        <div className="col s12 m6" />
+      </div>
+      <div className="row">
+        {user.role !== 'participant' && (
+          <PlayerList eventId={match.params.eventId} />
+        )}
+      </div>
+      <div className="row">
+        <div className="col s6" />
       </div>
       {!props.event.status !== 'done' &&
         (props.user.role === 'admin' ? (

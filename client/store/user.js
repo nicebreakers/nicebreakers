@@ -62,6 +62,7 @@ export const updateUser = newValues => async dispatch => {
   try {
     let {data} = await axios.put(`/api/users/${newValues.id}`, newValues)
     dispatch(updatedUser(data))
+    M.toast({html: 'Saved!', classes: 'green'})
     history.push('/profile?success=true')
   } catch (err) {
     history.push('/profile?success=false')
