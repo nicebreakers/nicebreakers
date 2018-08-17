@@ -28,7 +28,7 @@ const EventCard = ({type, title, details, id}) => (
           <p>{details}</p>
         </div>
       </Link>
-      <div className="card-action right-align">Go to Event</div>
+      <div className="card-action right-align black-text">Go to Event</div>
     </div>
   </div>
 )
