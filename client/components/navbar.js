@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import EventActionButton from './user-home/eventActionButton'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
@@ -22,6 +23,9 @@ const LoggedInLinks = props => (
       <a href="#" onClick={props.handleClick} className="sidenav-close">
         Logout
       </a>
+    </li>
+    <li>
+      <EventActionButton />
     </li>
   </span>
 )
