@@ -101,7 +101,7 @@ export default function(state = defaultInteractions, action) {
 export const getPrompt = state => {
   const {promptId} = state.interaction.currentInteraction
   if (promptId) return state.prompt.byId[promptId].question
-  else return 'Where is the question?'
+  else return 'Loading error, please refresh.'
 }
 
 export const getDisplayShape = state => {
