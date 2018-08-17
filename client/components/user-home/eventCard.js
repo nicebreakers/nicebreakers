@@ -15,10 +15,11 @@ const style = {
   }
 }
 
-const EventCard = ({type, title, details, id, notParticipant}) => (
+const EventCard = ({type, title, details, id}) => (
   <div className="col s12 m6 l4 xl3">
     <div className={`card hoverable ${style[type].background}`}>
-      <Link to={`/events/${id}`}>
+      <Link to={`/events/${id}/`}>
+
         <div className={`card-content ${style[type].contentText}`}>
           <span className={`card-title ${style[type].titleText}`}>
             {title ? title : 'Placeholder title'}
@@ -26,7 +27,9 @@ const EventCard = ({type, title, details, id, notParticipant}) => (
           <p>{details ? details : 'Placeholder content'}</p>
         </div>
       </Link>
-      {notParticipant && <CardAdminTools {...{id, type}} />}
+      {/*
+      Think we can delete this considering we've moved it to the Single Page
+      {notParticipant && <CardAdminTools {...{id, type}} />} */}
     </div>
   </div>
 )
