@@ -23,6 +23,7 @@ const UPDATE_EVENT_STATUS = 'UPDATE_EVENT_STATUS'
 const UPDATE_EVENT_DATE = 'UPDATE_EVENT_DATE'
 const INCREASE_ROUND = 'INCREASE_ROUND'
 const RESET_ROUNDS = 'RESET_ROUNDS'
+const UPDATE_ROUND = 'UPDATE_ROUND'
 
 /**
  * ACTION CREATORS
@@ -34,6 +35,7 @@ const updateEventAll = event => ({type: UPDATE_EVENT_ALL, event})
 const updateEventDate = event => ({type: UPDATE_EVENT_DATE, event})
 const incrementRound = () => ({type: INCREASE_ROUND})
 export const resetRound = () => ({type: RESET_ROUNDS})
+const updateRound = (eventId, {round}) => ({type: UPDATE_ROUND, eventId, round})
 
 /**
  * SOCKET THUNK CREATORS
@@ -45,6 +47,8 @@ export const sendGameInitEvent = eventId => dispatch => {
     .then(({data}) => dispatch(updateEventStatus(data)))
     .then(() => axios.post(`/api/events/${eventId}/interactions/`))
     .then(({data}) => dispatch(gotInteractions(eventId, data)))
+    .then(() => axios.get(`/api/events/${eventId}/round`))
+    .then(({data}) => dispatch(updateRound(eventId, data)))
     .then(() => {
       socket.emit(START_EVENT, {eventId})
       console.log(`Emitted ${START_EVENT} for event ${eventId}`)
@@ -66,11 +70,15 @@ export const sendEndGameEvent = eventId => dispatch => {
 }
 
 export const leaderRequestNextRound = (eventId, round) => dispatch => {
-  dispatch(incrementRound())
-  socket.emit(REQUEST_NEXT_ROUND, {eventId, round})
-  console.log(
-    `Emitted ${REQUEST_NEXT_ROUND} for event ${eventId} with round ${round}`
-  )
+  axios
+    .put(`/api/events/${eventId}/round`, {updatedRound: round})
+    .then(({data}) => dispatch(updateRound(eventId, data)))
+    .then(() => {
+      socket.emit(REQUEST_NEXT_ROUND, {eventId, round})
+      console.log(
+        `Emitted ${REQUEST_NEXT_ROUND} for event ${eventId} with round ${round}`
+      )
+    })
 }
 
 /**
@@ -101,6 +109,7 @@ export const changeEventAllFields = eventSubmission => async dispatch => {
     eventSubmission
   )
   dispatch(updateEventAll(updatedEvent))
+  M.toast({html: 'Event Updated!', classes: 'green'})
   history.push('/home')
 }
 
@@ -125,7 +134,7 @@ export const changeEventDate = (newDate, eventId) => async dispatch => {
 /**
  * INITIAL STATE
  */
-const defaultEvents = {byId: {}, round: 2}
+const defaultEvents = {byId: {}}
 /**
  * REDUCER
  */
@@ -150,16 +159,18 @@ export default function(state = defaultEvents, action) {
           [action.event.id]: action.event
         }
       }
-    case INCREASE_ROUND: {
-      return {
-        byId: {...state.byId},
-        round: state.round + 1
-      }
-    }
     case RESET_ROUNDS: {
       return {
         byId: {...state.byId},
-        round: 2
+        round: 1
+      }
+    }
+    case UPDATE_ROUND: {
+      return {
+        byId: {
+          ...state.byId,
+          [action.eventId]: {...state.byId[action.eventId], round: action.round}
+        }
       }
     }
     default:
@@ -188,6 +199,7 @@ export const isEventDone = (state, eventId) => {
   return event ? event.status === 'done' : false
 }
 
-export const getRound = state => {
-  return state.events.round
+export const getRound = (state, eventId) => {
+  const event = state.events.byId[eventId]
+  return event ? event.round : 1
 }
