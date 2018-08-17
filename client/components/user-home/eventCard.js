@@ -21,15 +21,14 @@ const style = {
 
 const EventCard = ({type, title, details, id}) => (
   <div className="col s12 m6 l4 xl3">
-    <div className={`card hoverable small ${style[type].background}`}>
-      <Link to={`/events/${id}/`}>
+    <Link to={`/events/${id}/`}>
+      <div className={`card hoverable small ${style[type].background}`}>
         <div className={`card-content ${style[type].contentText}`}>
           <span className={`card-title ${style[type].titleText}`}>{title}</span>
           <p>{details}</p>
         </div>
-      </Link>
-      <div className="card-action right-align black-text">Go to Event</div>
-    </div>
+      </div>
+    </Link>
   </div>
 )
 
