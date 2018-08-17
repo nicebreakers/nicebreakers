@@ -15,7 +15,7 @@ router.put(
       const {aId, bId} = interaction
 
       //Check the Round?
-      if (round !== interaction.round)
+      if (+round !== +interaction.round)
         throw Error('Round does not match the interaction round')
 
       //Check to see if the user is either a or b
