@@ -129,7 +129,7 @@ router.route('/:eventId/round/:round').get((req, res, next) => {
 
 router.get('/:eventId/round', async (req, res, next) => {
   try {
-    const newRound = await Event.findById({
+    const newRound = await Event.findOne({
       where: {
         id: req.params.eventId
       },

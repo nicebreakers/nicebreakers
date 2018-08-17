@@ -39,10 +39,12 @@ class EventControl extends React.Component {
   }
 
   nextRoundWrapper = (eventId, currRound) => {
-    if (currRound >= 4) {
+    console.log('the current round is ', currRound)
+    if (currRound > 2) {
       //do nothing
+      //having the 2 above makes sure the next round button can only be pressed twice (1 (initial round) + 2 (next round button) = 3 (rounds total))
     } else {
-      this.props.nextRound(eventId, currRound)
+      this.props.nextRound(eventId, currRound + 1)
     }
   }
 
@@ -101,7 +103,7 @@ class EventControl extends React.Component {
 
 const mapState = (state, {match}) => ({
   isGameDone: isEventDone(state, match.params.eventId),
-  currRound: getRound(state)
+  currRound: getRound(state, match.params.eventId)
 })
 
 const mapDispatch = dispatch => ({
