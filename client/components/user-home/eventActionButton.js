@@ -6,35 +6,14 @@ const EventActionButton = props => (
   // the function provided.  So here, it just calls some init code for this
   // button using JQuery.  Fun!
 
-  <div
-    id="menu"
-    className="fixed-action-btn "
-    ref={el => $(el).floatingActionButton()}
-  >
-    <a className="btn-floating btn-large yellow darken-3">
+  <div id="menu" className="hover-emitter">
+    <Link
+      to="/events/create"
+      className="btn-floating btn-large yellow darken-3 hover-target"
+    >
       <i className="large material-icons">add</i>
-    </a>
-    <ul>
-      <li>
-        <Link
-          to="/events/create"
-          className="btn-floating red"
-          alt="new dating game"
-        >
-          <i className="material-icons">favorite</i>
-        </Link>
-      </li>
-      <li>
-        <Link to="/events/create" className="btn-floating yellow darken-1">
-          <i className="material-icons">business_center</i>
-        </Link>
-      </li>
-      <li>
-        <Link to="/events/create" className="btn-floating green">
-          <i className="material-icons">group</i>
-        </Link>
-      </li>
-    </ul>
+    </Link>
+    <p className="hover-listener"> Create Event</p>
   </div>
 )
 

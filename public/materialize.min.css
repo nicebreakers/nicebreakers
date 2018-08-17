@@ -7602,4 +7602,17 @@ input[type='range']::-ms-thumb {
     text-align: center;
     margin-top: 1.2rem;
   }
+
 }
+
+.hover-emitter {
+  padding: .1em;
+  display: flex;
+}
+.hover-listener {
+  color:blue;
+  position: relative;
+  bottom: 1em;
+  right: 1em;
+}
+

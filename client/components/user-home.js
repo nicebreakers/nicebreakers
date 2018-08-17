@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {getEventsByStatus, fetchAllEvents} from '../store/event'
-import {EventCard, EventActionButton} from '../components'
+import {EventCard} from '../components'
 import InstructionPanel from './user-home/instructionsPanel'
 
 /**
@@ -55,10 +55,6 @@ class UserHome extends React.Component {
             />
           ))}
         </div>
-        {/* <PlayerAdd />
-      <PlayerList /> */}
-
-        <EventActionButton />
       </div>
     )
   }
