@@ -4,12 +4,10 @@
  * having to figure out which file they belong to!
  */
 export {default as Navbar} from './navbar'
-export {default as UserHome} from './user-home'
+export {default as UserHome} from './user-home/user-home'
 export {Login, Signup} from './auth-form'
 export {default as PlayerAddForm} from './player-add-form'
 export {default as PlayerList} from './player-list'
-export {default as PlayerSingle} from './player-single'
-export {default as PlayerAdd} from './player-add'
 export {default as FourOFour} from './utility-components/FourOFour'
 export {default as EventCard} from './user-home/eventCard'
 export {default as EventActionButton} from './user-home/eventActionButton'
