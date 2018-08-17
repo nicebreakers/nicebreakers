@@ -7,9 +7,14 @@ const CardAdminTools = ({id, type}) => {
   if (type === 'pending') actionName = 'edit'
   return (
     <div className="card-action right-align">
-      <Link to={`/events/${id}/${actionName}`} className="deep-orange-text">
-        {actionName} Event
-      </Link>
+      {type === 'in_progress' && (
+        <Link to={`/events/${id}/console`}>Go to Controller</Link>
+      )}
+      {type !== 'in_progress' && (
+        <Link to={`/events/${id}/${actionName}`} className="deep-orange-text">
+          {actionName} Event
+        </Link>
+      )}
       <br />
       {type === 'pending' && (
         <Link to={`/events/${id}/console`} className="teal-text">

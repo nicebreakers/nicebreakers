@@ -12,6 +12,11 @@ const style = {
     background: 'blue-grey darken-1',
     titleText: 'white-text',
     contentText: 'grey-text text-lighten-2'
+  },
+  in_progress: {
+    background: 'green lighten-3',
+    titleText: 'black-text',
+    contentText: 'black-text'
   }
 }
 
@@ -20,10 +25,8 @@ const EventCard = ({type, title, details, id, notParticipant}) => (
     <div className={`card hoverable ${style[type].background}`}>
       <Link to={`/events/${id}/controller`}>
         <div className={`card-content ${style[type].contentText}`}>
-          <span className={`card-title ${style[type].titleText}`}>
-            {title ? title : 'Placeholder title'}
-          </span>
-          <p>{details ? details : 'Placeholder content'}</p>
+          <span className={`card-title ${style[type].titleText}`}>{title}</span>
+          <p>{details}</p>
         </div>
       </Link>
       {notParticipant && <CardAdminTools {...{id, type}} />}
