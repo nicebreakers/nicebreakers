@@ -127,6 +127,38 @@ router.route('/:eventId/round/:round').get((req, res, next) => {
     .catch(next)
 })
 
+router.get('/:eventId/round', async (req, res, next) => {
+  try {
+    const newRound = await Event.findOne({
+      where: {
+        id: req.params.eventId
+      },
+      attributes: ['round']
+    })
+    res.send(newRound)
+  } catch (err) {
+    console.error(err)
+  }
+})
+
+router.put('/:eventId/round', async (req, res, next) => {
+  try {
+    const {updatedRound} = req.body
+    const [numAffected, affectedRow] = await Event.update(
+      {
+        round: updatedRound
+      },
+      {
+        where: {id: req.params.eventId},
+        returning: true,
+        plain: true
+      }
+    )
+    res.send(affectedRow)
+  } catch (err) {
+    console.error(err)
+  }
+})
 /*
       * Event Init - Creates interactions for each player, joins pairs and adds a round number
       */

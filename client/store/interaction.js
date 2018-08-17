@@ -72,6 +72,7 @@ export const updateInteractionData = interaction => dispatch => {
   axios
     .put(`/api/interactions/${interaction.id}`, interaction)
     .then(() => console.log('DEFINITELY DO STUFF AND FIX THIS'))
+    .then(() => M.toast({html: 'Input Recieved!'}))
     .catch(err => console.error(err))
 }
 

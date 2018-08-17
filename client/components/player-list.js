@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import {PlayerSingle} from '../components'
 import {deletePlayer, fetchPlayersByEventId} from '../store'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import {PlayerAddForm} from '../components'
 
 class PlayerList extends Component {
   componentDidMount() {
@@ -14,16 +14,42 @@ class PlayerList extends Component {
     this.props.removePlayer(data)
   }
   render() {
-    const {participants} = this.props
+    const {participants, eventId} = this.props
     return (
-      <div>
-        {participants.map(participant => (
-          <PlayerSingle
-            key={participant.id}
-            participant={participant}
-            handleClick={this.handleClick}
-          />
-        ))}
+      <div className="container">
+        <ul className="collection with-header">
+          <li className="collection-header">
+            <h4>Participants</h4>
+          </li>
+          <li className="collection-item">
+            <div>
+              <PlayerAddForm eventId={eventId} />
+            </div>
+            <span />
+            <button
+              className="btn-flat blue-text"
+              type="button"
+              onClick={() => console.log('Invites Sent')}
+            >
+              {' '}
+              Send out Invites!{' '}
+            </button>
+          </li>
+          {participants.map(participant => (
+            <li className="collection-item" key={participant.id}>
+              <div>
+                {participant.email}
+                <a
+                  onClick={event => this.handleClick(event, participant)}
+                  className="secondary-content red-text"
+                  href="#"
+                >
+                  <i className="material-icons">remove_circle</i>
+                </a>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     )
   }
