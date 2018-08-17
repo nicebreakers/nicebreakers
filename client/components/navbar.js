@@ -9,13 +9,17 @@ import {logout} from '../store'
 const LoggedInLinks = props => (
   <span>
     <li>
-      <Link to="/home">Home</Link>
+      <Link to="/home" className="sidenav-close">
+        Home
+      </Link>
     </li>
     <li>
-      <Link to="/profile">Profile</Link>
+      <Link to="/profile" className="sidenav-close">
+        Profile
+      </Link>
     </li>
     <li>
-      <a href="#" onClick={props.handleClick}>
+      <a href="#" onClick={props.handleClick} className="sidenav-close">
         Logout
       </a>
     </li>
@@ -27,10 +31,14 @@ const LoggedOutLinks = props => (
     {' '}
     <li>
       {' '}
-      <Link to="/login">Login</Link>
+      <Link to="/login" className="sidenav-close">
+        Login
+      </Link>
     </li>
     <li>
-      <Link to="/signup">Sign Up</Link>
+      <Link to="/signup" className="sidenav-close">
+        Sign Up
+      </Link>
     </li>
   </span>
 )
@@ -45,14 +53,14 @@ const Navbar = props => (
         <ul className="right hide-on-med-and-down">
           {props.isLoggedIn ? <LoggedInLinks {...props} /> : <LoggedOutLinks />}
         </ul>
-        <ul id="nav-mobile" className="sidenav" ref={el => $(el).sidenav()}>
-          {props.isLoggedIn ? <LoggedInLinks {...props} /> : <LoggedOutLinks />}
-        </ul>
         <a href="#" data-target="nav-mobile" className="sidenav-trigger">
           <i className="material-icons">menu</i>
         </a>
       </div>
     </nav>
+    <ul id="nav-mobile" className="sidenav" ref={el => $(el).sidenav()}>
+      {props.isLoggedIn ? <LoggedInLinks {...props} /> : <LoggedOutLinks />}
+    </ul>
   </div>
 )
 

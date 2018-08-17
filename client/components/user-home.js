@@ -71,6 +71,7 @@ class UserHome extends React.Component {
           {props.doneEvents.map(event => (
             <EventCard
               key={event.id}
+              id={event.id}
               details={event.description}
               title={event.name}
               type="done"
@@ -78,9 +79,6 @@ class UserHome extends React.Component {
             />
           ))}
         </div>
-        {/* <PlayerAdd />
-      <PlayerList /> */}
-
         <EventActionButton />
       </div>
     )
