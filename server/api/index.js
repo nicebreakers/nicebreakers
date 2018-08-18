@@ -2,6 +2,7 @@ const router = require('express').Router()
 module.exports = router
 
 router.use('/users', require('./users'))
+router.use('/mailer', require('./mailer'))
 router.use('/events', require('./events'))
 router.use('/interactions', require('./interactions'))
 router.use('/profileSubmissions', require('./profileSubmissions'))
