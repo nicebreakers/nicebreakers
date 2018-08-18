@@ -1,5 +1,5 @@
 import React from 'react'
-import {Field, reduxForm} from 'redux-form'
+import {Field, reduxForm, reset} from 'redux-form'
 import {connect} from 'react-redux'
 import {updateInteractionData} from '../../store'
 
@@ -31,6 +31,7 @@ let NotesPhase = ({pristine, submitting, handleSubmit, myId}) => (
   </div>
 )
 
+
 const mapStateToProps = state => ({
   initialValues: state.interaction.currentInteraction, //so we get the id etc...
   myId: state.interaction.currentInteraction
@@ -42,7 +43,9 @@ const mapDispatchToProps = dispatch => ({
   onSubmit: values => dispatch(updateInteractionData(values))
 })
 
-NotesPhase = reduxForm({form: 'controllerInputForm'})(NotesPhase)
+NotesPhase = reduxForm({form: 'controllerInputForm', enableReinitialize: true})(
+  NotesPhase
+)
 
 NotesPhase = connect(mapStateToProps, mapDispatchToProps)(NotesPhase)
 

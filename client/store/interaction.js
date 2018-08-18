@@ -20,7 +20,7 @@ import {updateEventStatus} from '../store'
  */
 const GOT_INTERACTIONS = 'GET_INTERACTIONS'
 const GOT_NEXT_INTERACTION = 'GOT_NEXT_INTERACTION'
-
+const UPDATE_CURRENT_INTERACTION = 'UPDATE_CURRENT_INTERACTION'
 /**
  * ACTION CREATORS
  */
@@ -31,6 +31,10 @@ export const gotInteractions = (eventId, interactions) => ({
 
 const gotNextInteraction = interaction => ({
   type: GOT_NEXT_INTERACTION,
+  interaction
+})
+const updateCurrentInteraction = interaction => ({
+  type: UPDATE_CURRENT_INTERACTION,
   interaction
 })
 
@@ -71,13 +75,15 @@ export const getRoundInteraction = (
 export const updateInteractionData = interaction => dispatch => {
   axios
     .put(`/api/interactions/${interaction.id}`, interaction)
-    .then(() => console.log('DEFINITELY DO STUFF AND FIX THIS'))
-    .then(() => M.toast({html: 'Input Recieved!'}))
+    .then(({data: updatedInteraction}) =>
+      dispatch(updateCurrentInteraction(updatedInteraction))
+    )
     .catch(err => console.error(err))
 }
 
 export default function(state = defaultInteractions, action) {
   switch (action.type) {
+    case UPDATE_CURRENT_INTERACTION:
     case GOT_NEXT_INTERACTION:
       return {
         ...state,

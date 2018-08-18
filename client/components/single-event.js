@@ -90,6 +90,21 @@ const SingleEventPage = ({event, match, user}) => {
       <div className="row">
         <div className="col s6" />
       </div>
+      {!event.status !== 'done' &&
+        (user.role === 'admin' ? (
+          <div className="btn m7">
+            <Link to={`/events/${event.id}/console`} className="white-text">
+              Go Event Controls
+            </Link>
+          </div>
+        ) : (
+          <div className="btn m7">
+            <Link className="white-text" to={`/events/${event.id}/controller`}>
+              {' '}
+              Join the Event{' '}
+            </Link>
+          </div>
+        ))}
     </div>
   ) : (
     <h1> Loading </h1>
