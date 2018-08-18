@@ -55,8 +55,8 @@ class EventControl extends React.Component {
   }
 
   disableNextRound = () => {
-    const {isGamePending, isGameDone} = this.props
-    if (isGameDone || isGamePending) {
+    const {isGamePending, isGameDone, currRound, maxRounds} = this.props
+    if (isGameDone || isGamePending || currRound >= maxRounds) {
       return true
     }
     return false
@@ -71,7 +71,7 @@ class EventControl extends React.Component {
   }
 
   render() {
-    const {isGameDone, isGamePending, match} = this.props
+    const {isGameDone, isGamePending, match, currRound, maxRounds} = this.props
     const {eventId} = match.params
     return (
       <div className="container">
@@ -120,6 +120,13 @@ class EventControl extends React.Component {
             </button>
           </div>
         </div>
+        {currRound >= maxRounds && (
+          <div className="row">
+            <div className="col s11 btn waves waves-effect">
+              {isGameDone ? 'Thanks For Playing!' : 'Final Round!'}
+            </div>
+          </div>
+        )}
       </div>
     )
   }
@@ -128,7 +135,8 @@ class EventControl extends React.Component {
 const mapState = (state, {match}) => ({
   isGameDone: isEventDone(state, match.params.eventId),
   isGamePending: isEventPending(state, match.params.eventId),
-  currRound: getRound(state, match.params.eventId)
+  currRound: getRound(state, match.params.eventId),
+  maxRounds: 3
 })
 
 const mapDispatch = dispatch => ({
