@@ -32,3 +32,19 @@ router.put('/', canOnlyBeUsedBy('admin', 'leader'), async (req, res, next) => {
     next(err)
   }
 })
+
+router.put(
+  '/:eventId/remove',
+  canOnlyBeUsedBy('admin', 'leader'),
+  async (req, res, next) => {
+    try {
+      const {id} = req.body.user
+      const user = await User.findById(id)
+      const event = await Event.findById(req.params.eventId)
+      user.removeEvent(event)
+      res.json(user)
+    } catch (err) {
+      next(err)
+    }
+  }
+)

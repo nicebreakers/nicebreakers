@@ -11,7 +11,7 @@ export const REMOVE_USER_FROM_EVENT = 'REMOVE_PLAYER'
  */
 const gotUsersForEvent = users => ({type: GET_USERS_AT_EVENT, users})
 const addedUser = user => ({type: ADD_USER_TO_EVENT, user})
-const removedUser = userId => ({type: REMOVE_USER_FROM_EVENT, userId})
+const removedUser = user => ({type: REMOVE_USER_FROM_EVENT, user})
 
 /**
  * THUNK CREATORS
@@ -38,6 +38,18 @@ export const addUserToEvent = (userEmail, eventId) => async dispatch => {
   }
 }
 
+export const removeUserFromEvent = (user, eventId) => async dispatch => {
+  try {
+    const {data: deletedUser} = await axios.put(
+      `/api/users/atEvents/${eventId}/remove`,
+      {user}
+    )
+    dispatch(removedUser(deletedUser))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 /**
  * INITIAL STATE
  */
@@ -52,6 +64,11 @@ export default function(state = defaultUsersAtEvent, action) {
       return action.users
     case ADD_USER_TO_EVENT: {
       return [...state, action.user]
+    }
+    case REMOVE_USER_FROM_EVENT: {
+      return state.filter(user => {
+        return user.id !== action.user.id
+      })
     }
 
     // case REMOVE_PLAYER:
