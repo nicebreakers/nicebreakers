@@ -3,18 +3,21 @@ import {Field, reduxForm, reset} from 'redux-form'
 import {connect} from 'react-redux'
 import {updateInteractionData} from '../../store'
 
-let NotesPhase = ({pristine, submitting, handleSubmit, myId}) => {
-  return (
-    <div className="row">
-      <form className="card col s12" onSubmit={handleSubmit}>
+let NotesPhase = ({pristine, submitting, handleSubmit, myId}) => (
+  <div className="row">
+    <form className="card col s12" onSubmit={handleSubmit}>
+      <div className="card-content">
+        <div className="card-title">Your Notes:</div>
         <div className="input-field col s12">
           <Field
             component="textarea"
             id="inputarea"
             name={`${myId}Input`}
-            className="materialize-textarea"
+            className="materialize-textarea flow-text"
           />
-          <label htmlFor="inputarea">Textarea</label>
+          <label htmlFor="inputarea">
+            Tap here to add your notes about your partner!
+          </label>
           <button
             className="waves-effect waves-light btn"
             type="submit"
@@ -23,10 +26,11 @@ let NotesPhase = ({pristine, submitting, handleSubmit, myId}) => {
             Submit
           </button>
         </div>
-      </form>
-    </div>
-  )
-}
+      </div>
+    </form>
+  </div>
+)
+
 
 const mapStateToProps = state => ({
   initialValues: state.interaction.currentInteraction, //so we get the id etc...
