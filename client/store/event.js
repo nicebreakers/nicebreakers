@@ -89,12 +89,12 @@ export const leaderRequestNextRound = (eventId, round) => dispatch => {
  */
 export const sendEventEmail = eventId => async dispatch => {
   try {
-    const {data: interactions} = axios.get(`/api/interactions/event/${eventId}`)
-    await axios.post(`/api/mailer`, {
-      eventId,
-      messages: createEmails(interactions)
-    })
-    dispatch(eventEmailSent())
+    const {data: userReports} = await axios.get(
+      `/api/interactions/event/${eventId}`
+    )
+    axios
+      .post(`/api/mailer`, {eventId, messages: createEmails(userReports)})
+      .then(() => dispatch(eventEmailSent()))
   } catch (err) {
     console.error(err)
   }

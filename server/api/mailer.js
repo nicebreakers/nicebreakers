@@ -9,35 +9,26 @@ const auth = {
 
 const nodemailerMailgun = nodemailer.createTransport(mg(auth))
 
-const sendReports = (eventId, messages) => {
-  const mails = [...messages]
-
-  mails.forEach(message => {
-    nodemailerMailgun.sendMail(
-      {
+const sendReports = messages =>
+  Promise.all(
+    messages.map(({to, html}) =>
+      nodemailerMailgun.sendMail({
         from: 'reporter@nicebreakers.fun',
-        to: message.sendTo,
-        subject: 'Your Nicebreakers Report',
         'h:Reply-To': 'no-reply@nicebreakers.fun',
-        html: message
-      },
-      function(err, info) {
-        if (err) {
-          console.log('Error: ' + err)
-        } else {
-          console.log('Response: ' + info)
-        }
-      }
+        subject: 'Your Nicebreakers Report' + to,
+        to: 'test@pck.email',
+        html
+      })
     )
-  })
-}
+  )
 
 router
   .route('/')
   .all(canOnlyBeUsedBy('leader', 'admin'))
-  .post((req, res, next) => {
-    sendReports(+req.body.eventId, req.body.messages)
-    res.sendStatus(201)
-  })
+  .post((req, res, next) =>
+    sendReports(req.body.messages)
+      .then(() => res.sendStatus(200))
+      .catch(next)
+  )
 
 module.exports = router

@@ -12,21 +12,23 @@ router
       const {Users} = await Event.findById(+req.params.eventId, {
         include: [User]
       })
-      const usersById = Users.reduce((acc, cur) => {
-        const {id, firstName, lastName, email, imageUrl} = cur.dataValues
-        acc[id] = {id, firstName, lastName, email, imageUrl}
-        return acc
-      }, {})
 
-      const interactions = await Interaction.findAll({
+      const ints = await Interaction.findAll({
         where: {eventId: +req.params.eventId}
       })
-      const response = interactions.map(int => {
+
+      let response = Users.reduce((acc, user) => {
+        const {id, firstName, lastName, email, imageUrl} = user.dataValues
         return {
-          ...int.dataValues,
-          aId: usersById[int.dataValues.aId],
-          bId: usersById[int.dataValues.bId]
+          ...acc,
+          [id]: {id, firstName, lastName, email, imageUrl, interactions: []}
         }
+      }, {})
+
+      ints.forEach(int => {
+        const {aId, bId} = int.dataValues
+        response[aId].interactions.push(int.dataValues)
+        response[bId].interactions.push(int.dataValues)
       })
 
       res.json(response)
