@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import {Image, Span} from 'react-html-email'
 import {connect} from 'react-redux'
 
@@ -8,7 +8,21 @@ const nameStyle = {
   color: 'blue'
 }
 
-const InteractionTemplate = ({interaction, userReports, user, prompts}) => {
+const highlightStyle = {
+  fontFamily: 'verdana',
+  fontSize: 26,
+  color: 'green'
+}
+
+const textDefault = {fontSize: 20, fontWeight: 'bold'}
+
+const InteractionTemplate = ({
+  interaction,
+  userReports,
+  user,
+  prompts,
+  highlight
+}) => {
   let otherUser =
     interaction.aId === user.id
       ? userReports[interaction.bId]
@@ -42,18 +56,25 @@ const InteractionTemplate = ({interaction, userReports, user, prompts}) => {
       <td
         style={{textAlign: 'left', paddingLeft: '50px', paddingBottom: '100px'}}
       >
-        <Span style={{fontSize: 20, fontWeight: 'bold'}}>
-          You talked about:
-        </Span>
+        <Span style={textDefault}>You talked about:</Span>
         <br />
         <Span style={{fontSize: 18}}>
           {prompts[interaction.promptId].question}
         </Span>
         <br />
         <br />
-        <Span style={{fontSize: 20, fontWeight: 'bold'}}>You said: </Span>
+        <Span style={textDefault}>You said: </Span>
         <br />
         <Span style={{fontSize: 18}}>{otherResponse || ''}</Span>
+        <br />
+        {highlight && (
+          <Fragment>
+            <br />
+            <Span style={highlightStyle}>
+              We recommend you follow up with this person! How about lunch!?!
+            </Span>
+          </Fragment>
+        )}
       </td>
     </tr>
   )
