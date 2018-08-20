@@ -1,19 +1,24 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-const GameEnded = props => {
-  const {gameEndedMessage} = props
-  return (
-    <div>
-      <div className="center">
-        <h5 className="card-panel blue lighten-4">{gameEndedMessage}</h5>
+const GameEnded = ({gameEndedMessage}) => (
+  <div className="row">
+    <div className="section" />
+    <div className="card blue-grey darken-1 white-text col s12 l10 xl8 offset-xl2  offset-l1">
+      <div className="card-content">
+        <span className="card-title">Thank you!</span>
+        <p>{gameEndedMessage}</p>
       </div>
-      {/* link for end of game summary */}
-      <Link className="waves-effect waves-light btn" to="/home">
-        Go to Dashboard
-      </Link>
+      <div className="card-action">
+        <Link
+          className="btn-flat blue-grey lighten-1 white-text waves waves-light"
+          to="/home"
+        >
+          Go to to home
+        </Link>
+      </div>
     </div>
-  )
-}
+  </div>
+)
 
 export default GameEnded
