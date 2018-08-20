@@ -1,56 +1,27 @@
 [
   {
-    "name": "Awesome Event",
-    "description": "Be there or be square",
+    "name": "Tuesday Singles",
+    "description":
+      "Meet single programmers in Chicago!  Capped at thirty participants.",
     "status": "done",
-    "location": "Fullstack Academy"
+    "location": "Stout, Chicago, IL"
   },
   {
-    "name": "Super Event",
-    "description": "Be there or be a triangle",
+    "name": "Fullstack Academy 18-09 Icebreakers",
+    "description": "New cohort first day activity",
     "status": "pending",
-    "location": "Fullstack Academy"
+    "location": "Fullstack Academy of Code"
   },
   {
-    "name": "Bad Event",
-    "description": "The best",
+    "name": "Alumni Networking Event",
+    "description": "Fullstack Alumni Networking",
     "status": "pending",
-    "location": "Fullstack Academy"
+    "location": "Fullstack Academy of Code"
   },
   {
-    "name": "Meh Event",
-    "description": "Don't come",
+    "name": "Comic Con Star Wars",
+    "description": "Find YOUR stars among fellow Star Wars fans.",
     "status": "pending",
-    "location": "Fullstack Academy"
-  },
-  {
-    "name": "Whoa Event",
-    "description": "Nothing",
-    "status": "pending",
-    "location": "Fullstack Academy"
-  },
-  {
-    "name": "Yeah Event",
-    "description": "Wait up",
-    "status": "pending",
-    "location": "Fullstack Academy"
-  },
-  {
-    "name": "No Event",
-    "description": "Wake me up",
-    "status": "pending",
-    "location": "Fullstack Academy"
-  },
-  {
-    "name": "Yes Event",
-    "description": "When September",
-    "status": "pending",
-    "location": "Fullstack Academy"
-  },
-  {
-    "name": "WHAAA Event",
-    "description": "Ends",
-    "status": "pending",
-    "location": "Fullstack Academy"
+    "location": "McCormick Center, Chicago, IL"
   }
 ]
