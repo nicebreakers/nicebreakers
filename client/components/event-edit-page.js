@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import EventForm from './game-forms/EventForm'
 import {changeEventAllFields} from '../store/event'
-import history from '../history'
 
 export const EditEventFormPage = props => {
   if (props.event && props.event.date) {
