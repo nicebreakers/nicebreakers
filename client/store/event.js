@@ -2,7 +2,7 @@ import axios from 'axios'
 import history from '../history'
 import socket from '../socket'
 import {gotInteractions} from './interaction'
-import {createEmails} from '../emails/report'
+import {createHtmlEmails} from '../emails/report'
 /*
 * SOCKET EVENT TYPES
 */
@@ -93,7 +93,7 @@ export const sendEventEmail = eventId => async dispatch => {
       `/api/interactions/event/${eventId}`
     )
     axios
-      .post(`/api/mailer`, {eventId, messages: createEmails(userReports)})
+      .post(`/api/mailer`, {eventId, messages: createHtmlEmails(userReports)})
       .then(() => dispatch(eventEmailSent()))
   } catch (err) {
     console.error(err)
