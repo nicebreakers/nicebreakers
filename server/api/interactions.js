@@ -18,10 +18,10 @@ router
       })
 
       let response = Users.reduce((acc, user) => {
-        const {id, firstName, lastName, email, imageUrl} = user.dataValues
+        const {id, firstName, lastName, email, imageURL} = user.dataValues
         return {
           ...acc,
-          [id]: {id, firstName, lastName, email, imageUrl, interactions: []}
+          [id]: {id, firstName, lastName, email, imageURL, interactions: []}
         }
       }, {})
 

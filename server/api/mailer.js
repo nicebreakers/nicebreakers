@@ -15,8 +15,8 @@ const sendReports = messages =>
       nodemailerMailgun.sendMail({
         from: 'reporter@nicebreakers.fun',
         'h:Reply-To': 'no-reply@nicebreakers.fun',
-        subject: 'Your Nicebreakers Report' + to,
-        to: 'test@pck.email',
+        subject: 'Your Nicebreakers Report',
+        to,
         html
       })
     )
