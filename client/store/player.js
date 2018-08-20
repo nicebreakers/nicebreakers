@@ -40,9 +40,9 @@ export const addUserToEvent = (userEmail, eventId) => async dispatch => {
 
 export const removeUserFromEvent = (user, eventId) => async dispatch => {
   try {
-    const {data: deletedUser} = await axios.put(
-      `/api/users/atEvents/${eventId}/remove`,
-      {user}
+    const {data: deletedUser} = await axios.delete(
+      `/api/users/atEvents/${eventId}`,
+      {data: {user}}
     )
     dispatch(removedUser(deletedUser))
   } catch (err) {

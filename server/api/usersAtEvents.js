@@ -33,8 +33,8 @@ router.put('/', canOnlyBeUsedBy('admin', 'leader'), async (req, res, next) => {
   }
 })
 
-router.put(
-  '/:eventId/remove',
+router.delete(
+  '/:eventId',
   canOnlyBeUsedBy('admin', 'leader'),
   async (req, res, next) => {
     try {
