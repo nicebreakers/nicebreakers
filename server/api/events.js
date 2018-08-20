@@ -46,8 +46,6 @@ router
         location
       })
       //add user to the event
-      const currentUser = await User.findById(req.user.id)
-      newEvent.addUser(currentUser)
       res.send(newEvent)
     } catch (err) {
       next(err)
