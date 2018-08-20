@@ -58,7 +58,7 @@ router
 //Presumes that values meant to remain consistent will be passed in
 router
   .route('/:eventId')
-  .get(canOnlyBeUsedBy('admin'), async (req, res, next) => {
+  .get(canOnlyBeUsedBy('admin', 'participant'), async (req, res, next) => {
     try {
       const events = await Event.findById(req.params.eventId)
       res.send(events)
