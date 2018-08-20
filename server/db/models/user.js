@@ -34,7 +34,8 @@ const User = db.define('User', {
     type: Sequelize.STRING
   },
   imageURL: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: '/media/placeholder.png'
   },
   role: {
     type: Sequelize.ENUM('participant', 'leader', 'admin'),

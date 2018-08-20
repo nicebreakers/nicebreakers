@@ -19,5 +19,6 @@ export {default as ProfileForm} from './user-home/profileForm'
 export {default as InstructionsPanel} from './user-home/instructionsPanel'
 export {default as Controller} from './controllers/Controller'
 export {default as SingleEventPage} from './single-event'
+export {default as ReportsPage} from './ReportsPage'
 
 // export {default as SubmitPhoto} from './game-forms/'

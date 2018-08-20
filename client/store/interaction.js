@@ -5,22 +5,13 @@ import {updateEventStatus} from '../store'
 // import history from '../history'
 // import socket from '../socket'
 
-/*
-* SOCKET EVENT TYPES
-*/
-// import {
-//   REQUEST_NEXT_ROUND,
-//   START_EVENT,
-//   ROOM,
-//   EVENT_PREFIX
-// } from '../../server/socket/events'
-
 /**
  * ACTION TYPES
  */
 const GOT_INTERACTIONS = 'GET_INTERACTIONS'
 const GOT_NEXT_INTERACTION = 'GOT_NEXT_INTERACTION'
 const UPDATE_CURRENT_INTERACTION = 'UPDATE_CURRENT_INTERACTION'
+
 /**
  * ACTION CREATORS
  */
@@ -33,6 +24,7 @@ const gotNextInteraction = interaction => ({
   type: GOT_NEXT_INTERACTION,
   interaction
 })
+
 const updateCurrentInteraction = interaction => ({
   type: UPDATE_CURRENT_INTERACTION,
   interaction
