@@ -31,7 +31,6 @@ let NotesPhase = ({pristine, submitting, handleSubmit, myId}) => (
   </div>
 )
 
-
 const mapStateToProps = state => ({
   initialValues: state.interaction.currentInteraction, //so we get the id etc...
   myId: state.interaction.currentInteraction

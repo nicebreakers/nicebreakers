@@ -14,7 +14,7 @@ const Interaction = db.define('Interaction', {
     type: Sequelize.INTEGER
   },
   aScore: {
-    type: Sequelize.INTEGER
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   },
   bInput: {
     type: Sequelize.TEXT
@@ -23,7 +23,7 @@ const Interaction = db.define('Interaction', {
     type: Sequelize.INTEGER
   },
   bScore: {
-    type: Sequelize.INTEGER
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   },
   round: {
     type: Sequelize.INTEGER
