@@ -97,6 +97,10 @@ router.get(
   }
 )
 
+/**
+* Gets the interactions for a user in a single event, sorted by positivity score, highest to lowest
+*/
+
 router.get(
   '/event/:eventId/user/:userId',
   canOnlyBeUsedBy('admin', 'leader'),
