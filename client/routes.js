@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {me, fetchAllEvents} from './store'
+import {me, fetchAllEvents, fetchAllPrompts} from './store'
 import PictureSubmission from './components/game-forms/PictureSubmitPage'
 import EventFormPage from './components/event-create-page'
 import EditEventPage from './components/event-edit-page'
@@ -17,7 +17,8 @@ import {
   EventControl,
   ProfileForm,
   Controller,
-  SingleEventPage
+  SingleEventPage,
+  ReportsPage
 } from './components'
 
 /**
@@ -37,13 +38,18 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-
         {/* Protected Routes */}
         {isLoggedIn && (
           <Switch>
             <ProtectedRoute
               path="/events/create"
               component={EventFormPage}
+              condition={isLoggedIn} // TODO: Limit to Leader/Admin
+              redirect="/login"
+            />
+            <ProtectedRoute
+              path="/events/:eventId/reports"
+              component={ReportsPage}
               condition={isLoggedIn} // TODO: Limit to Leader/Admin
               redirect="/login"
             />
@@ -106,6 +112,7 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
       dispatch(fetchAllEvents())
+      dispatch(fetchAllPrompts())
     }
   }
 }
