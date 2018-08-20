@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {getEventsByStatus, fetchAllEvents} from '../../store/event'
-import {EventCard, EventActionButton} from '..'
+import {EventCard} from '..'
 import InstructionPanel from './instructionsPanel'
 
 const EventList = ({eventArray, type, message}) => {
@@ -27,7 +27,6 @@ class UserHome extends React.Component {
     this.props.getUsersEvents()
   }
   render() {
-    const props = this.props
     return (
       <div className="container">
         <InstructionPanel />
@@ -68,7 +67,7 @@ class UserHome extends React.Component {
             message="You have no completed events to review! Darn. Start one above!"
           />
         </div>
-        <EventActionButton />
+        {/* <EventActionButton /> */}
       </div>
     )
   }

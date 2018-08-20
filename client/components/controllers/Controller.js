@@ -106,7 +106,6 @@ class Controller extends Component {
     const gameEndedMessage = `The game has ended. Check your email for your story!`
     const postNotesPhaseMessage = `Waiting for the next round`
     const preGameMessage = `Please wait for the event to begin`
-
     if (this.props.pending) {
       return <PreGameMessenger preGameMessage={preGameMessage} />
     } else if (this.props.isDone) {
@@ -138,7 +137,13 @@ class Controller extends Component {
   }
   render() {
     const whichComponentToRender = this.checkPhase()
-    return <div className="container">{whichComponentToRender}</div>
+    console.log('Current Round', this.props.currentInteraction)
+    return (
+      <div className="container">
+        <h4> Round {this.props.currentInteraction.round} of 3</h4>
+        {whichComponentToRender}
+      </div>
+    )
   }
 }
 
@@ -150,7 +155,8 @@ const mapStateToProps = (state, {match}) => {
     event: state.events.byId[match.params.eventId],
     isDone: isEventDone(state, match.params.eventId),
     currentRound: getRound(state, match.params.eventId),
-    question: getPrompt(state)
+    question: getPrompt(state),
+    currentInteraction: state.interaction.currentInteraction
   }
 }
 
