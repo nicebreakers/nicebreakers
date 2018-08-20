@@ -40,9 +40,9 @@ export const Report = ({userReports}) => (
     {Object.values(userReports).map(user => (
       <Fragment key={user.id}>
         <Item style={{border: '0'}}>
-          <Span fontSize={20} style={{fontWeight: 'bold'}}>{`Nicebreakers: ${
+          <Span fontSize={20} style={{fontWeight: 'bold'}}>{`${
             user.firstName
-          }'s Post-Event Report`}</Span>
+          } ${user.lastName}'s Post-Event Report`}</Span>
         </Item>
         <Item>
           {user.interactions.map(interaction => (
