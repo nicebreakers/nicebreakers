@@ -13,7 +13,8 @@ import {
   getDisplayShape,
   isEventDone,
   getRound,
-  getPrompt
+  getPrompt,
+  fetchAllEvents
 } from '../../store'
 
 import socket from '../../socket'
@@ -29,7 +30,8 @@ import {
 } from '../../../server/socket/events'
 
 class Controller extends Component {
-  componentDidMount() {
+  async componentDidMount() {
+    //removes listeners, making sure we don't duplicate any while we create more
     socket.removeAllListeners([
       EVENT_STARTED,
       NEXT_ROUND,
@@ -39,37 +41,37 @@ class Controller extends Component {
       REQUEST_NEXT_ROUND
     ])
     /*
-    *   Load in State
+    *   Load in Store State
     */
     this.props.getAllPrompts()
+    await this.props.fetchEvents()
 
     /*
     *   REGISTER INTO THE ROOM
     */
+    const {eventId} = this.props.match.params
     // Oh hey, this component is only rendered when we want to join
     // an event.  So let's ask the server for a room for that
-    const {eventId} = this.props.match.params
-
     if (eventId) {
       socket.emit(ROOM, {room: EVENT_PREFIX + eventId})
       console.log(`Emitted ${ROOM} for event ${eventId}`)
     }
+
+    this.props.fetchRound(eventId, this.props.currentRound)
 
     /*
     *   SOCKET EVENTS
     */
     socket.on(EVENT_STARTED, ({eventId}) => {
       console.log(`Got ${EVENT_STARTED} with payload=`, eventId)
-
       const updatedEvent = {
         ...this.props.event, // THIS MUST STAY LIKE THIS OTHERWISE BUG.
         status: 'in_progress'
       }
-      this.props.fetchRound(eventId, 1, updatedEvent)
       // we need to update the status only AFTER we get the interactions.
+      console.log(`fetching round 1 for event ${eventId}`)
+      this.props.fetchRound(eventId, 1, updatedEvent)
     })
-
-    const startFunc = ({eventId}) => {}
 
     socket.on(EVENT_ENDED, ({eventId}) => {
       console.log(`Got ${EVENT_ENDED} with payload=`, eventId)
@@ -86,17 +88,11 @@ class Controller extends Component {
     })
   }
 
-  componentDidUpdate() {
-    /*
-    *   Destructure Props.
-    */
-  }
-
   componentWillUnmount() {
     socket.removeAllListeners()
     // Make sure to clean up all socket events in case this is re-rendered.
+    // Needed along with the one in componentDidMount; not sure why
   }
-
   randomPrompt = () => {
     const promptLength = this.props.prompt.length
     if (promptLength > 0) {
@@ -140,7 +136,6 @@ class Controller extends Component {
       }
     }
   }
-
   render() {
     const whichComponentToRender = this.checkPhase()
     return <div className="container">{whichComponentToRender}</div>
@@ -164,7 +159,8 @@ const mapDispatchToProps = dispatch => {
     getAllPrompts: () => dispatch(fetchAllPrompts()),
     updateEventStatus: event => dispatch(updateEventStatus(event)),
     fetchRound: (eventId, round, updatedEvent) =>
-      dispatch(getRoundInteraction(eventId, round, updatedEvent))
+      dispatch(getRoundInteraction(eventId, round, updatedEvent)),
+    fetchEvents: () => dispatch(fetchAllEvents())
     // onSubmit: newInteraction => dispatch(postInteraction(newInteraction))
   }
 }

@@ -40,7 +40,6 @@ class EventControl extends React.Component {
   }
 
   nextRoundWrapper = (eventId, currRound) => {
-    console.log('the current round is ', currRound)
     if (currRound > 2) {
       //do nothing
       //having the 2 above makes sure the next round button can only be pressed twice (1 (initial round) + 2 (next round button) = 3 (rounds total))
