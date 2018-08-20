@@ -28,14 +28,16 @@ const User = db.define('User', {
     type: Sequelize.STRING
   },
   firstName: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   },
   lastName: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   },
   imageURL: {
     type: Sequelize.STRING,
-    defaultValue: '/media/placeholder.png'
+    defaultValue: 'https://nicebreakers.herokuapp.com/media/placeholder.png'
   },
   role: {
     type: Sequelize.ENUM('participant', 'leader', 'admin'),
