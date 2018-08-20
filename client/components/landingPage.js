@@ -7,7 +7,10 @@ const LandingPage = props => (
       <div className="section no-pad-bot">
         <div className="container row center">
           <br />
-          <div className="card-panel white col s12 m10 offset-m1 l8 offset-l2 xl6 offset-xl3">
+          <div
+            style={{opacity: 0.9}}
+            className="card-panel z-depth-5 white col s12 m10 offset-m1 l8 offset-l2 xl6 offset-xl3"
+          >
             <h1 className="header center blue-text">Nicebreakers</h1>
             <div className="row center">
               <i className="material-icons large blue-text text-lighten-2">
@@ -43,7 +46,7 @@ const LandingPage = props => (
           <div className="col s12 m4">
             <div className="icon-block">
               <h2 className="center blue-text darken-text-5">
-                <i className="material-icons">flash_on</i>
+                <i className="material-icons large">flash_on</i>
               </h2>
               <h5 className="center">Quick Setup</h5>
               <p className="light">
@@ -56,7 +59,7 @@ const LandingPage = props => (
           <div className="col s12 m4">
             <div className="icon-block">
               <h2 className="center blue-text darken-text-5">
-                <i className="material-icons">group</i>
+                <i className="material-icons large">group</i>
               </h2>
               <h5 className="center">Flexible</h5>
               <p className="light">
@@ -69,7 +72,7 @@ const LandingPage = props => (
           <div className="col s12 m4">
             <div className="icon-block">
               <h2 className="center blue-text darken-text-5">
-                <i className="material-icons">settings</i>
+                <i className="material-icons large">settings</i>
               </h2>
               <h5 className="center">Easy to Use</h5>
               <p className="light">

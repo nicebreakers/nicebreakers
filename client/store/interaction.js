@@ -5,21 +5,12 @@ import {updateEventStatus} from '../store'
 // import history from '../history'
 // import socket from '../socket'
 
-/*
-* SOCKET EVENT TYPES
-*/
-// import {
-//   REQUEST_NEXT_ROUND,
-//   START_EVENT,
-//   ROOM,
-//   EVENT_PREFIX
-// } from '../../server/socket/events'
-
 /**
  * ACTION TYPES
  */
 const GOT_INTERACTIONS = 'GET_INTERACTIONS'
 const GOT_NEXT_INTERACTION = 'GOT_NEXT_INTERACTION'
+const UPDATE_CURRENT_INTERACTION = 'UPDATE_CURRENT_INTERACTION'
 
 /**
  * ACTION CREATORS
@@ -31,6 +22,11 @@ export const gotInteractions = (eventId, interactions) => ({
 
 const gotNextInteraction = interaction => ({
   type: GOT_NEXT_INTERACTION,
+  interaction
+})
+
+const updateCurrentInteraction = interaction => ({
+  type: UPDATE_CURRENT_INTERACTION,
   interaction
 })
 
@@ -71,13 +67,15 @@ export const getRoundInteraction = (
 export const updateInteractionData = interaction => dispatch => {
   axios
     .put(`/api/interactions/${interaction.id}`, interaction)
-    .then(() => console.log('DEFINITELY DO STUFF AND FIX THIS'))
-    .then(() => M.toast({html: 'Input Recieved!'}))
+    .then(({data: updatedInteraction}) =>
+      dispatch(updateCurrentInteraction(updatedInteraction))
+    )
     .catch(err => console.error(err))
 }
 
 export default function(state = defaultInteractions, action) {
   switch (action.type) {
+    case UPDATE_CURRENT_INTERACTION:
     case GOT_NEXT_INTERACTION:
       return {
         ...state,
@@ -101,7 +99,7 @@ export default function(state = defaultInteractions, action) {
 export const getPrompt = state => {
   const {promptId} = state.interaction.currentInteraction
   if (promptId) return state.prompt.byId[promptId].question
-  else return 'Where is the question?'
+  else return 'Loading error, please refresh.'
 }
 
 export const getDisplayShape = state => {

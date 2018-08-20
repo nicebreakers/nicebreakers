@@ -2,6 +2,7 @@ import axios from 'axios'
 import history from '../history'
 import socket from '../socket'
 import {gotInteractions} from './interaction'
+import {createHtmlEmails} from '../emails/report'
 /*
 * SOCKET EVENT TYPES
 */
@@ -23,6 +24,7 @@ const UPDATE_EVENT_STATUS = 'UPDATE_EVENT_STATUS'
 const UPDATE_EVENT_DATE = 'UPDATE_EVENT_DATE'
 const RESET_ROUNDS = 'RESET_ROUNDS'
 const UPDATE_ROUND = 'UPDATE_ROUND'
+const SEND_EVENT_EMAIL = 'SEND_EVENT_EMAIL'
 
 /**
  * ACTION CREATORS
@@ -32,6 +34,7 @@ const getEvents = events => ({type: GET_EVENTS, events})
 const addEvent = event => ({type: ADD_EVENT, event})
 const updateEventAll = event => ({type: UPDATE_EVENT_ALL, event})
 const updateEventDate = event => ({type: UPDATE_EVENT_DATE, event})
+const eventEmailSent = message => ({type: SEND_EVENT_EMAIL, message})
 export const resetRound = () => ({type: RESET_ROUNDS})
 const updateRound = (eventId, {round}) => ({type: UPDATE_ROUND, eventId, round})
 
@@ -82,6 +85,19 @@ export const leaderRequestNextRound = (eventId, round) => dispatch => {
 /**
  * NON-SOCKET THUNK CREATORS
  */
+export const sendEventEmail = eventId => async dispatch => {
+  try {
+    const {data: userReports} = await axios.get(
+      `/api/interactions/event/${eventId}`
+    )
+    axios
+      .post(`/api/mailer`, {eventId, messages: createHtmlEmails(userReports)})
+      .then(() => dispatch(eventEmailSent()))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const postEvent = event => async dispatch => {
   try {
     const {data: newEvent} = await axios.post('/api/events', event)

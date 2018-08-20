@@ -103,7 +103,7 @@ class Controller extends Component {
   }
 
   checkPhase() {
-    const gameEndedMessage = `Thank you for playing`
+    const gameEndedMessage = `The game has ended. Check your email for your story!`
     const postNotesPhaseMessage = `Waiting for the next round`
     const preGameMessage = `Please wait for the event to begin`
 
