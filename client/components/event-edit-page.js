@@ -9,7 +9,7 @@ export const EditEventFormPage = props => {
     props.event.date = props.event.date.substring(0, 10) //fixes prepopulation of date
   }
   return (
-    <div>
+    <div className="container section">
       <h1> Edit Event </h1>
       <EventForm
         formAction="Edit"
