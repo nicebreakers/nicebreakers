@@ -96,3 +96,46 @@ router.get(
     res.json(scores)
   }
 )
+
+router.get(
+  '/event/:eventId/user/:userId',
+  canOnlyBeUsedBy('admin', 'leader'),
+  async (req, res, next) => {
+    const event = req.params.eventId
+    const userId = req.params.userId
+    const myInteractions = await Interaction.findAll({
+      where: {
+        [Op.or]: [{aId: userId}, {bId: userId}],
+        eventId: +event
+      }
+    })
+
+    /**
+     * Iterate through each interaction for which selected user is a participant and parse into JSON
+     * Then Sort the interactions by highest positive response socre
+     */
+    let interactionsInJson = myInteractions.map(inter => {
+      //determine whether the user was a or b and parse score info
+      console.log(inter)
+      console.log(+userId, inter.aId, inter.bId)
+      if (+inter.aId === +userId)
+        return {
+          score: JSON.parse(inter.aScore[0]),
+          otherUser: inter.bId
+        }
+      else if (+inter.bId === +userId)
+        return {
+          score: JSON.parse(inter.bScore[0]),
+          otherUser: inter.aId
+        }
+      else throw new Error('Interaction pulled for wrong user')
+    }, [])
+    console.log(interactionsInJson)
+
+    interactionsInJson.sort(
+      (a, b) => b.score.probabilities.positive - a.score.probabilities.positive
+    )
+
+    res.send({interactions: interactionsInJson})
+  }
+)
