@@ -2,12 +2,16 @@
   {
     "email": "testAdmin@email.com",
     "password": "123",
-    "role": "admin"
+    "role": "admin",
+    "firstName": "Test",
+    "lastName": "Admin"
   },
   {
     "email": "testLeader@email.com",
     "password": "456",
-    "role": "leader"
+    "role": "leader",
+    "firstName": "Test",
+    "lastName": "Leader"
   },
   {
     "email": "testUser1@pck.email",
