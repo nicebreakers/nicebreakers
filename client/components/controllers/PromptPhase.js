@@ -10,9 +10,14 @@ const PromptPhase = props => {
             <strong>Prompt: </strong> <br />
             {prompt}
           </p>
+          <div className="section">
+            <strong>
+              <em>Discuss with the other:</em>
+            </strong>
+          </div>
         </div>
         <div className="card-image">
-          <img src={shape} />
+          <img src={shape} height="500px" width="auto" />
         </div>
       </div>
     </div>
