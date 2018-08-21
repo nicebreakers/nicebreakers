@@ -2,6 +2,7 @@ import axios from 'axios'
 import history from '../history'
 import socket from '../socket'
 import {gotInteractions} from './interaction'
+import {createHtmlEmails} from '../emails/report'
 /*
 * SOCKET EVENT TYPES
 */
@@ -21,9 +22,9 @@ const ADD_EVENT = 'ADD_EVENT'
 const UPDATE_EVENT_ALL = 'UPDATE_EVENT_ALL'
 const UPDATE_EVENT_STATUS = 'UPDATE_EVENT_STATUS'
 const UPDATE_EVENT_DATE = 'UPDATE_EVENT_DATE'
-const INCREASE_ROUND = 'INCREASE_ROUND'
 const RESET_ROUNDS = 'RESET_ROUNDS'
 const UPDATE_ROUND = 'UPDATE_ROUND'
+const SEND_EVENT_EMAIL = 'SEND_EVENT_EMAIL'
 
 /**
  * ACTION CREATORS
@@ -32,8 +33,8 @@ export const updateEventStatus = event => ({type: UPDATE_EVENT_STATUS, event})
 const getEvents = events => ({type: GET_EVENTS, events})
 const addEvent = event => ({type: ADD_EVENT, event})
 const updateEventAll = event => ({type: UPDATE_EVENT_ALL, event})
-const updateEventDate = event => ({type: UPDATE_EVENT_DATE, event})
-const incrementRound = () => ({type: INCREASE_ROUND})
+// const updateEventDate = event => ({type: UPDATE_EVENT_DATE, event})
+const eventEmailSent = message => ({type: SEND_EVENT_EMAIL, message})
 export const resetRound = () => ({type: RESET_ROUNDS})
 const updateRound = (eventId, {round}) => ({type: UPDATE_ROUND, eventId, round})
 
@@ -78,12 +79,32 @@ export const leaderRequestNextRound = (eventId, round) => dispatch => {
       console.log(
         `Emitted ${REQUEST_NEXT_ROUND} for event ${eventId} with round ${round}`
       )
+      if (round >= 3)
+        M.toast({
+          html:
+            'Thanks for Playing!\n Press "Send Reports" to send Participants their summaries\n Press "End Game" to complete the game',
+          displayLength: 30000,
+          classes: 'teal'
+        })
     })
 }
 
 /**
  * NON-SOCKET THUNK CREATORS
  */
+export const sendEventEmail = eventId => async dispatch => {
+  try {
+    const {data: userReports} = await axios.get(
+      `/api/interactions/event/${eventId}`
+    )
+    axios
+      .post(`/api/mailer`, {eventId, messages: createHtmlEmails(userReports)})
+      .then(() => dispatch(eventEmailSent()))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const postEvent = event => async dispatch => {
   try {
     const {data: newEvent} = await axios.post('/api/events', event)
@@ -123,13 +144,13 @@ export const changeEventStatus = (status, eventId) => async dispatch => {
   dispatch(updateEventStatus(updatedEvent))
   history.push('/home')
 }
-export const changeEventDate = (newDate, eventId) => async dispatch => {
-  const {data: updatedEvent} = await axios.put(
-    `/api/events/${eventId}`,
-    newDate
-  )
-  dispatch(updateEventDate(updatedEvent))
-}
+// export const changeEventDate = (newDate, eventId) => async dispatch => {
+//   const {data: updatedEvent} = await axios.put(
+//     `/api/events/${eventId}`,
+//     newDate
+//   )
+//   dispatch(updateEventDate(updatedEvent))
+// }
 
 /**
  * INITIAL STATE

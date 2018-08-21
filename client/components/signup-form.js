@@ -1,11 +1,11 @@
 import React from 'react'
 
 const SignUpForm = props => {
-  const {name, displayName, handleSubmit, error} = props
-
+  const {name, displayName, handleSignup, error} = props
+  console.log(props)
   return (
     <div className="container">
-      <form onSubmit={handleSubmit} name={name}>
+      <form onSubmit={handleSignup} name={name}>
         <div className="row">
           <div className="input-field col s6">
             <input id="first_name" type="text" />

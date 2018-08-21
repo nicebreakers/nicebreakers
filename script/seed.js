@@ -1,36 +1,40 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Event, Prompt} = require('../server/db/models')
+const {User, Event, Prompt, Interaction} = require('../server/db/models')
 const userData = require('./users.json')
 const eventData = require('./events.json')
 const promptData = require('./prompts.json')
+const interactionData = require('./interactions.json')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const users = await Promise.all(userData.map(user => User.create(user)))
+  await Promise.all(userData.map(user => User.create(user)))
   console.log(`seeded ${userData.length} users`)
 
-  const events = await Promise.all(eventData.map(event => Event.create(event)))
+  await Promise.all(eventData.map(event => Event.create(event)))
   console.log(`seeded ${eventData.length} events`)
 
-  const prompts = await Promise.all(
-    promptData.map(prompt => Prompt.create(prompt))
-  )
+  await Promise.all(promptData.map(prompt => Prompt.create(prompt)))
   console.log(`seeded ${promptData.length} prompts`)
 
-  const user1 = await User.findById(3)
-  const user2 = await User.findById(4)
-  const user3 = await User.findById(5)
-  const user4 = await User.findById(6)
+  const users = await Promise.all([
+    User.findById(3),
+    User.findById(4),
+    User.findById(5),
+    User.findById(6)
+  ])
 
-  const eventIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  await user1.setEvents(eventIds)
-  await user2.setEvents(eventIds)
-  await user3.setEvents(eventIds)
-  await user4.setEvents(eventIds)
+  const eventIds = [1, 2, 3, 4]
+
+  await Promise.all(users.map(user => user.setEvents(eventIds)))
+  console.log(`seeded ${eventIds.length} users at events`)
+
+  await Promise.all(interactionData.map(int => Interaction.create(int)))
+
+  console.log(`seeded ${interactionData.length} interactions`)
 
   console.log(`seeded successfully`)
 }

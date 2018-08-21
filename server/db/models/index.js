@@ -7,11 +7,14 @@ const Interaction = require('./interaction')
 User.belongsToMany(Event, {through: 'UsersAtEvents'})
 Event.belongsToMany(User, {through: 'UsersAtEvents'})
 User.belongsToMany(User, {
-  through: Interaction,
-  as: 'Pair',
-  // foreignKey: 'aId',
-  // otherKey: 'bId',
-  constraints: false
+  through: {
+    model: Interaction,
+    unique: false
+  },
+  as: 'Pairs',
+  foreignKey: 'aId',
+  otherKey: 'bId',
+  foreignKeyConstraint: false
 })
 
 Interaction.belongsTo(Event, {foreignKey: 'eventId'})

@@ -1,3 +1,4 @@
+/* global M */
 import React from 'react'
 import {Field, reduxForm, reset} from 'redux-form'
 import {connect} from 'react-redux'
@@ -22,6 +23,10 @@ let NotesPhase = ({pristine, submitting, handleSubmit, myId}) => (
             className="waves-effect waves-light btn"
             type="submit"
             disabled={pristine || submitting}
+            ref={() => {
+              M.textareaAutoResize($('#inputarea'))
+              M.updateTextFields()
+            }}
           >
             Submit
           </button>
@@ -30,7 +35,6 @@ let NotesPhase = ({pristine, submitting, handleSubmit, myId}) => (
     </form>
   </div>
 )
-
 
 const mapStateToProps = state => ({
   initialValues: state.interaction.currentInteraction, //so we get the id etc...

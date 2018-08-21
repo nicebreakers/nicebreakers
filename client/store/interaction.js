@@ -1,19 +1,13 @@
 import axios from 'axios'
-import {getShapeById, getAnimalById} from '../components/pictureHashLookup'
+import {
+  getShapeById,
+  getAnimalById,
+  getCarById
+} from '../components/pictureHashLookup'
 import {updateEventStatus} from '../store'
 
 // import history from '../history'
 // import socket from '../socket'
-
-/*
-* SOCKET EVENT TYPES
-*/
-// import {
-//   REQUEST_NEXT_ROUND,
-//   START_EVENT,
-//   ROOM,
-//   EVENT_PREFIX
-// } from '../../server/socket/events'
 
 /**
  * ACTION TYPES
@@ -21,6 +15,7 @@ import {updateEventStatus} from '../store'
 const GOT_INTERACTIONS = 'GET_INTERACTIONS'
 const GOT_NEXT_INTERACTION = 'GOT_NEXT_INTERACTION'
 const UPDATE_CURRENT_INTERACTION = 'UPDATE_CURRENT_INTERACTION'
+
 /**
  * ACTION CREATORS
  */
@@ -33,6 +28,7 @@ const gotNextInteraction = interaction => ({
   type: GOT_NEXT_INTERACTION,
   interaction
 })
+
 const updateCurrentInteraction = interaction => ({
   type: UPDATE_CURRENT_INTERACTION,
   interaction
@@ -75,9 +71,15 @@ export const getRoundInteraction = (
 export const updateInteractionData = interaction => dispatch => {
   axios
     .put(`/api/interactions/${interaction.id}`, interaction)
-    .then(({data: updatedInteraction}) =>
+    .then(({data: updatedInteraction}) => {
       dispatch(updateCurrentInteraction(updatedInteraction))
-    )
+      M.toast({
+        html:
+          'Submitted! \nPlease wait for instruction\nThe next round will begin soon!',
+        displayLength: 10000,
+        classes: 'green'
+      })
+    })
     .catch(err => console.error(err))
 }
 
@@ -116,9 +118,11 @@ export const getDisplayShape = state => {
   if (state.interaction.currentInteraction.id) {
     //extract the id and the number of Participants in the Event
     const interactionId = state.interaction.currentInteraction.id
-    const numParticipants = Object.values(state.interaction.byId).length
+    // const numParticipants = Object.values(state.interaction.byId).length
     //Interchange Shapes and Animals from Round to Round
-    if (state.interaction.currentInteraction.round % 2 === 0)
+    if (state.interaction.currentInteraction.round % 3 === 0)
+      photoUrl = getCarById(interactionId, 4)
+    else if (state.interaction.currentInteraction.round % 3 === 1)
       photoUrl = getShapeById(interactionId, 4)
     else {
       photoUrl = getAnimalById(interactionId, 4)

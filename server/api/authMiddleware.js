@@ -1,5 +1,10 @@
 const canOnlyBeUsedBy = (...roles) => (req, res, next) => {
-  if (req.user && roles.includes('self') && +req.params.userId === req.user.id)
+  if (req.user && roles.includes('participant')) next()
+  else if (
+    req.user &&
+    roles.includes('self') &&
+    +req.params.userId === req.user.id
+  )
     next()
   else if (req.user && roles.includes(req.user.role)) next()
   else {

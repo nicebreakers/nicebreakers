@@ -42,12 +42,25 @@ const mapSignup = state => {
 
 const mapDispatch = dispatch => {
   return {
-    handleSubmit(evt) {
+    handleSubmit: function(evt) {
       evt.preventDefault()
       const formName = evt.target.name
-      const email = evt.target.email.value
-      const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      const userInfo = {
+        email: evt.target.email.value,
+        password: evt.target.password.value
+      }
+      dispatch(auth(formName, userInfo))
+    },
+    handleSignup: function(evt) {
+      evt.preventDefault()
+      const formName = evt.target.name
+      const userInfo = {
+        email: evt.target.email.value,
+        password: evt.target.password.value,
+        firstName: evt.target.first_name.value,
+        lastName: evt.target.last_name.value
+      }
+      dispatch(auth(formName, userInfo))
     }
   }
 }

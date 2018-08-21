@@ -14,7 +14,8 @@ import {
   isEventDone,
   getRound,
   getPrompt,
-  getMe
+  getMe,
+  fetchAllEvents
 } from '../../store'
 
 import socket from '../../socket'
@@ -31,7 +32,8 @@ import {
 } from '../../../server/socket/events'
 
 class Controller extends Component {
-  componentDidMount() {
+  async componentDidMount() {
+    //removes listeners, making sure we don't duplicate any while we create more
     socket.removeAllListeners([
       EVENT_STARTED,
       NEXT_ROUND,
@@ -42,9 +44,10 @@ class Controller extends Component {
       USER_JOINED_ROOM
     ])
     /*
-    *   Load in State
+    *   Load in Store State
     */
     this.props.getAllPrompts()
+    await this.props.fetchEvents()
 
     /*
     *   REGISTER INTO THE ROOM
@@ -62,18 +65,20 @@ class Controller extends Component {
       socket.emit(USER_JOINED_ROOM, {eventId, message: this.props.userObject})
     }
 
+    this.props.fetchRound(eventId, this.props.currentRound)
+
     /*
     *   SOCKET EVENTS
     */
     socket.on(EVENT_STARTED, ({eventId}) => {
       console.log(`Got ${EVENT_STARTED} with payload=`, eventId)
-
       const updatedEvent = {
         ...this.props.event, // THIS MUST STAY LIKE THIS OTHERWISE BUG.
         status: 'in_progress'
       }
-      this.props.fetchRound(eventId, 1, updatedEvent)
       // we need to update the status only AFTER we get the interactions.
+      console.log(`fetching round 1 for event ${eventId}`)
+      this.props.fetchRound(eventId, 1, updatedEvent)
     })
 
     socket.on(EVENT_ENDED, ({eventId}) => {
@@ -91,17 +96,11 @@ class Controller extends Component {
     })
   }
 
-  componentDidUpdate() {
-    /*
-    *   Destructure Props.
-    */
-  }
-
   componentWillUnmount() {
     socket.removeAllListeners()
     // Make sure to clean up all socket events in case this is re-rendered.
+    // Needed along with the one in componentDidMount; not sure why
   }
-
   randomPrompt = () => {
     const promptLength = this.props.prompt.length
     if (promptLength > 0) {
@@ -115,7 +114,6 @@ class Controller extends Component {
     const gameEndedMessage = `The game has ended. Check your email for your story!`
     const postNotesPhaseMessage = `Waiting for the next round`
     const preGameMessage = `Please wait for the event to begin`
-
     if (this.props.pending) {
       return <PreGameMessenger preGameMessage={preGameMessage} />
     } else if (this.props.isDone) {
@@ -145,10 +143,14 @@ class Controller extends Component {
       }
     }
   }
-
   render() {
     const whichComponentToRender = this.checkPhase()
-    return <div className="container">{whichComponentToRender}</div>
+    return (
+      <div className="container">
+        <h4> Round {this.props.currentInteraction.round || 1} of 3</h4>
+        {whichComponentToRender}
+      </div>
+    )
   }
 }
 
@@ -161,7 +163,8 @@ const mapStateToProps = (state, {match}) => {
     isDone: isEventDone(state, match.params.eventId),
     currentRound: getRound(state, match.params.eventId),
     question: getPrompt(state),
-    userObject: getMe(state)
+    userObject: getMe(state),
+    currentInteraction: state.interaction.currentInteraction
   }
 }
 
@@ -170,7 +173,8 @@ const mapDispatchToProps = dispatch => {
     getAllPrompts: () => dispatch(fetchAllPrompts()),
     updateEventStatus: event => dispatch(updateEventStatus(event)),
     fetchRound: (eventId, round, updatedEvent) =>
-      dispatch(getRoundInteraction(eventId, round, updatedEvent))
+      dispatch(getRoundInteraction(eventId, round, updatedEvent)),
+    fetchEvents: () => dispatch(fetchAllEvents())
     // onSubmit: newInteraction => dispatch(postInteraction(newInteraction))
   }
 }

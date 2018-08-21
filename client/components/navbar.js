@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
@@ -7,7 +7,7 @@ import {logout} from '../store'
 // TODO -- Use an AUTH higher order component.
 
 const LoggedInLinks = props => (
-  <span>
+  <Fragment>
     <li>
       <Link to="/home" className="sidenav-close">
         Home
@@ -29,11 +29,20 @@ const LoggedInLinks = props => (
         Create Event
       </Link>
     </li>
-  </span>
+    <li className="right-align">
+      <img
+        src={props.image}
+        className="forceImgVAlign circle"
+        alt="Your profile picture"
+        width="40px"
+        height="40px"
+      />
+    </li>
+  </Fragment>
 )
 
 const LoggedOutLinks = props => (
-  <span>
+  <Fragment>
     {' '}
     <li>
       {' '}
@@ -46,10 +55,10 @@ const LoggedOutLinks = props => (
         Sign Up
       </Link>
     </li>
-  </span>
+  </Fragment>
 )
 const Navbar = props => (
-  <div>
+  <header>
     <nav className="light-blue" role="navigation">
       <div className="nav-wrapper container">
         <Link to="/" className="brand-logo logo-container">
@@ -67,12 +76,13 @@ const Navbar = props => (
     <ul id="nav-mobile" className="sidenav" ref={el => $(el).sidenav()}>
       {props.isLoggedIn ? <LoggedInLinks {...props} /> : <LoggedOutLinks />}
     </ul>
-  </div>
+  </header>
 )
 
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    image: state.user.imageURL || ''
   }
 }
 

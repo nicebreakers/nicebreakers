@@ -11,14 +11,14 @@ const LandingPage = props => (
             style={{opacity: 0.9}}
             className="card-panel z-depth-5 white col s12 m10 offset-m1 l8 offset-l2 xl6 offset-xl3"
           >
-            <h1 className="header center blue-text">Nicebreakers</h1>
+            <h2 className="header center blue-text">Nicebreakers</h2>
             <div className="row center">
               <i className="material-icons large blue-text text-lighten-2">
                 ac_unit
               </i>
             </div>
             <div className="row center">
-              <h5 className="header col s12 light">Meet each other.</h5>
+              <h5 className="header col s12 light">meet each other</h5>
             </div>
             <div className="row center">
               <Link
@@ -85,16 +85,15 @@ const LandingPage = props => (
         </div>
       </div>
     </div>
-    <div className="parallax-container valign-wrapper">
+    <div
+      className="parallax-container valign-wrapper"
+      style={{height: '300px'}}
+    >
       <div className="container">
         <div className="container center">
-          <h5 className="header white-text">
-            We use analytics to help you find compatible group members and
-            empower them to take the next steps in their relationship!
-          </h5>
+          <h5 className="header white-text" />
         </div>
       </div>
-
       <div className="parallax">
         <img src="/media/background-landing-2.jpeg" alt="Analytics" />
       </div>
@@ -107,8 +106,12 @@ const LandingPage = props => (
             <h3>
               <i className="mdi-content-send brown-text" />
             </h3>
-            <h4>Why Nicebreakers</h4>
-            <p className="left-align light">Easy to use and free. Try it!</p>
+            <h4>Analytics</h4>
+            <p className="left-align light">
+              {' '}
+              We use analytics to help you find compatible group members and
+              help empower them to take the next steps in their relationship!
+            </p>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {deletePlayer, fetchPlayersByEventId} from '../store'
+import {removeUserFromEvent, fetchPlayersByEventId} from '../store'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {PlayerAddForm} from '../components'
@@ -35,6 +35,7 @@ class PlayerList extends Component {
               Send out Invites!{' '}
             </button>
           </li>
+
           {participants.map(participant => (
             <li className="collection-item" key={participant.id}>
               <div>
@@ -60,7 +61,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = (dispatch, {eventId}) => ({
-  removePlayer: playerId => dispatch(deletePlayer(playerId)),
+  removePlayer: participant =>
+    dispatch(removeUserFromEvent(participant, eventId)),
   getUsersAtEvent: () => dispatch(fetchPlayersByEventId(eventId))
 })
 

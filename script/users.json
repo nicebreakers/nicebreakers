@@ -2,46 +2,71 @@
   {
     "email": "testAdmin@email.com",
     "password": "123",
-    "role": "admin"
+    "role": "admin",
+    "firstName": "Test",
+    "lastName": "Admin"
   },
   {
     "email": "testLeader@email.com",
     "password": "456",
-    "role": "leader"
+    "role": "leader",
+    "firstName": "Test",
+    "lastName": "Leader"
   },
   {
-    "email": "testUser1@email.com",
+    "email": "testUser1@pck.email",
     "password": "789",
-    "role": "participant"
+    "role": "participant",
+    "imageURL": "https://randomuser.me/api/portraits/women/1.jpg",
+    "firstName": "Pamela",
+    "lastName": "Gunn"
   },
   {
-    "email": "testUser2@email.com",
+    "email": "testUser2@pck.email",
     "password": "789",
-    "role": "participant"
+    "role": "participant",
+    "imageURL": "https://randomuser.me/api/portraits/men/2.jpg",
+    "firstName": "Jeff",
+    "lastName": "Harris"
   },
   {
-    "email": "testUser3@email.com",
+    "email": "testUser3@pck.email",
     "password": "789",
-    "role": "participant"
+    "role": "participant",
+    "imageURL": "https://randomuser.me/api/portraits/men/3.jpg",
+    "firstName": "Troy",
+    "lastName": "Uren"
   },
   {
-    "email": "testUser4@email.com",
+    "email": "testUser4@pck.email",
     "password": "789",
-    "role": "participant"
-  },
-  {
-    "email": "testUser5@email.com",
-    "password": "789",
-    "role": "participant"
+    "role": "participant",
+    "imageURL": "https://randomuser.me/api/portraits/women/6.jpg",
+    "firstName": "Lula",
+    "lastName": "Jones"
   },
   {
     "email": "testUser6@email.com",
     "password": "789",
-    "role": "participant"
+    "role": "participant",
+    "imageURL": "https://randomuser.me/api/portraits/men/4.jpg",
+    "firstName": "David",
+    "lastName": "Stewart"
+  },
+  {
+    "email": "testUser5@email.com",
+    "password": "789",
+    "role": "participant",
+    "imageURL": "https://randomuser.me/api/portraits/men/5.jpg",
+    "firstName": "Clyde",
+    "lastName": "Hawkins"
   },
   {
     "email": "testUser7@email.com",
     "password": "789",
-    "role": "participant"
+    "role": "participant",
+    "imageURL": "https://randomuser.me/api/portraits/men/7.jpg",
+    "firstName": "Brian",
+    "lastName": "Price"
   }
 ]
