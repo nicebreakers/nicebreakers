@@ -36,18 +36,15 @@ router
     }
   )
   .post(canOnlyBeUsedBy('admin', 'leader'), async (req, res, next) => {
-    const {name, status, description, date, location} = req.body
+    const {name, status, description, location} = req.body
     try {
       const newEvent = await Event.create({
         name,
         status,
         description,
-        date,
         location
       })
       //add user to the event
-      const currentUser = await User.findById(req.user.id)
-      newEvent.addUser(currentUser)
       res.send(newEvent)
     } catch (err) {
       next(err)
@@ -67,7 +64,7 @@ router
     }
   })
   .put(canOnlyBeUsedBy('admin', 'leader'), async (req, res, next) => {
-    const {name, status, description, date, location} = req.body
+    const {name, status, description, location} = req.body
     try {
       const targetEvent = await Event.findById(req.params.eventId)
       //if values are not passed in through req.body, set values to null
@@ -76,7 +73,6 @@ router
           name: name || null,
           status: status || null,
           description: description || null,
-          date: date || null,
           location: location || null
         },
         {returning: true}
@@ -104,16 +100,16 @@ router.put(
 )
 
 //Specifically changes the date for event
-router.put('/:eventId/date', async (req, res, next) => {
-  try {
-    const {date} = req.body
-    const targetEvent = await Event.findById(req.params.eventId)
-    await targetEvent.update({date})
-    res.send(targetEvent)
-  } catch (err) {
-    next(err)
-  }
-})
+// router.put('/:eventId/date', async (req, res, next) => {
+//   try {
+//     const {date} = req.body
+//     const targetEvent = await Event.findById(req.params.eventId)
+//     await targetEvent.update({date})
+//     res.send(targetEvent)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 router.route('/:eventId/round/:round').get((req, res, next) => {
   Interaction.findOne({

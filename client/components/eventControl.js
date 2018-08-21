@@ -119,14 +119,13 @@ class EventControl extends React.Component {
               End Game
             </button>
           </div>
-        </div>
-        {currRound >= maxRounds && (
-          <div className="row">
-            <div className="col s11 btn waves waves-effect">
-              {isGameDone ? 'Thanks For Playing!' : 'Final Round!'}
-            </div>
+          <div>
+            <h4>
+              {' '}
+              Round {this.props.currRound} of {this.props.maxRounds}{' '}
+            </h4>
           </div>
-        )}
+        </div>
       </div>
     )
   }
