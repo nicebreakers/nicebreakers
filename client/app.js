@@ -1,15 +1,17 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 
 import {Navbar, Footer} from './components'
 import Routes from './routes'
 
 const App = () => {
   return (
-    <div>
+    <Fragment>
       <Navbar />
-      <Routes />
+      <main>
+        <Routes />
+      </main>
       <Footer />
-    </div>
+    </Fragment>
   )
 }
 

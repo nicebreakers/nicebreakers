@@ -49,7 +49,7 @@ const LoggedOutLinks = props => (
   </span>
 )
 const Navbar = props => (
-  <div>
+  <header>
     <nav className="light-blue" role="navigation">
       <div className="nav-wrapper container">
         <Link to="/" className="brand-logo logo-container">
@@ -67,7 +67,7 @@ const Navbar = props => (
     <ul id="nav-mobile" className="sidenav" ref={el => $(el).sidenav()}>
       {props.isLoggedIn ? <LoggedInLinks {...props} /> : <LoggedOutLinks />}
     </ul>
-  </div>
+  </header>
 )
 
 const mapState = state => {
