@@ -10,7 +10,7 @@ describe('Event model', () => {
   describe('validations', () => {
     it('has a name', async () => {
       try {
-        await Event.create({})
+        await Event.create({leaderId: 1})
       } catch (err) {
         expect(err.message).to.equal(
           'notNull Violation: Event.name cannot be null'
@@ -19,7 +19,7 @@ describe('Event model', () => {
     })
     it('name is not empty', async () => {
       try {
-        await Event.create({name: ''})
+        await Event.create({name: '', leaderId: 1})
       } catch (err) {
         expect(err.message).to.equal(
           'Validation error: Validation notEmpty on name failed'
@@ -31,11 +31,13 @@ describe('Event model', () => {
     beforeEach(async () => {
       await Event.create({
         name: 'Test Event',
-        date: new Date(2017, 0, 1)
+        date: new Date(2017, 0, 1),
+        leaderId: 1
       })
       await Event.create({
         name: 'Test Event2',
-        date: new Date(new Date() - 2 * 24 * 60 * 60 * 1000)
+        date: new Date(new Date() - 2 * 24 * 60 * 60 * 1000),
+        leaderId: 1
       })
     })
     it('FindByName', async () => {

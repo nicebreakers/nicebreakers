@@ -25,6 +25,10 @@ const Event = db.define('Event', {
   round: {
     type: Sequelize.INTEGER,
     defaultValue: 1
+  },
+  leaderId: {
+    type: Sequelize.INTEGER,
+    allowNull: null
   }
 })
 

@@ -4,24 +4,28 @@
     "description":
       "Meet single programmers in Chicago!  Capped at thirty participants.",
     "status": "done",
-    "location": "Stout, Chicago, IL"
+    "location": "Stout, Chicago, IL",
+    "leaderId": 1
   },
   {
     "name": "Fullstack Academy 18-09 Icebreakers",
     "description": "New cohort first day activity",
     "status": "pending",
-    "location": "Fullstack Academy of Code"
+    "location": "Fullstack Academy of Code",
+    "leaderId": 1
   },
   {
     "name": "Alumni Networking Event",
     "description": "Fullstack Alumni Networking",
     "status": "pending",
-    "location": "Fullstack Academy of Code"
+    "location": "Fullstack Academy of Code",
+    "leaderId": 1
   },
   {
     "name": "Comic Con Star Wars",
     "description": "Find YOUR stars among fellow Star Wars fans.",
     "status": "pending",
-    "location": "McCormick Center, Chicago, IL"
+    "location": "McCormick Center, Chicago, IL",
+    "leaderId": 2
   }
 ]
