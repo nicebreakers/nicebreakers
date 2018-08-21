@@ -14,8 +14,6 @@ import {
 
 import socket from '../socket'
 import {
-  REQUEST_NEXT_ROUND,
-  // START_EVENT,
   ROOM,
   EVENT_PREFIX,
   USER_JOINED,
@@ -57,10 +55,6 @@ class EventControl extends React.Component {
     })
   }
 
-  sendMoveToReviewEvent = () => {
-    //socket code
-  }
-
   initGameWrapper = eventId => {
     this.props.initGame(eventId)
     this.props.resetRounds()
@@ -97,7 +91,7 @@ class EventControl extends React.Component {
   }
 
   render() {
-    const {isGameDone, isGamePending, match, currRound, maxRounds} = this.props
+    const {match} = this.props
     const {eventId} = match.params
     return (
       <div className="container">
@@ -130,20 +124,15 @@ class EventControl extends React.Component {
               Next Round
             </button>
           </div>
-          <div className="col s12">
-            <button
-              className="btn-large red waves waves-effect"
-              type="button"
-              onClick={() => this.props.sendReport(eventId)}
-            >
-              Send Report
-            </button>
-          </div>
+
           <div className="col s12 m4">
             <button
               className="btn waves waves-effect"
               type="button"
-              onClick={() => this.props.endGame(eventId)}
+              onClick={() => {
+                this.props.sendReport(eventId)
+                this.props.endGame(eventId)
+              }}
               disabled={this.disableEnd()}
             >
               End Game
@@ -151,7 +140,6 @@ class EventControl extends React.Component {
           </div>
           <div>
             <h4>
-              {' '}
               Round {this.props.currRound} of {this.props.maxRounds}{' '}
             </h4>
           </div>
