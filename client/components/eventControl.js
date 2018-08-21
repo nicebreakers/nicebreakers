@@ -48,7 +48,8 @@ class EventControl extends React.Component {
     })
 
     socket.on(USER_LEFT_ROOM, ({user}) => {
-      console.log(`user ${user.email} with id=${user.id} left`)
+      // console.log(`user ${user.email} with id=${user.id} left`)
+      console.log('Inside event control', user)
       let currAvail = this.state.available
       const newAvail = currAvail.filter(num => num !== user.id)
       this.setState({available: newAvail})

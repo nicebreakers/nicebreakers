@@ -9,11 +9,17 @@ class LivePlayerList extends Component {
   }
 
   isConnected = partId => {
-    console.log(this.props.available)
     if (this.props.available.includes(partId)) {
       return 'green'
     }
     return 'red'
+  }
+
+  nameOrEmail = part => {
+    if (!part.firstName) {
+      return part.email
+    }
+    return `${part.firstName} ${part.lastName}`
   }
 
   render() {
@@ -25,7 +31,6 @@ class LivePlayerList extends Component {
             <h4>Participants</h4>
           </li>
           {participants.map(participant => {
-            console.log(participant.id)
             return (
               <li
                 className={`collection-item ${this.isConnected(
@@ -33,7 +38,7 @@ class LivePlayerList extends Component {
                 )}`}
                 key={participant.id}
               >
-                <div>{participant.email}</div>
+                <div>{this.nameOrEmail(participant)}</div>
               </li>
             )
           })}

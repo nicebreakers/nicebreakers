@@ -27,7 +27,8 @@ import {
   EVENT_PREFIX,
   EVENT_ENDED,
   END_EVENT,
-  USER_JOINED_ROOM
+  USER_JOINED_ROOM,
+  USER_LEFT
 } from '../../../server/socket/events'
 
 function repeat(sock, eventId, content) {
@@ -46,7 +47,8 @@ class Controller extends Component {
       EVENT_ENDED,
       START_EVENT,
       END_EVENT,
-      USER_JOINED_ROOM
+      USER_JOINED_ROOM,
+      USER_LEFT
     ])
     /*
     *   Load in Store State
@@ -103,6 +105,12 @@ class Controller extends Component {
   }
 
   componentWillUnmount() {
+    const {eventId} = this.props.match.params
+    const {userObject} = this.props
+    socket.emit(USER_LEFT, {eventId, user: userObject})
+    console.log(
+      `fired USER_LEFT with event Id ${eventId} and user ${userObject}`
+    )
     socket.removeAllListeners()
     // Make sure to clean up all socket events in case this is re-rendered.
     // Needed along with the one in componentDidMount; not sure why
