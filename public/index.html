@@ -1,19 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
 
 <head>
   <meta charset='utf-8'>
   <meta name='viewport' content='width=device-width initial-scale=1.0'>
+  <meta name="theme-color" content="#40c4ff" />
+  <meta name="Description" content="A web app for introductions.">
   <title>Nicebreakers!</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link type="text/css" rel="stylesheet" href="/materialize.min.css" media="screen,projection" />
-  <script defer src="/bundle.js"></script>
+  <script defer src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+    crossorigin="anonymous"></script>
+  <script defer type="text/javascript" src="/materialize.min.js"></script>
+  <script defer type="text/javascript" src="/bundle.js"></script>
+  <link rel="manifest" href="/manifest.json">
 </head>
 
 <body>
-  <div id="app"></div>
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script type="text/javascript" src="/materialize.min.js"></script>
+  <div id="app">
+    <noscript>
+      <div class="container">
+        <p class="flow-text">Nicebreakers requires you to enable javascript in order to work!</p>
+      </div>
+    </noscript>
+  </div>
 </body>
 
 </html>
