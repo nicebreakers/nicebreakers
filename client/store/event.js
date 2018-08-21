@@ -33,7 +33,7 @@ export const updateEventStatus = event => ({type: UPDATE_EVENT_STATUS, event})
 const getEvents = events => ({type: GET_EVENTS, events})
 const addEvent = event => ({type: ADD_EVENT, event})
 const updateEventAll = event => ({type: UPDATE_EVENT_ALL, event})
-const updateEventDate = event => ({type: UPDATE_EVENT_DATE, event})
+// const updateEventDate = event => ({type: UPDATE_EVENT_DATE, event})
 const eventEmailSent = message => ({type: SEND_EVENT_EMAIL, message})
 export const resetRound = () => ({type: RESET_ROUNDS})
 const updateRound = (eventId, {round}) => ({type: UPDATE_ROUND, eventId, round})
@@ -144,13 +144,13 @@ export const changeEventStatus = (status, eventId) => async dispatch => {
   dispatch(updateEventStatus(updatedEvent))
   history.push('/home')
 }
-export const changeEventDate = (newDate, eventId) => async dispatch => {
-  const {data: updatedEvent} = await axios.put(
-    `/api/events/${eventId}`,
-    newDate
-  )
-  dispatch(updateEventDate(updatedEvent))
-}
+// export const changeEventDate = (newDate, eventId) => async dispatch => {
+//   const {data: updatedEvent} = await axios.put(
+//     `/api/events/${eventId}`,
+//     newDate
+//   )
+//   dispatch(updateEventDate(updatedEvent))
+// }
 
 /**
  * INITIAL STATE

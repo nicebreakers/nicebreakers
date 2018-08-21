@@ -5,11 +5,11 @@ import propTypes from 'prop-types'
 /*
 * Custom Validations
 */
-const futureDate = dateValue => {
-  return new Date(dateValue) < Date.now()
-    ? 'Event must be in the future'
-    : undefined
-}
+// const futureDate = dateValue => {
+//   return new Date(dateValue) < Date.now()
+//     ? 'Event must be in the future'
+//     : undefined
+// }
 const nameHasValue = name => {
   return !name || name === '' ? 'Event must have a name' : undefined
 }
@@ -43,7 +43,7 @@ let EventForm = props => {
         placeholder="My Event"
         validate={nameHasValue}
       />
-      <label htmlFor="date">Date of Event</label>
+      {/* <label htmlFor="date">Date of Event</label>
       <Field
         name="date"
         component={renderField}
@@ -51,7 +51,7 @@ let EventForm = props => {
         label={Date.now()}
         validate={futureDate}
         warn={futureDate}
-      />
+      /> */}
       <label htmlFor="location"> Event Location</label>
       <Field
         name="location"

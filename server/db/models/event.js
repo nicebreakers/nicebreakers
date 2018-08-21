@@ -2,9 +2,9 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Event = db.define('Event', {
-  date: {
-    type: Sequelize.DATE
-  },
+  // date: {
+  //   type: Sequelize.DATE
+  // },
   name: {
     type: Sequelize.STRING,
     allowNull: false,
