@@ -23,21 +23,24 @@ const LoggedInLinks = props => (
         Logout
       </a>
     </li>
-    <li>
-      {' '}
-      <Link to="/events/create" className="sidenav-close">
-        Create Event
-      </Link>
-    </li>
-    <li className="right-align">
-      <img
-        src={props.image}
-        className="forceImgVAlign circle"
-        alt="Your profile picture"
-        width="40px"
-        height="40px"
-      />
-    </li>
+    {props.canCreate && (
+      <li>
+        <Link to="/events/create" className="sidenav-close">
+          Create Event
+        </Link>
+      </li>
+    )}
+    {props.renderPic && (
+      <li className="right-align">
+        <img
+          src={props.image}
+          className="forceImgVAlign circle"
+          alt="Your profile picture"
+          width="40px"
+          height="40px"
+        />
+      </li>
+    )}
   </Fragment>
 )
 
@@ -66,7 +69,11 @@ const Navbar = props => (
           <span className="flow-text truncate"> Nicebreakers </span>
         </Link>
         <ul className="right hide-on-med-and-down">
-          {props.isLoggedIn ? <LoggedInLinks {...props} /> : <LoggedOutLinks />}
+          {props.isLoggedIn ? (
+            <LoggedInLinks {...props} renderPic={true} />
+          ) : (
+            <LoggedOutLinks />
+          )}
         </ul>
         <a href="#" data-target="nav-mobile" className="sidenav-trigger">
           <i className="material-icons">menu</i>
@@ -74,7 +81,11 @@ const Navbar = props => (
       </div>
     </nav>
     <ul id="nav-mobile" className="sidenav" ref={el => $(el).sidenav()}>
-      {props.isLoggedIn ? <LoggedInLinks {...props} /> : <LoggedOutLinks />}
+      {props.isLoggedIn ? (
+        <LoggedInLinks {...props} renderPic={false} />
+      ) : (
+        <LoggedOutLinks />
+      )}
     </ul>
   </header>
 )
@@ -82,6 +93,7 @@ const Navbar = props => (
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
+    canCreate: state.user.role === 'admin' || state.user.role === 'leader',
     image: state.user.imageURL || ''
   }
 }
