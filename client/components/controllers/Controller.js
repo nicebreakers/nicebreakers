@@ -30,6 +30,13 @@ import {
   USER_JOINED_ROOM
 } from '../../../server/socket/events'
 
+function repeat(sock, eventId, content) {
+  return setTimeout(function() {
+    sock.emit(USER_JOINED_ROOM, {eventId, message: content})
+  }, 5000)
+}
+
+let clearThis
 class Controller extends Component {
   async componentDidMount() {
     //removes listeners, making sure we don't duplicate any while we create more
@@ -60,6 +67,7 @@ class Controller extends Component {
       console.log(
         `Emitted ${ROOM} for event ${eventId} and user ${userObject.email}`
       )
+      clearThis = repeat(socket, eventId, this.props.userObject)
       socket.emit(USER_JOINED_ROOM, {eventId, message: this.props.userObject})
     }
 
@@ -98,6 +106,7 @@ class Controller extends Component {
     socket.removeAllListeners()
     // Make sure to clean up all socket events in case this is re-rendered.
     // Needed along with the one in componentDidMount; not sure why
+    clearTimeout(clearThis)
   }
   randomPrompt = () => {
     const promptLength = this.props.prompt.length
