@@ -102,16 +102,16 @@ router.put(
 )
 
 //Specifically changes the date for event
-router.put('/:eventId/date', async (req, res, next) => {
-  try {
-    const {date} = req.body
-    const targetEvent = await Event.findById(req.params.eventId)
-    await targetEvent.update({date})
-    res.send(targetEvent)
-  } catch (err) {
-    next(err)
-  }
-})
+// router.put('/:eventId/date', async (req, res, next) => {
+//   try {
+//     const {date} = req.body
+//     const targetEvent = await Event.findById(req.params.eventId)
+//     await targetEvent.update({date})
+//     res.send(targetEvent)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 router.route('/:eventId/round/:round').get((req, res, next) => {
   Interaction.findOne({
