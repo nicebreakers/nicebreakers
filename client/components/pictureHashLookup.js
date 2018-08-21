@@ -1,27 +1,27 @@
 const shapeTable = {
   byId: {
-    0: '/gamepics/circle.png',
-    1: '/gamepics/octagon.jpg',
-    2: '/gamepics/square.png',
-    3: '/gamepics/triangle.jpg'
+    0: '/media/star.svg',
+    1: '/media/triangle.svg',
+    2: '/media/square.svg',
+    3: '/media/circle.svg'
   }
 }
 
 const animalTable = {
   byId: {
-    0: '/gamepics/dino.png',
-    1: '/gamepics/bear.png',
-    2: '/gamepics/penguin.png',
-    3: '/gamepics/snails.png'
+    0: '/media/cat.svg',
+    1: '/media/butterfly.svg',
+    2: '/media/paw.svg',
+    3: '/media/rabbit.svg'
   }
 }
 
-const carTable = {
+const transTable = {
   byId: {
-    0: '/gamepics/rolls_royce.jpg',
-    1: '/gamepics/convertable.jpg',
-    2: '/gamepics/t_bird.jpg',
-    3: '/gamepics/lamborghini.jpg'
+    0: '/media/ship.svg',
+    1: '/media/car.svg',
+    2: '/media/monster.svg',
+    3: '/media/tractor.svg'
   }
 }
 
@@ -32,5 +32,5 @@ export const getAnimalById = (interactionId, numParticipants) => {
   return animalTable.byId[interactionId % numParticipants]
 }
 export const getCarById = (interactionId, numParticipants) => {
-  return carTable.byId[interactionId % numParticipants]
+  return transTable.byId[interactionId % numParticipants]
 }
