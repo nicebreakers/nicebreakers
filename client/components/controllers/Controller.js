@@ -20,7 +20,6 @@ import {
 
 import socket from '../../socket'
 import {
-  REQUEST_NEXT_ROUND,
   START_EVENT,
   EVENT_STARTED,
   NEXT_ROUND,
@@ -40,7 +39,6 @@ class Controller extends Component {
       EVENT_ENDED,
       START_EVENT,
       END_EVENT,
-      REQUEST_NEXT_ROUND,
       USER_JOINED_ROOM
     ])
     /*
