@@ -31,6 +31,9 @@ class UserHome extends React.Component {
       <div className="container">
         <InstructionPanel />
         <div className="section">
+          <h5 className="header right">Welcome {this.props.userWelcome}!</h5>
+        </div>
+        <div className="section">
           {' '}
           <h5>In Progress Events</h5>{' '}
         </div>
@@ -78,7 +81,9 @@ class UserHome extends React.Component {
 const mapState = state => {
   return {
     email: state.user.email,
+    image: state.user.imageURL,
     events: state.events,
+    userWelcome: state.user.firstName || state.user.email,
     pendingEvents: getEventsByStatus(state, 'pending'),
     doneEvents: getEventsByStatus(state, 'done'),
     inProgressEvents: getEventsByStatus(state, 'in_progress'),
