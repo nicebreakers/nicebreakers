@@ -10,7 +10,7 @@
     "build-client": "webpack",
     "build-client-watch": "webpack -w",
     "deploy": "script/deploy",
-    "lint": "eslint ./ --ignore-path .gitignore --ignore-pattern *.min.*",
+    "lint": "eslint ./ --ignore-path .gitignore --ignore-pattern *.min.* --ignore-pattern service-worker.js",
     "lint-fix": "npm run lint -- --fix",
     "precommit": "lint-staged && npm test",
     "prepare": "if [ -d .git ]; then npm-merge-driver install; fi",
@@ -104,7 +104,9 @@
     "redux-mock-store": "^1.5.3",
     "sinon": "^6.1.4",
     "supertest": "^3.1.0",
+    "sw-precache-webpack-plugin": "^0.11.5",
     "webpack": "^4.16.4",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.0",
+    "webpack-manifest-plugin": "^2.0.3"
   }
 }
