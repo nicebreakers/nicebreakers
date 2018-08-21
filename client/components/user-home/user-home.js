@@ -45,7 +45,6 @@ class UserHome extends React.Component {
             message="No events are in progress."
           />
         </div>
-        <div className="divider" />
         <div className="section">
           {' '}
           <h5>Pending Events</h5>{' '}
