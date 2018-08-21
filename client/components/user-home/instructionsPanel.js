@@ -18,14 +18,20 @@ const InstructionPanel = props => (
       <div className="modal-content">
         <h4>Getting Started</h4>
         <p>
-          {' '}
-          Press the orange button in the bottom right corner to create an event{' '}
+          Click on an event below, and click 'join event' to wait for your event
+          to begin!
         </p>
-        <p> You're going to need four friends and a leader to do an event.</p>
         <p>
-          {' '}
-          You can use testParticipant1@email.com and testParticipant2@email.com
-          (pw: "789" for both)
+          If you don't see any events, contact the event leader than sent you
+          invitation.
+        </p>
+        <p>
+          <strong>
+            <em>
+              If you are a leader you can create a new event by clicking the
+              option in the navbar.
+            </em>
+          </strong>
         </p>
       </div>
       <div className="modal-footer">
