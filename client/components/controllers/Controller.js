@@ -14,7 +14,6 @@ import {
   isEventDone,
   getRound,
   getPrompt,
-  GET_USERS_AT_EVENT,
   getMe
 } from '../../store'
 
@@ -27,7 +26,8 @@ import {
   ROOM,
   EVENT_PREFIX,
   EVENT_ENDED,
-  END_EVENT
+  END_EVENT,
+  USER_JOINED_ROOM
 } from '../../../server/socket/events'
 
 class Controller extends Component {
@@ -38,7 +38,8 @@ class Controller extends Component {
       EVENT_ENDED,
       START_EVENT,
       END_EVENT,
-      REQUEST_NEXT_ROUND
+      REQUEST_NEXT_ROUND,
+      USER_JOINED_ROOM
     ])
     /*
     *   Load in State
@@ -51,17 +52,14 @@ class Controller extends Component {
     // Oh hey, this component is only rendered when we want to join
     // an event.  So let's ask the server for a room for that
     const {eventId} = this.props.match.params
+    const {userObject} = this.props
 
     if (eventId) {
-      // console.log("PROPS", this.props)
-      socket.emit(ROOM, {room: EVENT_PREFIX + eventId, userId: 3})
+      socket.emit(ROOM, {room: EVENT_PREFIX + eventId})
       console.log(
-        `Emitted ${ROOM} for event ${eventId} and user ${
-          this.props.userObject.email
-        }`
+        `Emitted ${ROOM} for event ${eventId} and user ${userObject.email}`
       )
-      // console.log(this.props.userObject)
-      socket.emit('user joined room', {eventId, message: this.props.userObject})
+      socket.emit(USER_JOINED_ROOM, {eventId, message: this.props.userObject})
     }
 
     /*
@@ -77,8 +75,6 @@ class Controller extends Component {
       this.props.fetchRound(eventId, 1, updatedEvent)
       // we need to update the status only AFTER we get the interactions.
     })
-
-    const startFunc = ({eventId}) => {}
 
     socket.on(EVENT_ENDED, ({eventId}) => {
       console.log(`Got ${EVENT_ENDED} with payload=`, eventId)

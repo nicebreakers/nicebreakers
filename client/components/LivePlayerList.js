@@ -1,15 +1,11 @@
 import React, {Component} from 'react'
-import {fetchPlayersByEventId, sendGameInitEvent} from '../store'
+import {fetchPlayersByEventId} from '../store'
 import {connect} from 'react-redux'
-import socket from '../socket'
 
 class LivePlayerList extends Component {
   componentDidMount() {
     const {getUsersAtEvent} = this.props
     getUsersAtEvent()
-    // socket.on('USER_JOINED', userId => {
-    //   console.log(`User ${userId}, joined`)
-    // })
   }
 
   isConnected = partId => {
@@ -21,7 +17,7 @@ class LivePlayerList extends Component {
   }
 
   render() {
-    const {participants, eventId} = this.props
+    const {participants} = this.props
     return (
       <div className="container">
         <ul className="collection with-header">

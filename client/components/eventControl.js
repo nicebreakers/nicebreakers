@@ -16,7 +16,9 @@ import {
   REQUEST_NEXT_ROUND,
   // START_EVENT,
   ROOM,
-  EVENT_PREFIX
+  EVENT_PREFIX,
+  USER_JOINED,
+  USER_LEFT_ROOM
 } from '../../server/socket/events'
 import LivePlayerList from './LivePlayerList'
 
@@ -32,7 +34,7 @@ class EventControl extends React.Component {
       socket.emit(ROOM, {room: EVENT_PREFIX + eventId, userId: 1})
       console.log(`Emitted ${ROOM} for event ${eventId} and user ${1}`)
     }
-    socket.on('USER_JOINED', userObject => {
+    socket.on(USER_JOINED, userObject => {
       console.log(
         `Signal received from user=${userObject.email} and userId=${
           userObject.id
@@ -44,18 +46,13 @@ class EventControl extends React.Component {
       } else {
         this.setState({available: newAvail})
       }
-      console.log('state', this.state.available)
-      // this.setState({available:[userId]})
     })
 
-    socket.on('user left', ({user}) => {
+    socket.on(USER_LEFT_ROOM, ({user}) => {
       console.log(`user ${user.email} with id=${user.id} left`)
-      console.log(user)
       let currAvail = this.state.available
       const newAvail = currAvail.filter(num => num !== user.id)
       this.setState({available: newAvail})
-
-      // io.emit("USER_LEFT",  )
     })
   }
 
