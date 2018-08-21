@@ -30,11 +30,11 @@ const DetailsSection = ({event}) => (
           .concat(event.status.slice(1).replace(/_/, ' '))}
       </p>
     </div>
-    <div className={detailDivStyle}>
+    {/* <div className={detailDivStyle}>
       <h6 className={detailHeadingStyle}> Date of Event </h6>
       <div className="divider" />
       <p> {event.date || "This event hasn't been scheduled."}</p>
-    </div>
+    </div> */}
     <div className={detailDivStyle}>
       <h6 className={detailHeadingStyle}> Location</h6>
       <div className="divider" />
