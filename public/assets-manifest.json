@@ -1,0 +1,7 @@
+{
+  "materialize.min.css": "http://localhost:8080/materialize.min.css",
+  "materialize.min.js": "http://localhost:8080/materialize.min.js",
+  "jquery-3.3.1.slim.min.js": "http://localhost:8080/jquery-3.3.1.slim.min.js",
+  "main.js": "http://localhost:8080/main.js",
+  "main.js.map": "http://localhost:8080/main.js.map"
+}
