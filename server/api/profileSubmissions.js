@@ -27,7 +27,7 @@ router.post('/picSubmit', async (req, res, next) => {
         if (err) next(err)
       })
       const user = await User.findById(req.user.id)
-      user.update({imageURL: `/pics/${req.user.id}_${req.files.image.name}`})
+      user.update({imageURL: `${req.user.id}_${req.files.image.name}`})
       photo.mv(`public/pics/${req.user.id}_${req.files.image.name}`, function(
         err
       ) {

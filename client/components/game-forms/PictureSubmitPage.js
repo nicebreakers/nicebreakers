@@ -1,13 +1,12 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
+import {updatedUser} from '../../store'
 import axios from 'axios'
 
-export default class PictureSubmission extends Component {
+class PictureSubmission extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      imageUrl: '',
-      submitted: false,
       error: false
     }
   }
@@ -26,35 +25,55 @@ export default class PictureSubmission extends Component {
           }
         }
       )
-      this.setState({imageUrl: submission.url, submitted: true})
+      console.log(submission)
+      this.props.submitPhotoToStore(this.props.user, submission.url)
     } catch (err) {
+      console.log(err)
       this.setState({error: true})
     }
   }
   render() {
+    console.log(this.props)
     return (
-      <div>
-        <form onSubmit={this.handleImageUpload}>
-          <label htmlFor="playerName"> PlayerName </label>
-          <label htmlFor="imageUrl"> Player Picture </label>
-          <input
-            ref={ref => {
-              this.uploadInput = ref
-            }}
-            type="file"
-            accept="image/*"
-            name="imageUrl"
-          />
-          <button type="submit"> Go </button>
+      <div className="row">
+        <h3> Profile Picture </h3>
+        <form className="col s8 center" onSubmit={this.handleImageUpload}>
+          <div className="col s6">
+            <input
+              ref={ref => {
+                this.uploadInput = ref
+              }}
+              type="file"
+              accept="image/*"
+              name="imageUrl"
+            />
+          </div>
+          <button className="cols s6 btn" type="submit">
+            {' '}
+            Update Picture{' '}
+          </button>
         </form>
-        {this.state.submitted ? (
+        {this.props.user.imageURL ? (
           <Fragment>
-            <img src={'pics/' + this.state.imageUrl} />
-            <p> Picture Submitted! </p>
+            <img className="col s3" src={'pics/' + this.props.user.imageURL} />
           </Fragment>
-        ) : null}
-        {this.state.error && <p> File must be in jpeg, png or jpg format</p>}
+        ) : (
+          <img className="col s3" src="media/placeholder.png" />
+        )}
       </div>
     )
   }
 }
+
+const mapState = state => ({
+  user: state.user
+})
+
+const mapDispatch = dispatch => ({
+  submitPhotoToStore: (user, imageURL) => {
+    const userWithPhoto = Object.assign({}, user, {imageURL})
+    dispatch(updatedUser(userWithPhoto))
+  }
+})
+
+export default connect(mapState, mapDispatch)(PictureSubmission)

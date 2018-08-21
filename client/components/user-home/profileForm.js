@@ -3,6 +3,7 @@
 import React from 'react'
 import {Field, reduxForm} from 'redux-form'
 import {updateUser} from '../../store'
+import PicSubmit from '../game-forms/PictureSubmitPage'
 import {connect} from 'react-redux'
 
 let ProfileForm = ({
@@ -54,7 +55,7 @@ let ProfileForm = ({
           // Materialize initialization.
           ref={() => M.updateTextFields()}
         >
-          Submit
+          Update Profile
           <i className="material-icons right">send</i>
         </button>
       </div>
@@ -73,6 +74,7 @@ let ProfileForm = ({
         </button>
       </div>
     </form>
+    <PicSubmit />
   </div>
 )
 
