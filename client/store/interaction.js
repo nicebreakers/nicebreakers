@@ -1,5 +1,9 @@
 import axios from 'axios'
-import {getShapeById, getAnimalById} from '../components/pictureHashLookup'
+import {
+  getShapeById,
+  getAnimalById,
+  getCarById
+} from '../components/pictureHashLookup'
 import {updateEventStatus} from '../store'
 
 // import history from '../history'
@@ -114,9 +118,11 @@ export const getDisplayShape = state => {
   if (state.interaction.currentInteraction.id) {
     //extract the id and the number of Participants in the Event
     const interactionId = state.interaction.currentInteraction.id
-    const numParticipants = Object.values(state.interaction.byId).length
+    // const numParticipants = Object.values(state.interaction.byId).length
     //Interchange Shapes and Animals from Round to Round
-    if (state.interaction.currentInteraction.round % 2 === 0)
+    if (state.interaction.currentInteraction.round % 3 === 0)
+      photoUrl = getCarById(interactionId, 4)
+    else if (state.interaction.currentInteraction.round % 3 === 1)
       photoUrl = getShapeById(interactionId, 4)
     else {
       photoUrl = getAnimalById(interactionId, 4)
