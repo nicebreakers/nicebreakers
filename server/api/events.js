@@ -20,13 +20,23 @@ router
     async (req, res, next) => {
       try {
         if (req.user) {
-          const events = await Event.findAll(
-            {
-              include: [User]
-            },
-            {where: {id: req.user.id}}
-          )
-          res.send(events)
+          if (req.user.role === 'admin') {
+            const allEvents = await Event.findAll()
+            res.send(allEvents)
+          } else if (req.user.role === 'leader') {
+            const leadersEvents = await Event.findAll({
+              where: {
+                leaderId: req.user.id
+              }
+            })
+            res.send(leadersEvents)
+          } else {
+            //Eager Load the Events associated with the current user, extract and send
+            const userEvents = await User.findById(req.user.id, {
+              include: [Event]
+            })
+            res.send(userEvents.Events)
+          }
         } else {
           res.send('Cannot grant access to events')
         }
@@ -42,9 +52,9 @@ router
         name,
         status,
         description,
-        location
+        location,
+        leaderId: req.user.id
       })
-      //add user to the event
       res.send(newEvent)
     } catch (err) {
       next(err)
@@ -73,7 +83,8 @@ router
           name: name || null,
           status: status || null,
           description: description || null,
-          location: location || null
+          location: location || null,
+          leaderId: req.user.id
         },
         {returning: true}
       )

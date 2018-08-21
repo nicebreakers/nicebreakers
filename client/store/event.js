@@ -114,6 +114,10 @@ export const postEvent = event => async dispatch => {
     console.log(error)
   }
 }
+/**
+ * If user is not an admin, return events that user is associated with
+ * If user is admin, return all events
+ */
 export const fetchAllEvents = () => async dispatch => {
   try {
     const {data: events} = await axios.get('/api/events')
