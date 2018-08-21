@@ -32,8 +32,8 @@ class EventControl extends React.Component {
     // an event.  So let's ask the server for a room for that
     const {eventId} = this.props.match.params
     if (eventId) {
-      socket.emit(ROOM, {room: EVENT_PREFIX + eventId, userId: 1})
-      console.log(`Emitted ${ROOM} for event ${eventId} and user ${1}`)
+      socket.emit(ROOM, {room: EVENT_PREFIX + eventId})
+      console.log(`Emitted ${ROOM} for event ${eventId}`)
     }
     socket.on(USER_JOINED, userObject => {
       console.log(
