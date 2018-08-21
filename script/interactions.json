@@ -3,78 +3,76 @@
     "aId": 3,
     "bId": 4,
     "aInput":
-      "(aWrote) B said: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "(aWrote) B said: Troy said that his favorite city is Toronto and I think that's just such a cool city. It really supports how cool of a person Troy is. He just is really nice.",
     "bInput":
-      "(bWrote) A said: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "(bWrote) A said: Pamela couldn't really think of a city. To be honest, she just kind of rattled on about nothing. I think she's kind of fake and honestly, vapid",
     "promptId": 1,
     "round": 1,
     "eventId": 1,
-    "aScore": 100,
-    "bScore": 10
+    "aScore": 99,
+    "bScore": 12
   },
   {
     "aId": 5,
     "bId": 6,
     "aInput":
-      "(aWrote) B said: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "(aWrote) B said: Lula said something about Detroit. She's not even from Detroit! Her voice is so annoying!",
     "bInput":
-      "(bWrote) A said: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "(bWrote) A said: Meh. I don't really think she and I connected. I don't think I remember her name",
     "promptId": 1,
     "round": 1,
     "eventId": 1,
-    "aScore": 15,
-    "bScore": 20
+    "aScore": 7,
+    "bScore": 13
   },
   {
     "aId": 3,
     "bId": 5,
     "aInput":
-      "(aWrote) B said: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "(aWrote) B said: What an interesting answer from Jeff. Jeff seems like a pretty intelligent guy. I never thought of invisibility in that way.",
     "bInput":
-      "(bWrote) A said: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "(bWrote) A said: Pamela was really receptive. Just wish she'd spoken a little more. I felt like I was driving the conversation.",
     "promptId": 2,
     "round": 2,
     "eventId": 1,
-    "aScore": 25,
-    "bScore": 30
+    "aScore": 92,
+    "bScore": 73
   },
   {
     "aId": 4,
     "bId": 6,
-    "aInput":
-      "(aWrote) B said: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "aInput": "(aWrote) B said: Um. Yeah I guess she was okay.",
     "bInput":
-      "(bWrote) A said: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "(bWrote) A said: Didn't really feel heard during our conversation. Seems like a nice guy. Didn't show it tonight.",
     "promptId": 2,
     "round": 2,
     "eventId": 1,
-    "aScore": 35,
-    "bScore": 40
+    "aScore": 79,
+    "bScore": 31
   },
   {
     "aId": 3,
     "bId": 6,
     "aInput":
-      "(aWrote) B said: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "(aWrote) B said: I don't like ducks. She said ducks and I don't think that's true. I'm sure she is nice. No ducks.",
     "bInput":
-      "(bWrote) A said: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "(bWrote) A said: It was alright. She seemed a little stressed. I don't know. I'm not sure, but she seemed distracted..",
     "promptId": 3,
     "round": 3,
     "eventId": 1,
-    "aScore": 45,
-    "bScore": 50
+    "aScore": 40,
+    "bScore": 28
   },
   {
     "aId": 4,
     "bId": 5,
     "aInput":
-      "(aWrote) B said: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    "bInput":
-      "(bWrote) A said: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "(aWrote) B said: Ducks? And Horses? We had a laugh about the image.",
+    "bInput": "(bWrote) A said: We had a good laugh. I think I said horses.",
     "promptId": 3,
     "round": 3,
     "eventId": 1,
-    "aScore": 55,
-    "bScore": 60
+    "aScore": 48,
+    "bScore": 80
   }
 ]
