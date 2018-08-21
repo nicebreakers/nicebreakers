@@ -39,7 +39,7 @@ router
     }
   })
 
-//Put Route for Interaction Input. TODO: Account for User Input Score
+//Put Route for Interaction Input.
 router
   .route('/:interactionId')
   .put(
@@ -60,15 +60,14 @@ router
           throw Error('Round does not match the interaction round')
 
         //Get a stringified sentiment score for the userInput
-        const sentimentScore = await pd.sentiment(userInput)
-        const emotionScore = await pd.emotion(userInput)
-
-        const scoreArray = [sentimentScore, emotionScore]
+        const sentimentResponse = await pd.sentiment(userInput)
+        let sentimentScore = JSON.parse(sentimentResponse)
+        sentimentScore = Math.ceil(sentimentScore.probabilities.positive * 100)
         //Check to see if the user is either a or b
         if (req.user.id === aId) {
-          await interaction.update({aInput: userInput, aScore: scoreArray})
+          await interaction.update({aInput: userInput, aScore: sentimentScore})
         } else if (req.user.id === bId) {
-          await interaction.update({bInput: userInput, bScore: scoreArray})
+          await interaction.update({bInput: userInput, bScore: sentimentScore})
         }
         res.json(interaction)
       } catch (err) {
@@ -76,70 +75,3 @@ router
       }
     }
   )
-router.get(
-  '/:interactionId/scores',
-  canOnlyBeUsedBy('admin', 'leader'),
-  async (req, res, next) => {
-    const interaction = await Interaction.findById(req.params.interactionId)
-    const scores = {a: {}, b: {}}
-    const {aScore, bScore} = interaction
-    if (aScore) {
-      scores.a.sentiment = JSON.parse(interaction.aScore[0])
-      //Account for comma and missing closing braces for emotion string responses
-      scores.a.emotion = JSON.parse(interaction.aScore[1].slice(0, -2) + '}}')
-    }
-    if (bScore) {
-      scores.b.sentiment = JSON.parse(interaction.bScore[0])
-
-      scores.a.emotion = JSON.parse(interaction.bScore[1].slice(0, -2) + '}}')
-    }
-    res.json(scores)
-  }
-)
-
-/**
-* Gets the interactions for a user in a single event, sorted by positivity score, highest to lowest
-*/
-
-router.get(
-  '/event/:eventId/user/:userId',
-  canOnlyBeUsedBy('admin', 'leader'),
-  async (req, res, next) => {
-    const event = req.params.eventId
-    const userId = req.params.userId
-    const myInteractions = await Interaction.findAll({
-      where: {
-        [Op.or]: [{aId: userId}, {bId: userId}],
-        eventId: +event
-      }
-    })
-
-    /**
-     * Iterate through each interaction for which selected user is a participant and parse into JSON
-     * Then Sort the interactions by highest positive response socre
-     */
-    let interactionsInJson = myInteractions.map(inter => {
-      //determine whether the user was a or b and parse score info
-      console.log(inter)
-      console.log(+userId, inter.aId, inter.bId)
-      if (+inter.aId === +userId)
-        return {
-          score: JSON.parse(inter.aScore[0]),
-          otherUser: inter.bId
-        }
-      else if (+inter.bId === +userId)
-        return {
-          score: JSON.parse(inter.bScore[0]),
-          otherUser: inter.aId
-        }
-      else throw new Error('Interaction pulled for wrong user')
-    }, [])
-    console.log(interactionsInJson)
-
-    interactionsInJson.sort(
-      (a, b) => b.score.probabilities.positive - a.score.probabilities.positive
-    )
-
-    res.send({interactions: interactionsInJson})
-  }
-)
