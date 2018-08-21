@@ -67,9 +67,15 @@ export const getRoundInteraction = (
 export const updateInteractionData = interaction => dispatch => {
   axios
     .put(`/api/interactions/${interaction.id}`, interaction)
-    .then(({data: updatedInteraction}) =>
+    .then(({data: updatedInteraction}) => {
       dispatch(updateCurrentInteraction(updatedInteraction))
-    )
+      M.toast({
+        html:
+          'Submitted! \nPlease wait for instruction\nThe next round will begin soon!',
+        displayLength: 10000,
+        classes: 'green'
+      })
+    })
     .catch(err => console.error(err))
 }
 
