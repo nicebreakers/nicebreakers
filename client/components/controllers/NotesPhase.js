@@ -1,3 +1,4 @@
+/* global M */
 import React from 'react'
 import {Field, reduxForm, reset} from 'redux-form'
 import {connect} from 'react-redux'
@@ -22,6 +23,10 @@ let NotesPhase = ({pristine, submitting, handleSubmit, myId}) => (
             className="waves-effect waves-light btn"
             type="submit"
             disabled={pristine || submitting}
+            ref={() => {
+              M.textareaAutoResize($('#inputarea'))
+              M.updateTextFields()
+            }}
           >
             Submit
           </button>
