@@ -13,7 +13,9 @@ import {
   getDisplayShape,
   isEventDone,
   getRound,
-  getPrompt
+  getPrompt,
+  GET_USERS_AT_EVENT,
+  getMe
 } from '../../store'
 
 import socket from '../../socket'
@@ -53,7 +55,13 @@ class Controller extends Component {
     if (eventId) {
       // console.log("PROPS", this.props)
       socket.emit(ROOM, {room: EVENT_PREFIX + eventId, userId: 3})
-      console.log(`Emitted ${ROOM} for event ${eventId} and user ${3}`)
+      console.log(
+        `Emitted ${ROOM} for event ${eventId} and user ${
+          this.props.userObject.email
+        }`
+      )
+      // console.log(this.props.userObject)
+      socket.emit('user joined room', {eventId, message: this.props.userObject})
     }
 
     /*
@@ -156,7 +164,8 @@ const mapStateToProps = (state, {match}) => {
     event: state.events.byId[match.params.eventId],
     isDone: isEventDone(state, match.params.eventId),
     currentRound: getRound(state, match.params.eventId),
-    question: getPrompt(state)
+    question: getPrompt(state),
+    userObject: getMe(state)
   }
 }
 

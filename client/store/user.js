@@ -84,3 +84,7 @@ export default function(state = defaultUser, action) {
       return state
   }
 }
+
+export const getMe = state => {
+  return state.user
+}

@@ -9,6 +9,7 @@ const {
   NEXT_ROUND
 } = require('./events')
 
+let user
 module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
@@ -28,8 +29,8 @@ module.exports = io => {
         `Socket ${socket.id}/User ${userId} is joining ${socket.room}`
       )
 
-      socket.emit('USER_JOINED', userId)
-      console.log(`User ${userId}, sent`)
+      // socket.emit('USER_JOINED', userId)
+      // console.log(`User ${userId}, sent`)
     })
 
     socket.on(START_EVENT, ({eventId}) => {
@@ -49,8 +50,19 @@ module.exports = io => {
       io.to(EVENT_PREFIX + eventId).emit(NEXT_ROUND, {eventId, round})
     })
 
+    socket.on('user joined room', ({eventId, message}) => {
+      console.log(`got ${message.email} and id ${message.id}`)
+      user = message
+      io.to(EVENT_PREFIX + eventId).emit('USER_JOINED', message)
+    })
+
     socket.on('disconnect', () => {
+      socket.broadcast.emit('user left', {user})
+      console.log(`User ${user} has left`)
+
       console.log(`Connection ${socket.id} has left the building`)
+
+      // socket.emit('user left', {userObject:user})
     })
   })
 }

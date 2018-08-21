@@ -7,12 +7,13 @@ class LivePlayerList extends Component {
   componentDidMount() {
     const {getUsersAtEvent} = this.props
     getUsersAtEvent()
-    socket.on('USER_JOINED', userId => {
-      console.log(`User ${userId}, joined`)
-    })
+    // socket.on('USER_JOINED', userId => {
+    //   console.log(`User ${userId}, joined`)
+    // })
   }
 
   isConnected = partId => {
+    console.log(this.props.available)
     if (this.props.available.includes(partId)) {
       return 'green'
     }
@@ -27,14 +28,19 @@ class LivePlayerList extends Component {
           <li className="collection-header">
             <h4>Participants</h4>
           </li>
-          {participants.map(participant => (
-            <li
-              className={`collection-item ${this.isConnected(participant.id)}`}
-              key={participant.id}
-            >
-              <div>{participant.email}</div>
-            </li>
-          ))}
+          {participants.map(participant => {
+            console.log(participant.id)
+            return (
+              <li
+                className={`collection-item ${this.isConnected(
+                  participant.id
+                )}`}
+                key={participant.id}
+              >
+                <div>{participant.email}</div>
+              </li>
+            )
+          })}
         </ul>
       </div>
     )
