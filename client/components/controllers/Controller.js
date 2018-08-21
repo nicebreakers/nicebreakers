@@ -137,7 +137,6 @@ class Controller extends Component {
   }
   render() {
     const whichComponentToRender = this.checkPhase()
-    console.log('Current Round', this.props.currentInteraction)
     return (
       <div className="container">
         <h4> Round {this.props.currentInteraction.round} of 3</h4>
