@@ -3,8 +3,30 @@ import {Email, Box, Item, Image, Span, A, renderEmail} from 'react-html-email'
 import InteractionTemplate from './interaction'
 import store from '../store'
 
-export const EmailTemplate = ({userReports, user}) => {
+function getMostPositiveIndex(user) {
+  let mostPositiveScore = -Infinity
+
+  return user.interactions.reduce((acc, cur) => {
+    let score, ID
+
+    if (cur.aId === user.id) {
+      score = cur.aScore || -Infinity
+      ID = cur.id
+    } else {
+      score = cur.bScore || -Infinity
+      ID = cur.id
+    }
+
+    if (score > mostPositiveScore) {
+      mostPositiveScore = score
+      return ID
+    } else return acc
+  }, -1)
+}
+
+let EmailTemplate = ({userReports, user}) => {
   const mailtitle = `Nicebreakers: ${user.firstName}'s Post-Event Report`
+
   return (
     <Email title={mailtitle} style={{backgroundColor: 'white'}}>
       <Box cellSpacing={20}>
@@ -17,6 +39,7 @@ export const EmailTemplate = ({userReports, user}) => {
           {user.interactions.map(interaction => (
             <InteractionTemplate
               key={interaction.id}
+              highlight={interaction.id === getMostPositiveIndex(user)}
               interaction={interaction}
               userReports={userReports}
               user={user}
@@ -49,6 +72,7 @@ export const Report = ({userReports}) => (
             <InteractionTemplate
               key={interaction.id}
               user={user}
+              highlight={interaction.id === getMostPositiveIndex(user)}
               interaction={interaction}
               userReports={userReports}
             />
