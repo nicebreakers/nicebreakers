@@ -53,7 +53,7 @@ class PictureSubmission extends Component {
         </form>
         {this.props.user.imageURL ? (
           <Fragment>
-            <img className="col s3" src={'pics/' + this.props.user.imageURL} />
+            <img className="col s3" src={this.props.user.imageURL} />
           </Fragment>
         ) : (
           <img className="col s3" src="media/placeholder.png" />
