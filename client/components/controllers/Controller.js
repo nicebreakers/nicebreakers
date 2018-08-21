@@ -51,8 +51,9 @@ class Controller extends Component {
     const {eventId} = this.props.match.params
 
     if (eventId) {
-      socket.emit(ROOM, {room: EVENT_PREFIX + eventId})
-      console.log(`Emitted ${ROOM} for event ${eventId}`)
+      // console.log("PROPS", this.props)
+      socket.emit(ROOM, {room: EVENT_PREFIX + eventId, userId: 3})
+      console.log(`Emitted ${ROOM} for event ${eventId} and user ${3}`)
     }
 
     /*

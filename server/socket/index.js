@@ -13,7 +13,7 @@ module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
 
-    socket.on(ROOM, ({room}) => {
+    socket.on(ROOM, ({room, userId}) => {
       // Nobody can belong to more than one room at a time.
       if (socket.room) {
         console.log(`Socket ${socket.id} is leaving ${socket.room}`)
@@ -24,7 +24,12 @@ module.exports = io => {
 
       // Subscribe this socket to this room.
       socket.join(room)
-      console.log(`Socket ${socket.id} is joining ${socket.room}`)
+      console.log(
+        `Socket ${socket.id}/User ${userId} is joining ${socket.room}`
+      )
+
+      socket.emit('USER_JOINED', userId)
+      console.log(`User ${userId}, sent`)
     })
 
     socket.on(START_EVENT, ({eventId}) => {
