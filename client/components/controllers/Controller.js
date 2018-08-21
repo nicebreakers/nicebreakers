@@ -14,19 +14,20 @@ import {
   isEventDone,
   getRound,
   getPrompt,
+  getMe,
   fetchAllEvents
 } from '../../store'
 
 import socket from '../../socket'
 import {
-  REQUEST_NEXT_ROUND,
   START_EVENT,
   EVENT_STARTED,
   NEXT_ROUND,
   ROOM,
   EVENT_PREFIX,
   EVENT_ENDED,
-  END_EVENT
+  END_EVENT,
+  USER_JOINED_ROOM
 } from '../../../server/socket/events'
 
 class Controller extends Component {
@@ -38,7 +39,7 @@ class Controller extends Component {
       EVENT_ENDED,
       START_EVENT,
       END_EVENT,
-      REQUEST_NEXT_ROUND
+      USER_JOINED_ROOM
     ])
     /*
     *   Load in Store State
@@ -49,12 +50,17 @@ class Controller extends Component {
     /*
     *   REGISTER INTO THE ROOM
     */
-    const {eventId} = this.props.match.params
     // Oh hey, this component is only rendered when we want to join
     // an event.  So let's ask the server for a room for that
+    const {eventId} = this.props.match.params
+    const {userObject} = this.props
+
     if (eventId) {
       socket.emit(ROOM, {room: EVENT_PREFIX + eventId})
-      console.log(`Emitted ${ROOM} for event ${eventId}`)
+      console.log(
+        `Emitted ${ROOM} for event ${eventId} and user ${userObject.email}`
+      )
+      socket.emit(USER_JOINED_ROOM, {eventId, message: this.props.userObject})
     }
 
     this.props.fetchRound(eventId, this.props.currentRound)
@@ -155,6 +161,7 @@ const mapStateToProps = (state, {match}) => {
     isDone: isEventDone(state, match.params.eventId),
     currentRound: getRound(state, match.params.eventId),
     question: getPrompt(state),
+    userObject: getMe(state),
     currentInteraction: state.interaction.currentInteraction
   }
 }

@@ -17,10 +17,16 @@ import {
   REQUEST_NEXT_ROUND,
   // START_EVENT,
   ROOM,
-  EVENT_PREFIX
+  EVENT_PREFIX,
+  USER_JOINED,
+  USER_LEFT_ROOM
 } from '../../server/socket/events'
+import LivePlayerList from './LivePlayerList'
 
 class EventControl extends React.Component {
+  state = {
+    available: []
+  }
   componentDidMount = () => {
     // Oh hey, this component is only rendered when we want to run
     // an event.  So let's ask the server for a room for that
@@ -29,6 +35,26 @@ class EventControl extends React.Component {
       socket.emit(ROOM, {room: EVENT_PREFIX + eventId})
       console.log(`Emitted ${ROOM} for event ${eventId}`)
     }
+    socket.on(USER_JOINED, userObject => {
+      console.log(
+        `Signal received from user=${userObject.email} and userId=${
+          userObject.id
+        }`
+      )
+      const newAvail = [...this.state.available, userObject.id]
+      if (this.state.available.includes(userObject.id)) {
+        //do nothing
+      } else {
+        this.setState({available: newAvail})
+      }
+    })
+
+    socket.on(USER_LEFT_ROOM, ({user}) => {
+      console.log(`user ${user.email} with id=${user.id} left`)
+      let currAvail = this.state.available
+      const newAvail = currAvail.filter(num => num !== user.id)
+      this.setState({available: newAvail})
+    })
   }
 
   sendMoveToReviewEvent = () => {
@@ -77,6 +103,10 @@ class EventControl extends React.Component {
       <div className="container">
         <h3 className="heading">Leader Control</h3>
         <br />
+        <LivePlayerList
+          eventId={match.params.eventId}
+          available={this.state.available}
+        />
         <div className="row">
           <div className="col s12 m4">
             <button

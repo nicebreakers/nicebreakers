@@ -6,14 +6,18 @@ const {
   EVENT_PREFIX,
   END_EVENT,
   EVENT_ENDED,
-  NEXT_ROUND
+  NEXT_ROUND,
+  USER_JOINED_ROOM,
+  USER_JOINED,
+  USER_LEFT_ROOM
 } = require('./events')
 
+let user
 module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
 
-    socket.on(ROOM, ({room}) => {
+    socket.on(ROOM, ({room, userId}) => {
       // Nobody can belong to more than one room at a time.
       if (socket.room) {
         console.log(`Socket ${socket.id} is leaving ${socket.room}`)
@@ -24,7 +28,9 @@ module.exports = io => {
 
       // Subscribe this socket to this room.
       socket.join(room)
-      console.log(`Socket ${socket.id} is joining ${socket.room}`)
+      console.log(
+        `Socket ${socket.id}/User ${userId} is joining ${socket.room}`
+      )
     })
 
     socket.on(START_EVENT, ({eventId}) => {
@@ -44,7 +50,15 @@ module.exports = io => {
       io.to(EVENT_PREFIX + eventId).emit(NEXT_ROUND, {eventId, round})
     })
 
+    socket.on(USER_JOINED_ROOM, ({eventId, message}) => {
+      console.log(`got ${message.email} and id ${message.id}`)
+      user = message
+      io.to(EVENT_PREFIX + eventId).emit(USER_JOINED, message)
+    })
+
     socket.on('disconnect', () => {
+      socket.broadcast.emit(USER_LEFT_ROOM, {user})
+      console.log(`User ${user} has left`)
       console.log(`Connection ${socket.id} has left the building`)
     })
   })
