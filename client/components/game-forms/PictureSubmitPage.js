@@ -25,7 +25,6 @@ class PictureSubmission extends Component {
           }
         }
       )
-      console.log(submission)
       this.props.submitPhotoToStore(this.props.user, submission.url)
     } catch (err) {
       console.log(err)
@@ -33,7 +32,6 @@ class PictureSubmission extends Component {
     }
   }
   render() {
-    console.log(this.props)
     return (
       <div className="row">
         <h3> Profile Picture </h3>
