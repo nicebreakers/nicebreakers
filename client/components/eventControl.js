@@ -96,7 +96,11 @@ class EventControl extends React.Component {
     const {eventId} = match.params
     return (
       <div className="container">
-        <h3 className="heading">Leader Control</h3>
+        <h3 className="heading">
+          {this.props.event.byId[eventId]
+            ? this.props.event.byId[eventId].name
+            : 'Leader Control'}
+        </h3>
         <br />
         <LivePlayerList
           eventId={match.params.eventId}
@@ -140,9 +144,12 @@ class EventControl extends React.Component {
             </button>
           </div>
           <div>
-            <h4>
+            <br />
+            <br />
+            <br />
+            <h6>
               Round {this.props.currRound} of {this.props.maxRounds}{' '}
-            </h4>
+            </h6>
           </div>
         </div>
       </div>
@@ -154,7 +161,8 @@ const mapState = (state, {match}) => ({
   isGameDone: isEventDone(state, match.params.eventId),
   isGamePending: isEventPending(state, match.params.eventId),
   currRound: getRound(state, match.params.eventId),
-  maxRounds: 3
+  maxRounds: 3,
+  event: state.events
 })
 
 const mapDispatch = dispatch => ({

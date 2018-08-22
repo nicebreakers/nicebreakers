@@ -162,7 +162,8 @@ class Controller extends Component {
     const whichComponentToRender = this.checkPhase()
     return (
       <div className="container">
-        <h4> Round {this.props.currentInteraction.round || 1} of 3</h4>
+        {this.props.event && <h3>{this.props.event.name}</h3>}
+        <h6> Round {this.props.currentInteraction.round || 1} of 3</h6>
         {whichComponentToRender}
       </div>
     )
