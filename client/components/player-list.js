@@ -39,7 +39,7 @@ class PlayerList extends Component {
           {participants.map(participant => (
             <li className="collection-item" key={participant.id}>
               <div>
-                {participant.email}
+                {participant.firstName + ' ' + participant.lastName}
                 <a
                   onClick={event => this.handleClick(event, participant)}
                   className="secondary-content red-text"
