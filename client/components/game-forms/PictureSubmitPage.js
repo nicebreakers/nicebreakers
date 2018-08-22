@@ -69,6 +69,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   submitPhotoToStore: (user, imageURL) => {
+    imageURL = 'pics/' + imageURL
     const userWithPhoto = Object.assign({}, user, {imageURL})
     dispatch(updatedUser(userWithPhoto))
   }

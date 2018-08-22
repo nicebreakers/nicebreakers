@@ -31,10 +31,11 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
+    if (isLoggedIn) this.props.loadEventData()
     return (
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <Route path="/createProfile" component={PictureSubmission} />
+        {/* <Route path="/createProfile" component={PictureSubmission} /> */}
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
@@ -109,8 +110,10 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    loadInitialData() {
+    loadInitialData: () => {
       dispatch(me())
+    },
+    loadEventData: () => {
       dispatch(fetchAllEvents())
       dispatch(fetchAllPrompts())
     }
