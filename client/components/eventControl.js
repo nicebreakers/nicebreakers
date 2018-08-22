@@ -99,7 +99,7 @@ class EventControl extends React.Component {
         <h3 className="heading">
           {this.props.event.byId[eventId]
             ? this.props.event.byId[eventId].name
-            : 'Leader Control'}
+            : 'Leader Controls'}
         </h3>
         <br />
         <LivePlayerList
