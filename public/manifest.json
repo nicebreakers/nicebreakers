@@ -28,7 +28,7 @@
     "type": "image/png"
   }
 ],
-  "start_url": "https://nicebreakers.herokuapp.com/",
+  "start_url": "/",
   "background_color": "#FFF",
   "theme_color": "#03a9f4",
   "display": "standalone",
