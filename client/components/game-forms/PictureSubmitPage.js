@@ -34,8 +34,11 @@ class PictureSubmission extends Component {
   render() {
     return (
       <div className="row">
-        <h3> Profile Picture </h3>
-        <form className="col s8 center" onSubmit={this.handleImageUpload}>
+        <h5> Profile Picture </h5>
+        <form
+          className="col s9 push-s3 center"
+          onSubmit={this.handleImageUpload}
+        >
           <div className="col s6">
             <input
               ref={ref => {
@@ -53,10 +56,13 @@ class PictureSubmission extends Component {
         </form>
         {this.props.user.imageURL ? (
           <Fragment>
-            <img className="col s3" src={this.props.user.imageURL} />
+            <img
+              className="circle col s3 pull-s9"
+              src={this.props.user.imageURL}
+            />
           </Fragment>
         ) : (
-          <img className="col s3" src="media/placeholder.png" />
+          <img className="circle col s3 pull-s9 " src="media/placeholder.png" />
         )}
       </div>
     )
