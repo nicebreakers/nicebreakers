@@ -1,6 +1,6 @@
 import React from 'react'
 import {PlayerList, PlayerAddForm} from '../components'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 const detailDivStyle = 'col s12 m6'
@@ -106,7 +106,7 @@ const SingleEventPage = ({event, match, user}) => {
       </div>
     </div>
   ) : (
-    <h1> Loading </h1>
+    <Redirect to="/home" />
   )
 }
 const mapState = (state, {match}) => ({
