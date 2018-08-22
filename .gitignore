@@ -9,3 +9,4 @@ public/main*.js
 public/main*.js.map
 public/service-worker.js
 public/assets-manifest.json
+public/*manifest*.js
