@@ -100,6 +100,7 @@ class EventControl extends React.Component {
           {this.props.event.byId[eventId]
             ? this.props.event.byId[eventId].name
             : 'Leader Controls'}
+
         </h3>
         <br />
         <LivePlayerList

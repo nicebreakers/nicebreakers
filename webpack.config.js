@@ -35,7 +35,8 @@ module.exports = {
     new GenerateSW({
       navigateFallback: '/',
       globDirectory: './public',
-      globPatterns: ['**/*.{js,css,html,ico,svg,jpeg}']
+      globPatterns: ['*/*.{js,css,html,ico,jpeg,svg}', '*.{js,css,json}'],
+      globIgnores: ['*precache*', '*service-worker*']
     })
   ]
 }

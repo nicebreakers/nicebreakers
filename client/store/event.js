@@ -81,8 +81,7 @@ export const leaderRequestNextRound = (eventId, round) => dispatch => {
       )
       if (round >= 3)
         M.toast({
-          html:
-            'Thanks for Playing!\n Press "Send Reports" to send Participants their summaries\n Press "End Game" to complete the game',
+          html: 'Thanks for Playing!\n Press "End Game" to complete the game',
           displayLength: 30000,
           classes: 'teal'
         })
