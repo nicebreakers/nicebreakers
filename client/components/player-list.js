@@ -26,20 +26,20 @@ class PlayerList extends Component {
               <PlayerAddForm eventId={eventId} />
             </div>
             <span />
-            <button
+            {/* <button
               className="btn-flat blue-text"
               type="button"
               onClick={() => console.log('Invites Sent')}
             >
               {' '}
               Send out Invites!{' '}
-            </button>
+            </button> */}
           </li>
 
           {participants.map(participant => (
             <li className="collection-item" key={participant.id}>
               <div>
-                {participant.email}
+                {participant.firstName + ' ' + participant.lastName}
                 <a
                   onClick={event => this.handleClick(event, participant)}
                   className="secondary-content red-text"

@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {getEventsByStatus, fetchAllEvents} from '../../store/event'
 import {EventCard} from '..'
 import InstructionPanel from './instructionsPanel'
+import {getAllParticipants} from '../../store/participant'
 
 const EventList = ({eventArray, type, message}) => {
   if (!eventArray.length) return <h6>{message}</h6>
@@ -25,6 +26,7 @@ const EventList = ({eventArray, type, message}) => {
 class UserHome extends React.Component {
   componentDidMount() {
     this.props.getUsersEvents()
+    this.props.getParticipants()
   }
   render() {
     return (
@@ -90,7 +92,8 @@ const mapState = state => {
   }
 }
 const mapDispatch = dispatch => ({
-  getUsersEvents: () => dispatch(fetchAllEvents())
+  getUsersEvents: () => dispatch(fetchAllEvents()),
+  getParticipants: () => dispatch(getAllParticipants())
 })
 
 export default connect(mapState, mapDispatch)(UserHome)

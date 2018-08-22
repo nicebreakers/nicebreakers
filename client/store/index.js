@@ -6,6 +6,7 @@ import user from './user'
 import usersAtEvent from './player'
 import events from './event'
 import interaction from './interaction'
+import participant from './participant'
 import {reducer as formReducer} from 'redux-form'
 
 import prompt from './prompt'
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   events,
   usersAtEvent,
   prompt,
+  participant,
   form: formReducer
 })
 const middleware = composeWithDevTools(
