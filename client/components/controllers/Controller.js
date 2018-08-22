@@ -27,9 +27,17 @@ import {
   EVENT_PREFIX,
   EVENT_ENDED,
   END_EVENT,
-  USER_JOINED_ROOM
+  USER_JOINED_ROOM,
+  USER_LEFT
 } from '../../../server/socket/events'
 
+function repeat(sock, eventId, content) {
+  return setTimeout(function() {
+    sock.emit(USER_JOINED_ROOM, {eventId, message: content})
+  }, 5000)
+}
+
+let clearThis
 class Controller extends Component {
   async componentDidMount() {
     //removes listeners, making sure we don't duplicate any while we create more
@@ -39,7 +47,8 @@ class Controller extends Component {
       EVENT_ENDED,
       START_EVENT,
       END_EVENT,
-      USER_JOINED_ROOM
+      USER_JOINED_ROOM,
+      USER_LEFT
     ])
     /*
     *   Load in Store State
@@ -60,6 +69,7 @@ class Controller extends Component {
       console.log(
         `Emitted ${ROOM} for event ${eventId} and user ${userObject.email}`
       )
+      clearThis = repeat(socket, eventId, this.props.userObject)
       socket.emit(USER_JOINED_ROOM, {eventId, message: this.props.userObject})
     }
 
@@ -95,9 +105,16 @@ class Controller extends Component {
   }
 
   componentWillUnmount() {
+    const {eventId} = this.props.match.params
+    const {userObject} = this.props
+    socket.emit(USER_LEFT, {eventId, user: userObject})
+    console.log(
+      `fired USER_LEFT with event Id ${eventId} and user ${userObject}`
+    )
     socket.removeAllListeners()
     // Make sure to clean up all socket events in case this is re-rendered.
     // Needed along with the one in componentDidMount; not sure why
+    clearTimeout(clearThis)
   }
   randomPrompt = () => {
     const promptLength = this.props.prompt.length

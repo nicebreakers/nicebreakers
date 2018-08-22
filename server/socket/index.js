@@ -9,7 +9,8 @@ const {
   NEXT_ROUND,
   USER_JOINED_ROOM,
   USER_JOINED,
-  USER_LEFT_ROOM
+  USER_LEFT_ROOM,
+  USER_LEFT
 } = require('./events')
 
 let user
@@ -54,6 +55,11 @@ module.exports = io => {
       console.log(`got ${message.email} and id ${message.id}`)
       user = message
       io.to(EVENT_PREFIX + eventId).emit(USER_JOINED, message)
+    })
+
+    socket.on(USER_LEFT, ({eventId, user}) => {
+      console.log(`user ${user.email} has left event ${eventId}`)
+      io.to(EVENT_PREFIX + eventId).emit(USER_LEFT_ROOM, {user})
     })
 
     socket.on('disconnect', () => {
