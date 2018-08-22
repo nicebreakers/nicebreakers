@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-import {Email, Box, Item, Image, Span, A, renderEmail} from 'react-html-email'
+import {Email, Box, Item, Span, renderEmail} from 'react-html-email'
 import InteractionTemplate from './interaction'
 import store from '../store'
 
@@ -10,13 +10,12 @@ function getMostPositiveIndex(user) {
     let score, ID
 
     if (cur.aId === user.id) {
-      score = cur.aScore || -Infinity
-      ID = cur.id
-    } else {
       score = cur.bScore || -Infinity
       ID = cur.id
+    } else {
+      score = cur.aScore || -Infinity
+      ID = cur.id
     }
-
     if (score > mostPositiveScore) {
       mostPositiveScore = score
       return ID
