@@ -107,7 +107,7 @@ const LandingPage = props => (
               <i className="mdi-content-send brown-text" />
             </h3>
             <h4>Analytics</h4>
-            <p className="left-align light">
+            <p className="center light">
               {' '}
               We use analytics to help you find compatible group members and
               help empower them to take the next steps in their relationship!
