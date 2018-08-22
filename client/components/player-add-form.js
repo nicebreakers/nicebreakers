@@ -12,7 +12,20 @@ let PlayerAddForm = props => {
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="email">Invite Participant by Email</label>
-      <Field name="email" component="Autocomplete" />
+
+      <Field
+        name="email"
+        component="select"
+        ref={() => $('select').formSelect()}
+      >
+        {props.participants.map(part => {
+          return (
+            <option key={part.id} value={part.email}>
+              {part.firstName + ' ' + part.lastName}
+            </option>
+          )
+        })}
+      </Field>
       <button type="submit" className="btn-flat green-text">
         add player
       </button>
