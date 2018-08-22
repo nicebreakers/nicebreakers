@@ -3,9 +3,9 @@
     "aId": 3,
     "bId": 4,
     "aInput":
-      "(aWrote) B said: Troy said that his favorite city is Toronto and I think that's just such a cool city. It really supports how cool of a person Troy is. He just is really nice.",
+      "His favorite city is Toronto and I think that's just such a cool city. It really supports how cool of a person he is. He just is really nice.",
     "bInput":
-      "(bWrote) A said: Pamela couldn't really think of a city. To be honest, she just kind of rattled on about nothing. I think she's kind of fake and honestly, vapid",
+      "Pamela couldn't really think of a city. To be honest, she just kind of rattled on about nothing. I think she's kind of fake and honestly, vapid",
     "promptId": 1,
     "round": 1,
     "eventId": 1,
@@ -16,9 +16,9 @@
     "aId": 5,
     "bId": 6,
     "aInput":
-      "(aWrote) B said: Lula said something about Detroit. She's not even from Detroit! Her voice is so annoying!",
+      "Lula said something about Detroit. She's not even from Detroit! Her voice is so annoying!",
     "bInput":
-      "(bWrote) A said: Meh. I don't really think she and I connected. I don't think I remember her name",
+      "Meh. I don't really think he and I connected. I don't think I remember his name",
     "promptId": 1,
     "round": 1,
     "eventId": 1,
@@ -29,9 +29,9 @@
     "aId": 3,
     "bId": 5,
     "aInput":
-      "(aWrote) B said: What an interesting answer from Jeff. Jeff seems like a pretty intelligent guy. I never thought of invisibility in that way.",
+      "What an interesting answer. Seems like a pretty intelligent guy. I never thought of invisibility in that way.",
     "bInput":
-      "(bWrote) A said: Pamela was really receptive. Just wish she'd spoken a little more. I felt like I was driving the conversation.",
+      "Really receptive. Just wish she'd spoken a little more. I felt like I was driving the conversation.",
     "promptId": 2,
     "round": 2,
     "eventId": 1,
@@ -41,9 +41,9 @@
   {
     "aId": 4,
     "bId": 6,
-    "aInput": "(aWrote) B said: Um. Yeah I guess she was okay.",
+    "aInput": "Um. Yeah I guess she was okay.",
     "bInput":
-      "(bWrote) A said: Didn't really feel heard during our conversation. Seems like a nice guy. Didn't show it tonight.",
+      "Didn't really feel heard during our conversation. Seems like a nice guy. Didn't show it tonight.",
     "promptId": 2,
     "round": 2,
     "eventId": 1,
@@ -54,9 +54,9 @@
     "aId": 3,
     "bId": 6,
     "aInput":
-      "(aWrote) B said: I don't like ducks. She said ducks and I don't think that's true. I'm sure she is nice. No ducks.",
+      "I don't like ducks. She said ducks and I don't think that's true. I'm sure she is nice. No ducks.",
     "bInput":
-      "(bWrote) A said: It was alright. She seemed a little stressed. I don't know. I'm not sure, but she seemed distracted..",
+      "It was alright. She seemed a little stressed. I don't know. I'm not sure, but she seemed distracted..",
     "promptId": 3,
     "round": 3,
     "eventId": 1,
@@ -66,9 +66,8 @@
   {
     "aId": 4,
     "bId": 5,
-    "aInput":
-      "(aWrote) B said: Ducks? And Horses? We had a laugh about the image.",
-    "bInput": "(bWrote) A said: We had a good laugh. I think I said horses.",
+    "aInput": "Ducks? And Horses? We had a laugh about the image.",
+    "bInput": "We had a good laugh. I think I said horses.",
     "promptId": 3,
     "round": 3,
     "eventId": 1,
