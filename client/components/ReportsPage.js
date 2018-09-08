@@ -11,7 +11,6 @@ export default class ReportsPage extends React.Component {
       const {data: reports} = await axios.get(
         `/api/interactions/event/${eventId}`
       )
-      console.log(reports)
       this.setState({reports})
     } catch (error) {
       console.error(error)

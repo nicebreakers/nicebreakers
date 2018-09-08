@@ -1,7 +1,8 @@
 import React from 'react'
-import {PlayerList, PlayerAddForm} from '../components'
-import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {Link, Redirect} from 'react-router-dom'
+
+import {PlayerList} from '../components'
 
 const detailDivStyle = 'col s12 m6'
 const detailHeadingStyle = 'blue-text text-darken-3'
@@ -30,11 +31,6 @@ const DetailsSection = ({event}) => (
           .concat(event.status.slice(1).replace(/_/, ' '))}
       </p>
     </div>
-    {/* <div className={detailDivStyle}>
-      <h6 className={detailHeadingStyle}> Date of Event </h6>
-      <div className="divider" />
-      <p> {event.date || "This event hasn't been scheduled."}</p>
-    </div> */}
     <div className={detailDivStyle}>
       <h6 className={detailHeadingStyle}> Location</h6>
       <div className="divider" />
