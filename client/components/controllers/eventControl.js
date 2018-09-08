@@ -1,6 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
+import LivePlayerList from '../controllers'
+
 import {
   sendGameInitEvent,
   sendEndGameEvent,
@@ -10,24 +12,21 @@ import {
   resetRound,
   isEventPending,
   sendEventEmail
-} from '../store'
+} from '../../store'
 
-import socket from '../socket'
 import {
   ROOM,
   EVENT_PREFIX,
   USER_JOINED,
   USER_LEFT_ROOM
-} from '../../server/socket/events'
-import LivePlayerList from './LivePlayerList'
+} from '../../../server/socket/events'
+import socket from '../../socket'
 
 class EventControl extends React.Component {
   state = {
     available: []
   }
   componentDidMount = () => {
-    // Oh hey, this component is only rendered when we want to run
-    // an event.  So let's ask the server for a room for that
     const {eventId} = this.props.match.params
     if (eventId) {
       socket.emit(ROOM, {room: EVENT_PREFIX + eventId})
@@ -100,7 +99,6 @@ class EventControl extends React.Component {
           {this.props.event.byId[eventId]
             ? this.props.event.byId[eventId].name
             : 'Leader Controls'}
-
         </h3>
         <br />
         <LivePlayerList

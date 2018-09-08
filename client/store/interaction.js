@@ -3,11 +3,8 @@ import {
   getShapeById,
   getAnimalById,
   getCarById
-} from '../components/pictureHashLookup'
+} from '../components/utility-components/pictureHashLookup'
 import {updateEventStatus} from '../store'
-
-// import history from '../history'
-// import socket from '../socket'
 
 /**
  * ACTION TYPES

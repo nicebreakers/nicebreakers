@@ -14,7 +14,7 @@
     "lastName": "Leader"
   },
   {
-    "email": "testUser1@pck.email",
+    "email": "testUser1@email.com",
     "password": "789",
     "role": "participant",
     "imageURL": "https://randomuser.me/api/portraits/women/1.jpg",
@@ -22,7 +22,7 @@
     "lastName": "Gunn"
   },
   {
-    "email": "testUser2@pck.email",
+    "email": "testUser2@email.com",
     "password": "789",
     "role": "participant",
     "imageURL": "https://randomuser.me/api/portraits/men/2.jpg",
@@ -30,7 +30,7 @@
     "lastName": "Harris"
   },
   {
-    "email": "testUser3@pck.email",
+    "email": "testUser3@email.com",
     "password": "789",
     "role": "participant",
     "imageURL": "https://randomuser.me/api/portraits/men/3.jpg",
@@ -38,7 +38,7 @@
     "lastName": "Uren"
   },
   {
-    "email": "testUser4@pck.email",
+    "email": "testUser4@email.com",
     "password": "789",
     "role": "participant",
     "imageURL": "https://randomuser.me/api/portraits/women/6.jpg",
