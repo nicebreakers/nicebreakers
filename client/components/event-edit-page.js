@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import EventForm from './game-forms/EventForm'
+import EventForm from './forms/EventForm'
 import {changeEventAllFields} from '../store/event'
 
 export const EditEventFormPage = props => {

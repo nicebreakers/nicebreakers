@@ -1,8 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {getEventsByStatus, fetchAllEvents} from '../../store/event'
-import {EventCard} from '..'
+import {EventCard} from './eventCard'
 import InstructionPanel from './instructionsPanel'
 
 const EventList = ({eventArray, type, message}) => {
@@ -69,7 +68,6 @@ class UserHome extends React.Component {
             message="You have no completed events to review! Darn. Start one above!"
           />
         </div>
-        {/* <EventActionButton /> */}
       </div>
     )
   }
@@ -77,27 +75,19 @@ class UserHome extends React.Component {
 /**
  * CONTAINER
  */
-const mapState = state => {
-  return {
-    email: state.user.email,
-    image: state.user.imageURL,
-    events: state.events,
-    userWelcome: state.user.firstName || state.user.email,
-    pendingEvents: getEventsByStatus(state, 'pending'),
-    doneEvents: getEventsByStatus(state, 'done'),
-    inProgressEvents: getEventsByStatus(state, 'in_progress'),
-    notParticipant: state.user.role !== 'participant'
-  }
-}
+const mapState = state => ({
+  email: state.user.email,
+  image: state.user.imageURL,
+  events: state.events,
+  userWelcome: state.user.firstName || state.user.email,
+  pendingEvents: getEventsByStatus(state, 'pending'),
+  doneEvents: getEventsByStatus(state, 'done'),
+  inProgressEvents: getEventsByStatus(state, 'in_progress'),
+  notParticipant: state.user.role !== 'participant'
+})
+
 const mapDispatch = dispatch => ({
   getUsersEvents: () => dispatch(fetchAllEvents())
 })
 
 export default connect(mapState, mapDispatch)(UserHome)
-
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}

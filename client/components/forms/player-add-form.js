@@ -2,7 +2,7 @@ import React from 'react'
 import {Field, reduxForm} from 'redux-form'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {addUserToEvent} from '../store'
+import {addUserToEvent} from '../../store'
 
 let PlayerAddForm = props => {
   const {handleSubmit, pristine, submitting, match} = props

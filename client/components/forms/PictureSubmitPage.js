@@ -4,13 +4,6 @@ import {updatedUser} from '../../store'
 import axios from 'axios'
 
 class PictureSubmission extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      error: false
-    }
-  }
-
   handleImageUpload = async evt => {
     evt.preventDefault()
     try {
@@ -28,7 +21,6 @@ class PictureSubmission extends Component {
       this.props.submitPhotoToStore(this.props.user, submission.url)
     } catch (err) {
       console.log(err)
-      this.setState({error: true})
     }
   }
   render() {
@@ -69,9 +61,7 @@ class PictureSubmission extends Component {
   }
 }
 
-const mapState = state => ({
-  user: state.user
-})
+const mapState = state => ({user: state.user})
 
 const mapDispatch = dispatch => ({
   submitPhotoToStore: (user, imageURL) => {

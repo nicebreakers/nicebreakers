@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import {removeUserFromEvent, fetchPlayersByEventId} from '../store'
+import {removeUserFromEvent, fetchPlayersByEventId} from '../../store'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {PlayerAddForm} from '../components'
+import {PlayerAddForm} from '..'
 
 class PlayerList extends Component {
   componentDidMount() {

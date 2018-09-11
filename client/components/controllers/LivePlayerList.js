@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import {fetchPlayersByEventId} from '../store'
 import {connect} from 'react-redux'
+
+import {fetchPlayersByEventId} from '../../store'
 
 class LivePlayerList extends Component {
   componentDidMount() {

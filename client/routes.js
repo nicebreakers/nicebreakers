@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {me, fetchAllEvents, fetchAllPrompts} from './store'
-import PictureSubmission from './components/game-forms/PictureSubmitPage'
 import EventFormPage from './components/event-create-page'
 import EditEventPage from './components/event-edit-page'
 
@@ -21,9 +20,6 @@ import {
   ReportsPage
 } from './components'
 
-/**
- * COMPONENT
- */
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
@@ -35,7 +31,6 @@ class Routes extends Component {
     return (
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        {/* <Route path="/createProfile" component={PictureSubmission} /> */}
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
@@ -100,28 +95,19 @@ class Routes extends Component {
 /**
  * CONTAINER
  */
-const mapState = state => {
-  return {
-    // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
-    // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
-  }
-}
+const mapState = state => ({isLoggedIn: !!state.user.id})
 
-const mapDispatch = dispatch => {
-  return {
-    loadInitialData: () => {
-      dispatch(me())
-    },
-    loadEventData: () => {
-      dispatch(fetchAllEvents())
-      dispatch(fetchAllPrompts())
-    }
+const mapDispatch = dispatch => ({
+  loadInitialData: () => {
+    dispatch(me())
+  },
+  loadEventData: () => {
+    dispatch(fetchAllEvents())
+    dispatch(fetchAllPrompts())
   }
-}
+})
 
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
+// Make sure that updates are not blocked when the url changes
 export default withRouter(connect(mapState, mapDispatch)(Routes))
 
 /**

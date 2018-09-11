@@ -1,9 +1,8 @@
 import React from 'react'
-
 import {connect} from 'react-redux'
-import EventForm from './game-forms/EventForm'
+
+import EventForm from './forms/EventForm'
 import {postEvent} from '../store/event'
-import history from '../history'
 
 export const EventFormPage = props => (
   <div className="container">

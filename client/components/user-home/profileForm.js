@@ -1,10 +1,11 @@
 // Make ESLINT happy with materialize global.
 /* global M */
 import React from 'react'
-import {Field, reduxForm} from 'redux-form'
-import {updateUser} from '../../store'
-import PicSubmit from '../game-forms/PictureSubmitPage'
 import {connect} from 'react-redux'
+import {Field, reduxForm} from 'redux-form'
+
+import {updateUser} from '../../store'
+import PicSubmit from '../forms/PictureSubmitPage'
 
 let ProfileForm = ({
   handleSubmit,

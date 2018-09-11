@@ -1,8 +1,9 @@
 import React, {Fragment} from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import PropTypes from 'prop-types'
+
+import {logout} from '../../store'
 
 // TODO -- Use an AUTH higher order component.
 

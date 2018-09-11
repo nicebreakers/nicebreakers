@@ -1,10 +1,15 @@
 import React, {Component} from 'react'
-import PreGameMessenger from './PreGameMessenger'
-import GameEnded from './GameEnded'
-import PostNotesPhase from './PostNotesPhase'
-import NotesPhase from './NotesPhase'
-import PromptPhase from './PromptPhase'
 import {connect} from 'react-redux'
+
+// components
+import {
+  PromptPhase,
+  NotesPhase,
+  GameEnded,
+  PreGameMessenger
+} from '../controllers'
+
+// selectors & event creators
 import {
   fetchAllPrompts,
   isEventPending,
@@ -18,7 +23,7 @@ import {
   fetchAllEvents
 } from '../../store'
 
-import socket from '../../socket'
+// socket connection and events
 import {
   START_EVENT,
   EVENT_STARTED,
@@ -30,14 +35,28 @@ import {
   USER_JOINED_ROOM,
   USER_LEFT
 } from '../../../server/socket/events'
+import socket from '../../socket'
 
+// Helpers
+let clearThis
 function repeat(sock, eventId, content) {
   return setTimeout(function() {
     sock.emit(USER_JOINED_ROOM, {eventId, message: content})
   }, 5000)
 }
 
-let clearThis
+const logDev = msg => process.env.NODE_ENV !== 'production' && console.log(msg)
+const log = {
+  emit: (room, id, email) =>
+    logDev(`Emitted ${room} for event ${id} and user ${email}`),
+  event: (evt, id) => logDev(`Got ${evt} with payload=${id}`),
+  round: (round, id) => logDev(`fetching round ${round} for event ${id}`)
+}
+
+// messages
+const gameEndedMessage = `The game has ended. Check your email for your story!`
+const preGameMessage = `Please wait for the event to begin`
+
 class Controller extends Component {
   async componentDidMount() {
     //removes listeners, making sure we don't duplicate any while we create more
@@ -50,150 +69,106 @@ class Controller extends Component {
       USER_JOINED_ROOM,
       USER_LEFT
     ])
-    /*
-    *   Load in Store State
-    */
+
+    // Load in Store State
     this.props.getAllPrompts()
     await this.props.fetchEvents()
 
-    /*
-    *   REGISTER INTO THE ROOM
-    */
-    // Oh hey, this component is only rendered when we want to join
-    // an event.  So let's ask the server for a room for that
+    // Component is only rendered when we want to join event, so ask for a room.
     const {eventId} = this.props.match.params
     const {userObject} = this.props
 
     if (eventId) {
       socket.emit(ROOM, {room: EVENT_PREFIX + eventId})
-      console.log(
-        `Emitted ${ROOM} for event ${eventId} and user ${userObject.email}`
-      )
+      log.emit(ROOM, eventId, userObject.email)
       clearThis = repeat(socket, eventId, this.props.userObject)
       socket.emit(USER_JOINED_ROOM, {eventId, message: this.props.userObject})
     }
 
     this.props.fetchRound(eventId, this.props.currentRound)
 
-    /*
-    *   SOCKET EVENTS
-    */
-    socket.on(EVENT_STARTED, ({eventId}) => {
-      console.log(`Got ${EVENT_STARTED} with payload=`, eventId)
-      const updatedEvent = {
-        ...this.props.event, // THIS MUST STAY LIKE THIS OTHERWISE BUG.
-        status: 'in_progress'
-      }
-      // we need to update the status only AFTER we get the interactions.
-      console.log(`fetching round 1 for event ${eventId}`)
-      this.props.fetchRound(eventId, 1, updatedEvent)
+    // Socket events
+    socket.on(EVENT_STARTED, ({eventId: id}) => {
+      const updatedEvent = {...this.props.event, status: 'in_progress'}
+      log.event(EVENT_STARTED, id)
+      log.round(1, id)
+      this.props.fetchRound(id, 1, updatedEvent)
     })
 
-    socket.on(EVENT_ENDED, ({eventId}) => {
-      console.log(`Got ${EVENT_ENDED} with payload=`, eventId)
-      this.props.updateEventStatus({
-        ...this.props.event, // THIS MUST STAY LIKE THIS OTHERWISE BUG.
-        status: 'done'
-      })
+    socket.on(EVENT_ENDED, ({eventId: id}) => {
+      log.event(EVENT_ENDED, id)
+      this.props.updateEventStatus({...this.props.event, status: 'done'})
     })
 
     socket.on(NEXT_ROUND, data => {
-      console.log(`Got ${NEXT_ROUND} with payload=`, data)
-      console.log(`fetching round ${data.round} for event ${data.eventId}`)
+      log.event(NEXT_ROUND, data)
+      log.round(data.round, data.eventId)
       this.props.fetchRound(data.eventId, data.round)
     })
   }
 
   componentWillUnmount() {
-    const {eventId} = this.props.match.params
-    const {userObject} = this.props
+    const {userObject, match: {params: {eventId}}} = this.props
+
     socket.emit(USER_LEFT, {eventId, user: userObject})
-    console.log(
-      `fired USER_LEFT with event Id ${eventId} and user ${userObject}`
-    )
-    socket.removeAllListeners()
-    // Make sure to clean up all socket events in case this is re-rendered.
-    // Needed along with the one in componentDidMount; not sure why
-    clearTimeout(clearThis)
+    log.emit(USER_LEFT, eventId, userObject.email)
+
+    socket.removeAllListeners() // clear listeners
+    clearTimeout(clearThis) // clear polling
   }
+
   randomPrompt = () => {
     const promptLength = this.props.prompt.length
-    if (promptLength > 0) {
-      const randNum = Math.floor(Math.random() * promptLength)
-      return this.props.prompt[randNum].question
-    }
-    return 'No question'
+    return promptLength > 0
+      ? this.props.prompt[Math.floor(Math.random() * promptLength)].question
+      : 'No question'
   }
 
   checkPhase() {
-    const gameEndedMessage = `The game has ended. Check your email for your story!`
-    const postNotesPhaseMessage = `Waiting for the next round`
-    const preGameMessage = `Please wait for the event to begin`
     if (this.props.pending) {
       return <PreGameMessenger preGameMessage={preGameMessage} />
     } else if (this.props.isDone) {
       return <GameEnded gameEndedMessage={gameEndedMessage} />
     } else {
-      switch ('Prompt') {
-        case 'Prompt':
-          return (
-            <div>
-              <PromptPhase
-                shape={this.props.shape}
-                prompt={this.props.question}
-              />
-              <NotesPhase />
-            </div>
-          )
-        // case 'Notes':
-        //   return <NotesPhase />
-        // case 'PostNotes':
-        //   return (
-        //     <PostNotesPhase postNotesPhaseMessage={postNotesPhaseMessage} />
-        //   )
-        case 'GameEnded':
-          return <GameEnded gameEndedMessage={gameEndedMessage} />
-        default:
-          return <PreGameMessenger preGameMessage={preGameMessage} />
-      }
+      return (
+        <div>
+          <PromptPhase shape={this.props.shape} prompt={this.props.question} />
+          <NotesPhase />
+        </div>
+      )
     }
   }
   render() {
     const whichComponentToRender = this.checkPhase()
-    const {event} = this.props
+    const {event, currentInteraction} = this.props
     return (
       <div className="container">
         {event && <h3>{event.name}</h3>}
-        <h6> Round {this.props.currentInteraction.round || 1} of 3</h6>
+        <h6>Round {currentInteraction.round || 1} of 3</h6>
         {whichComponentToRender}
       </div>
     )
   }
 }
 
-const mapStateToProps = (state, {match}) => {
-  return {
-    shape: getDisplayShape(state),
-    prompt: Object.values(state.prompt.byId),
-    pending: isEventPending(state, match.params.eventId),
-    event: state.events.byId[match.params.eventId],
-    isDone: isEventDone(state, match.params.eventId),
-    currentRound: getRound(state, match.params.eventId),
-    question: getPrompt(state),
-    userObject: getMe(state),
-    currentInteraction: state.interaction.currentInteraction
-  }
-}
+const mapStateToProps = (state, {match}) => ({
+  shape: getDisplayShape(state),
+  prompt: Object.values(state.prompt.byId),
+  pending: isEventPending(state, match.params.eventId),
+  event: state.events.byId[match.params.eventId],
+  isDone: isEventDone(state, match.params.eventId),
+  currentRound: getRound(state, match.params.eventId),
+  question: getPrompt(state),
+  userObject: getMe(state),
+  currentInteraction: state.interaction.currentInteraction
+})
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getAllPrompts: () => dispatch(fetchAllPrompts()),
-    updateEventStatus: event => dispatch(updateEventStatus(event)),
-    fetchRound: (eventId, round, updatedEvent) =>
-      dispatch(getRoundInteraction(eventId, round, updatedEvent)),
-    fetchEvents: () => dispatch(fetchAllEvents())
-    // onSubmit: newInteraction => dispatch(postInteraction(newInteraction))
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  getAllPrompts: () => dispatch(fetchAllPrompts()),
+  updateEventStatus: event => dispatch(updateEventStatus(event)),
+  fetchRound: (id, round, event) =>
+    dispatch(getRoundInteraction(id, round, event)),
+  fetchEvents: () => dispatch(fetchAllEvents())
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controller)
