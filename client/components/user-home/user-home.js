@@ -1,10 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getEventsByStatus, fetchAllEvents} from '../../store/event'
-import {EventCard} from './eventCard'
+import EventCard from './eventCard'
 import InstructionPanel from './instructionsPanel'
 
-const EventList = ({eventArray, type, message}) => {
+export const EventList = ({eventArray, type, message}) => {
   if (!eventArray.length) return <h6>{message}</h6>
   else
     return eventArray.map(event => (
@@ -38,6 +38,7 @@ class UserHome extends React.Component {
         </div>
         <div className="divider" />
         <div className="row">
+          {console.log('Hello', EventList)}
           <EventList
             eventArray={this.props.inProgressEvents}
             type="in_progress"

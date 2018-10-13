@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import LivePlayerList from '../controllers'
+import LivePlayerList from './LivePlayerList'
 
 import {
   sendGameInitEvent,
@@ -105,6 +105,7 @@ class EventControl extends React.Component {
           eventId={match.params.eventId}
           available={this.state.available}
         />
+        <h1>Test</h1>
         <div className="row">
           <div className="col s12 m4">
             <button
