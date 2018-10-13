@@ -38,7 +38,6 @@ class UserHome extends React.Component {
         </div>
         <div className="divider" />
         <div className="row">
-          {console.log('Hello', EventList)}
           <EventList
             eventArray={this.props.inProgressEvents}
             type="in_progress"
