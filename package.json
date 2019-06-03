@@ -37,7 +37,7 @@
   "license": "MIT",
   "dependencies": {
     "ajv": "^6.5.3",
-    "axios": "^0.15.3",
+    "axios": "^0.18.1",
     "cloudinary": "^1.11.0",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^4.1.0",
